@@ -60,7 +60,9 @@ public final class HahaManager {
 			"Devin beat 7C after 5 1/2 hours",
 			// shedaniel
 			"Look at me, I am vibing up here",
-			"Doesn't break REI"
+			"Doesn't break REI",
+			// devonk15
+			"Come here often?"
 	};
 
 	public static String getFact() {

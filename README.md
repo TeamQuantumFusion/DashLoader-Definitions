@@ -27,7 +27,7 @@ Welcome to the codebase where DashLoader lives! Please report any issues you fin
         <code>f3 + t</code> to recreate the cache to load your new assets in.
         If you want to just show off the speed of DashLoader you can press <code>shift + f3 + t</code>
         <br/><br/><br/>
-        <!-- Community -->
+        <!-- Community .-->
         <img src="https://notalpha.dev/assets/dashloader/community-new.png" alt="Community" width="1000"/>
         <br/>
         <img src="https://i.imgur.com/qbysL1T.png" alt="Discord" width="500"/>
