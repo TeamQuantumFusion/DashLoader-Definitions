@@ -3,7 +3,7 @@
   "minVersion": "0.8",
   "package": "dev.notalpha.dashloader.mixin",
   "plugin": "dev.notalpha.dashloader.mixin.MixinPlugin",
-  "compatibilityLevel": "JAVA_16",
+  "compatibilityLevel": "JAVA_17",
   "mixins": [
     "accessor.AbstractTextureAccessor",
     "accessor.AndMultipartModelSelectorAccessor",
