@@ -1,7 +1,6 @@
 package dev.notalpha.dashloader;
 
 import dev.notalpha.dashloader.api.DashObject;
-import dev.quantumfusion.hyphen.util.ScanUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -41,16 +40,18 @@ public final class DashObjectClass<R, D extends DashObject<R, ?>> {
             }
 
             boolean foundDashObject = false;
-            for (Type genericInterface : genericInterfaces) {
-                if (ScanUtil.getClassFrom(genericInterface) == DashObject.class) {
+            Class<?>[] interfaces = this.dashClass.getInterfaces();
+            for (int i = 0; i < interfaces.length; i++) {
+                if (interfaces[i] == DashObject.class) {
                     foundDashObject = true;
+                    var genericInterface = genericInterfaces[i];
                     if (genericInterface instanceof ParameterizedType targetClass) {
-                        Type[] actualTypeArguments = targetClass.getActualTypeArguments();
-                        Class<?> classFrom = ScanUtil.getClassFrom(actualTypeArguments[0]);
-                        if (classFrom == null) {
+                        if (targetClass.getActualTypeArguments()[0] instanceof Class<?> targetClass2) {
+                            this.targetClass = (Class<R>) targetClass2;
+                        }
+                        else {
                             throw new RuntimeException(this.dashClass + " has a non resolvable DashObject parameter");
                         }
-                        this.targetClass = (Class<R>) classFrom;
                     } else {
                         throw new RuntimeException(this.dashClass + " implements raw DashObject");
                     }

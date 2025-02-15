@@ -8,7 +8,7 @@ import dev.notalpha.dashloader.client.model.components.DashModelOverrideList;
 import dev.notalpha.dashloader.client.model.components.DashModelTransformation;
 import dev.notalpha.dashloader.client.sprite.content.DashSprite;
 import dev.notalpha.dashloader.mixin.accessor.BuiltinBakedModelAccessor;
-import dev.quantumfusion.hyphen.scan.annotations.DataNullable;
+import dev.notalpha.hyphen.scan.annotations.DataNullable;
 import net.minecraft.client.render.model.BuiltinBakedModel;
 import net.minecraft.client.render.model.json.ModelOverrideList;
 import net.minecraft.client.render.model.json.ModelTransformation;

@@ -2,7 +2,7 @@ package dev.notalpha.dashloader.client.shader;
 
 import dev.notalpha.dashloader.io.IOHelper;
 import dev.notalpha.dashloader.mixin.accessor.GlUniformAccessor;
-import dev.quantumfusion.hyphen.scan.annotations.DataNullable;
+import dev.notalpha.hyphen.scan.annotations.DataNullable;
 import net.minecraft.client.gl.GlUniform;
 import net.minecraft.client.gl.ShaderProgram;
 

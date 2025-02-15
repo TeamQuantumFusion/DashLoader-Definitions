@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import dev.notalpha.dashloader.api.DashObject;
 import dev.notalpha.dashloader.api.registry.RegistryReader;
 import dev.notalpha.dashloader.mixin.accessor.VertexFormatAccessor;
-import dev.quantumfusion.hyphen.scan.annotations.DataNullable;
+import dev.notalpha.hyphen.scan.annotations.DataNullable;
 import net.minecraft.client.render.VertexFormat;
 import net.minecraft.client.render.VertexFormatElement;
 import net.minecraft.client.render.VertexFormats;

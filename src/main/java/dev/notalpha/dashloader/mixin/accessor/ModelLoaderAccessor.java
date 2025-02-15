@@ -1,6 +1,6 @@
 package dev.notalpha.dashloader.mixin.accessor;
 
-import dev.quantumfusion.hyphen.thr.HyphenException;
+import dev.notalpha.hyphen.thr.HyphenException;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.model.ModelLoader;

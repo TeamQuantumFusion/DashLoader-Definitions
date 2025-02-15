@@ -19,7 +19,7 @@ import dev.notalpha.dashloader.registry.data.StageData;
 import dev.notalpha.dashloader.thread.ThreadHandler;
 import dev.notalpha.taski.Task;
 import dev.notalpha.taski.builtin.StepTask;
-import dev.quantumfusion.hyphen.io.ByteBufferIO;
+import dev.notalpha.hyphen.io.ByteBufferIO;
 import it.unimi.dsi.fastutil.objects.Object2ObjectMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 

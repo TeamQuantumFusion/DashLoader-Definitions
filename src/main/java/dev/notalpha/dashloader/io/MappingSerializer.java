@@ -8,7 +8,7 @@ import dev.notalpha.dashloader.config.ConfigHandler;
 import dev.notalpha.taski.Task;
 import dev.notalpha.taski.builtin.StepTask;
 import dev.notalpha.taski.builtin.WeightedStageTask;
-import dev.quantumfusion.hyphen.io.ByteBufferIO;
+import dev.notalpha.hyphen.io.ByteBufferIO;
 import it.unimi.dsi.fastutil.objects.Object2ObjectMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 

@@ -2,7 +2,7 @@ package dev.notalpha.dashloader.io;
 
 import com.github.luben.zstd.Zstd;
 import dev.notalpha.taski.builtin.StepTask;
-import dev.quantumfusion.hyphen.io.ByteBufferIO;
+import dev.notalpha.hyphen.io.ByteBufferIO;
 import org.apache.commons.io.IOUtils;
 import org.lwjgl.system.MemoryUtil;
 
