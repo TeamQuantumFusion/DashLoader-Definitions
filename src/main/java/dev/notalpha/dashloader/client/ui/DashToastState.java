@@ -19,7 +19,6 @@ public final class DashToastState {
     private long lastUpdate = System.currentTimeMillis();
     private long timeDone = System.currentTimeMillis();
 
-
     public DashToastState() {
         var langCode = MinecraftClient.getInstance().getLanguageManager().getLanguage();
         DashLoader.LOG.info(langCode);

@@ -22,7 +22,6 @@ import java.util.Collection;
 
 @Mixin(SpriteOpener.class)
 public interface SpriteOpenerMixin {
-
     @Final
     @Shadow
     Logger LOGGER = null;

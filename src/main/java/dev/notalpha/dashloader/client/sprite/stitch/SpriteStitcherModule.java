@@ -33,27 +33,22 @@ public class SpriteStitcherModule implements DashModule<SpriteStitcherModule.Dat
 
         var stitchers = new HashMap<Identifier, DashTextureStitcher.Data<?>>();
         var duplicate = new HashSet<Identifier>();
-        task.run(new StepTask("Caching Stitchers"), (stepTask) -> {
-            stepTask.doForEach(STITCHERS_SAVE.get(CacheStatus.SAVE), (pair) -> {
-                var identifier = pair.getLeft();
-                var textureStitcher = pair.getRight();
-                DashTextureStitcher.Data<?> existing = stitchers.put(identifier, new DashTextureStitcher.Data<>(writer, textureStitcher));
-                if (existing != null) {
-                    duplicate.add(identifier);
-                }
-            });
-        });
+        task.run(new StepTask("Caching Stitchers"), (stepTask) -> stepTask.doForEach(STITCHERS_SAVE.get(CacheStatus.SAVE), (pair) -> {
+            var identifier = pair.getLeft();
+            var textureStitcher = pair.getRight();
+            DashTextureStitcher.Data<?> existing = stitchers.put(identifier, new DashTextureStitcher.Data<>(writer, textureStitcher));
+            if (existing != null) {
+                duplicate.add(identifier);
+            }
+        }));
         duplicate.forEach(identifier -> {
             DashLoader.LOG.warn("Duplicate stitcher {}", identifier);
             stitchers.remove(identifier);
         });
 
-
         var output = new IntObjectList<DashTextureStitcher.Data<?>>();
 
-        stitchers.forEach((identifier, data) -> {
-            output.put(writer.add(identifier), data);
-        });
+        stitchers.forEach((identifier, data) -> output.put(writer.add(identifier), data));
 
         //var results = new IntObjectList<DashStitchResult>();
         //task.run(new StepTask("Caching Atlases"), (stepTask) -> {
@@ -71,9 +66,7 @@ public class SpriteStitcherModule implements DashModule<SpriteStitcherModule.Dat
     @Override
     public void load(Data data, RegistryReader reader, StepTask task) {
         var map = new HashMap<Identifier, DashTextureStitcher.ExportedData<?>>();
-        data.stitchers.forEach((key, value) -> {
-            map.put(reader.get(key), value.export(reader));
-        });
+        data.stitchers.forEach((key, value) -> map.put(reader.get(key), value.export(reader)));
         STITCHERS_LOAD.set(CacheStatus.LOAD, map);
     }
 

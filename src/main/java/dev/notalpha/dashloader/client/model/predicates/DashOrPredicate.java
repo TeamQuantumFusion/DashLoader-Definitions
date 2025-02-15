@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
 public final class DashOrPredicate implements DashObject<OrMultipartModelSelector, OrMultipartModelSelector> {
     public final int[] selectors;
 

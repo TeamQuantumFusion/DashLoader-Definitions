@@ -41,7 +41,6 @@ public final class DashBuiltinBakedModel implements DashObject<BuiltinBakedModel
         this.sideLit = access.getSideLit();
     }
 
-
     @Override
     public DazyImpl export(RegistryReader reader) {
         DashSprite.DazyImpl sprite = reader.get(this.spritePointer);

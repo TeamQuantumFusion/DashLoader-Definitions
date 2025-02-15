@@ -137,7 +137,7 @@ public final class CacheImpl implements Cache {
                 task.next();
             });
 
-            DashLoader.LOG.info("Saved cache in " + ProfilerUtil.getTimeStringFromStart(start));
+            DashLoader.LOG.info("Saved cache in {}", ProfilerUtil.getTimeStringFromStart(start));
             return true;
         } catch (Throwable thr) {
             DashLoader.LOG.error("Failed caching", thr);
@@ -206,7 +206,6 @@ public final class CacheImpl implements Cache {
         }
         return cacheDir.resolve(hash + "/");
     }
-
 
     public CacheStatus getStatus() {
         return status;

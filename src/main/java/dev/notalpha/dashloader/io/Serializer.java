@@ -4,11 +4,11 @@ import dev.notalpha.dashloader.config.ConfigHandler;
 import dev.notalpha.dashloader.io.def.NativeImageData;
 import dev.notalpha.dashloader.io.def.NativeImageDataDef;
 import dev.notalpha.dashloader.registry.data.ChunkData;
-import dev.notalpha.taski.builtin.StepTask;
 import dev.notalpha.hyphen.HyphenSerializer;
 import dev.notalpha.hyphen.SerializerFactory;
 import dev.notalpha.hyphen.io.ByteBufferIO;
 import dev.notalpha.hyphen.scan.annotations.DataSubclasses;
+import dev.notalpha.taski.builtin.StepTask;
 import net.minecraft.client.font.UnihexFont;
 import org.jetbrains.annotations.NotNull;
 
@@ -22,7 +22,6 @@ public class Serializer<O> {
     public Serializer(Class<O> aClass) {
         var factory = SerializerFactory.createDebug(ByteBufferIO.class, aClass);
         factory.addAnnotationProvider(ChunkData.class, new DataSubclasses() {
-
             @Override
             public Class<? extends Annotation> annotationType() {
                 return DataSubclasses.class;
@@ -30,12 +29,11 @@ public class Serializer<O> {
 
             @Override
             public Class<?>[] value() {
-                return new Class[] {ChunkData.class};
+                return new Class[]{ChunkData.class};
             }
         });
         factory.setClassName(getSerializerClassName(aClass));
         factory.addAnnotationProvider(UnihexFont.BitmapGlyph.class, new DataSubclasses() {
-
             @Override
             public Class<? extends Annotation> annotationType() {
                 return DataSubclasses.class;

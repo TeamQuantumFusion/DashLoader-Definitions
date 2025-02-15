@@ -23,7 +23,6 @@ import java.util.concurrent.Executor;
 
 @Mixin(ReloadableResourceManagerImpl.class)
 public class ReloadableResourceManagerImplMixin {
-
     @Inject(method = "reload",
         at = @At(value = "RETURN", shift = At.Shift.BEFORE))
     private void reloadDash(Executor prepareExecutor, Executor applyExecutor, CompletableFuture<Unit> initialStage, List<ResourcePack> packs, CallbackInfoReturnable<ResourceReload> cir) {
@@ -52,7 +51,7 @@ public class ReloadableResourceManagerImplMixin {
         }
 
         String hash = DigestUtils.md5Hex(values.toString()).toUpperCase();
-        DashLoader.LOG.info("Hash changed to " + hash);
+        DashLoader.LOG.info("Hash changed to {}", hash);
         DashLoaderClient.CACHE.load(hash);
     }
 }

@@ -81,7 +81,6 @@ public class DashMultipartBakedModel implements DashObject<MultipartBakedModel, 
         public final int selector;
         public final int identifier;
 
-
         public Component(int model, int selector, int identifier) {
             this.model = model;
             this.selector = selector;
@@ -132,7 +131,6 @@ public class DashMultipartBakedModel implements DashObject<MultipartBakedModel, 
             access.setStateCache(Collections.synchronizedMap(access.getStateCache()));
             return multipartBakedModel;
         }
-
 
         public static class Component {
             public final Dazy<? extends BakedModel> model;

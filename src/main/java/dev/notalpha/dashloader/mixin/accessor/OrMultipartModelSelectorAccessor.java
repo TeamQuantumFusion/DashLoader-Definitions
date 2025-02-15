@@ -7,8 +7,6 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(OrMultipartModelSelector.class)
 public interface OrMultipartModelSelectorAccessor {
-
     @Accessor
     Iterable<? extends MultipartModelSelector> getSelectors();
-
 }

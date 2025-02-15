@@ -76,7 +76,6 @@ public final class HahaManager {
             return null;
         }
 
-
         return splashLines.get((int) (System.currentTimeMillis() % splashLines.size()));
     }
 }

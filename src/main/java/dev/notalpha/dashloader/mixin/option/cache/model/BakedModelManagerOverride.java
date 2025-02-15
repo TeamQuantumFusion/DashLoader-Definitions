@@ -30,5 +30,4 @@ public abstract class BakedModelManagerOverride {
             map.putAll(this.models);
         });
     }
-
 }

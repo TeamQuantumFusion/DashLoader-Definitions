@@ -30,7 +30,6 @@ import java.util.function.BiFunction;
 
 @Mixin(value = ModelLoader.class, priority = 69420)
 public abstract class ModelLoaderMixin {
-
     @Mutable
     @Shadow
     @Final
@@ -104,16 +103,15 @@ public abstract class ModelLoaderMixin {
             DashLoader.LOG.info("with {} Fallback models", fallbackModels);
             DashLoader.LOG.info("and  {} Cached models", cachedModels);
         }
-
     }
 
-    @Inject(
-        method = "bake",
-        at = @At(
-            value = "TAIL"
-        )
-    )
-    private void debug(BiFunction<Identifier, SpriteIdentifier, Sprite> spriteLoader, CallbackInfo ci) {
+//    @Inject(
+//        method = "bake",
+//        at = @At(
+//            value = "TAIL"
+//        )
+//    )
+//    private void debug(BiFunction<Identifier, SpriteIdentifier, Sprite> spriteLoader, CallbackInfo ci) {
 //var models = new HashMap<Identifier, BakedModel>();
 //this.bakedModels.forEach((identifier, bakedModel) -> {
 //	if (
@@ -130,13 +128,11 @@ public abstract class ModelLoaderMixin {
 //		System.out.println();
 
 //
-        //String dump = ObjectDumper.dump(new ObjectDumper.Wrapper(models));
-        //try {
-        //	Files.writeString(Path.of("./output." + DashLoaderClient.CACHE.getStatus()), dump);
-        //} catch (IOException e) {
-        //	throw new RuntimeException(e);
-        //}
-    }
-
-
+    //String dump = ObjectDumper.dump(new ObjectDumper.Wrapper(models));
+    //try {
+    //	Files.writeString(Path.of("./output." + DashLoaderClient.CACHE.getStatus()), dump);
+    //} catch (IOException e) {
+    //	throw new RuntimeException(e);
+    //}
+//    }
 }

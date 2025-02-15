@@ -1,6 +1,5 @@
 package dev.notalpha.dashloader.client.identifier;
 
-
 import dev.notalpha.dashloader.api.DashObject;
 import dev.notalpha.dashloader.api.registry.RegistryReader;
 import dev.notalpha.dashloader.mixin.accessor.ModelIdentifierAccessor;

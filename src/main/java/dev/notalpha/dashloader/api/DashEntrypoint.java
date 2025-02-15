@@ -1,6 +1,5 @@
 package dev.notalpha.dashloader.api;
 
-
 import dev.notalpha.dashloader.api.cache.CacheFactory;
 
 /**

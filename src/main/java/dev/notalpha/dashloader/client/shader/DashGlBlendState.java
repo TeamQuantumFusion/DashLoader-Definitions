@@ -23,7 +23,6 @@ public final class DashGlBlendState {
         this.blendDisabled = blendDisabled;
     }
 
-
     public DashGlBlendState(GlBlendStateAccessor blendStateAccess) {
         this(
             blendStateAccess.getSrcRgb(),

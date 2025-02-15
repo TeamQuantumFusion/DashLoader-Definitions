@@ -32,7 +32,6 @@ public class CachingData<D> {
         }
     }
 
-
     /**
      * Gets the value or returns null if its status does not match the current state.
      **/

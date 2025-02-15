@@ -82,7 +82,6 @@ public class DashToast implements Toast {
         this.lines = newList;
         this.lines.addAll(newListPrio);
 
-
         // Setup scissor
         MatrixStack matrices = context.getMatrices();
         {
@@ -106,7 +105,6 @@ public class DashToast implements Toast {
                 line.draw(matrix4f, bufferBuilder);
             }
         });
-
 
         TextRenderer textRenderer = manager.getClient().textRenderer;
         // Draw progress text
@@ -157,7 +155,6 @@ public class DashToast implements Toast {
         RenderSystem.disableBlend();
     }
 
-
     public enum ColorKind {
         Neutral,
         Progress,
@@ -165,11 +162,11 @@ public class DashToast implements Toast {
     }
 
     private final class Line {
+        public final int width;
+        public final int height;
         public ColorKind colorKind;
         public float x;
         public float y;
-        public int width;
-        public int height;
         public float speedBoost;
         private Color color;
 
@@ -185,7 +182,6 @@ public class DashToast implements Toast {
         public boolean tick(int screenWidth, int screenHeight, float progress, float delta) {
             // Move the values
             this.x += (float) (speedBoost * (0.8 + (2.5 * progress))) * delta;
-
 
             // Check if not visible
             if (x > screenWidth || x + width < 0) {
@@ -234,7 +230,6 @@ public class DashToast implements Toast {
             drawVertex(b4, bb, 0f, x, y + height, end); // left bottom
             drawVertex(b4, bb, 0f, x + width, y + height, color); // right bottom
         }
-
 
         public void drawGlow(Matrix4f b4, BufferBuilder bb) {
             if (this.colorKind != ColorKind.Neutral) {

@@ -139,7 +139,6 @@ public class ObjectDumper {
         @Override
         protected void appendIdentityHashCode(StringBuffer buffer, Object object) {
 
-
         }
     }
 }

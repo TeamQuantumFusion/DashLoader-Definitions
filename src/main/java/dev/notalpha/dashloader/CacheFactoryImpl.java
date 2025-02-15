@@ -72,6 +72,5 @@ public class CacheFactoryImpl implements CacheFactory {
         }
 
         return new CacheImpl(cacheDir.resolve(DashLoader.MOD_HASH + "/"), modules, dashObjects, this.missingHandlers);
-
     }
 }

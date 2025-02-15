@@ -30,7 +30,6 @@ public final class DashSpaceFont implements DashObject<SpaceFont, SpaceFont> {
         }
     }
 
-
     @Override
     public SpaceFont export(RegistryReader exportHandler) {
         return new SpaceFont(new Int2FloatArrayMap(ints, floats));

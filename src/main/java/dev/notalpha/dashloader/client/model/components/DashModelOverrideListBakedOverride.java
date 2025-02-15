@@ -64,13 +64,12 @@ public final class DashModelOverrideListBakedOverride {
         return result;
     }
 
-
     public static class DazyImpl extends Dazy<ModelOverrideList.BakedOverride> {
         public final ModelOverrideList.InlinedCondition[] conditions;
         @Nullable
         public final Dazy<? extends BakedModel> model;
 
-        public DazyImpl(ModelOverrideList.InlinedCondition[] conditions, Dazy<? extends BakedModel> model) {
+        public DazyImpl(ModelOverrideList.InlinedCondition[] conditions, @Nullable Dazy<? extends BakedModel> model) {
             this.conditions = conditions;
             this.model = model;
         }

@@ -24,20 +24,16 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-
 @Mixin(value = SplashOverlay.class, priority = 69420)
 public class SplashScreenMixin {
     @Shadow
     @Final
     private MinecraftClient client;
-
     @Shadow
     private long reloadCompleteTime;
-
     @Shadow
     @Final
     private ResourceReload reload;
-
     @Mutable
     @Shadow
     @Final

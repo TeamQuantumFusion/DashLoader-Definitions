@@ -16,7 +16,6 @@ import java.util.function.Predicate;
 
 @Mixin(MultipartBakedModel.class)
 public interface MultipartBakedModelAccessor {
-
     @Accessor
     List<Pair<Predicate<BlockState>, BakedModel>> getComponents();
 

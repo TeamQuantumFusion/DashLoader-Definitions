@@ -12,7 +12,6 @@ import org.apache.logging.log4j.Logger;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-
 public final class DashLoader {
     public static final Logger LOG = LogManager.getLogger("DashLoader");
     public static final Serializer<CacheInfo> METADATA_SERIALIZER = new Serializer<>(CacheInfo.class);
@@ -43,7 +42,7 @@ public final class DashLoader {
     }
 
     private DashLoader() {
-        LOG.info("Initializing DashLoader " + VERSION + ".");
+        LOG.info("Initializing DashLoader {}.", VERSION);
         if (FabricLoader.getInstance().isDevelopmentEnvironment()) {
             LOG.warn("DashLoader launched in dev.");
         }

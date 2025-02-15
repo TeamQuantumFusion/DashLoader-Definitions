@@ -92,5 +92,4 @@ public final class FactoryBinding<R, D extends DashObject<R, ?>> {
     private interface MethodTester {
         MethodHandle getMethod(MethodHandles.Lookup lookup, MethodType parameters) throws Throwable;
     }
-
 }

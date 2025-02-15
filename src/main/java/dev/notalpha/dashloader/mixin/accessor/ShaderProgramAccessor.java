@@ -15,7 +15,6 @@ import java.util.Map;
 
 @Mixin(ShaderProgram.class)
 public interface ShaderProgramAccessor {
-
     @Accessor
     Map<String, Object> getSamplers();
 

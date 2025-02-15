@@ -24,7 +24,6 @@ public final class DashModelTransformation {
     public final Transformation ground;
     @DataNullable
     public final Transformation fixed;
-
     public transient int nullTransformations = 0;
 
     public DashModelTransformation(@Nullable Transformation thirdPersonLeftHand, @Nullable Transformation thirdPersonRightHand, @Nullable Transformation firstPersonLeftHand, @Nullable Transformation firstPersonRightHand, @Nullable Transformation head, @Nullable Transformation gui, @Nullable Transformation ground, @Nullable Transformation fixed) {

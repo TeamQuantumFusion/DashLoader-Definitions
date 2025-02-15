@@ -10,7 +10,6 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(SpriteContents.class)
 public interface SpriteContentsAccessor {
-
     @Accessor
     NativeImage getImage();
 
@@ -24,9 +23,6 @@ public interface SpriteContentsAccessor {
     @Accessor
     @Mutable
     void setAnimation(SpriteContents.Animation animation);
-
-    @Accessor
-    NativeImage[] getMipmapLevelsImages();
 
     @Accessor
     @Mutable

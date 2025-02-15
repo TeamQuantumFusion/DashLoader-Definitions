@@ -1,9 +1,10 @@
 package dev.notalpha.dashloader.io;
 
 import com.github.luben.zstd.Zstd;
-import dev.notalpha.taski.builtin.StepTask;
 import dev.notalpha.hyphen.io.ByteBufferIO;
+import dev.notalpha.taski.builtin.StepTask;
 import org.apache.commons.io.IOUtils;
+import org.jetbrains.annotations.NotNull;
 import org.lwjgl.system.MemoryUtil;
 
 import java.io.ByteArrayOutputStream;
@@ -18,7 +19,6 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 
 public final class IOHelper {
-
     public static int[] toArray(IntBuffer buffer) {
         if (buffer == null) {
             return null;
@@ -129,7 +129,7 @@ public final class IOHelper {
     public static byte[] streamToArray(InputStream inputStream) throws IOException {
         final ByteArrayOutputStream output = new ByteArrayOutputStream() {
             @Override
-            public synchronized byte[] toByteArray() {
+            public synchronized byte @NotNull [] toByteArray() {
                 return this.buf;
             }
         };

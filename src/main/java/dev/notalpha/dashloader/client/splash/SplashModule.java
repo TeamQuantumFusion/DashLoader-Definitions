@@ -13,7 +13,6 @@ import dev.notalpha.taski.builtin.StepTask;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class SplashModule implements DashModule<SplashModule.Data> {
     public static final CachingData<List<String>> TEXTS = new CachingData<>();
 

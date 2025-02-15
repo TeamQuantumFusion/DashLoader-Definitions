@@ -17,9 +17,9 @@ import dev.notalpha.dashloader.registry.data.ChunkData;
 import dev.notalpha.dashloader.registry.data.ChunkFactory;
 import dev.notalpha.dashloader.registry.data.StageData;
 import dev.notalpha.dashloader.thread.ThreadHandler;
+import dev.notalpha.hyphen.io.ByteBufferIO;
 import dev.notalpha.taski.Task;
 import dev.notalpha.taski.builtin.StepTask;
-import dev.notalpha.hyphen.io.ByteBufferIO;
 import it.unimi.dsi.fastutil.objects.Object2ObjectMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 
@@ -83,7 +83,6 @@ public class RegistrySerializer {
             stageSizes[i] = chunkSizes;
         }
 
-
         // Calculate amount of fragments required
         int minFragments = (int) (piece.size / MAX_FRAGMENT_SIZE);
         int maxFragments = (int) (piece.size / MIN_PER_THREAD_FRAGMENT_SIZE);
@@ -101,16 +100,14 @@ public class RegistrySerializer {
             fragments.add(new CacheFragment(fragment));
         }
 
-
         StepTask task = new StepTask("fragment", fragments.size() * 2);
         taskConsumer.accept(task);
         // Serialize
         for (int k = 0; k < fragments.size(); k++) {
-            DashLoader.LOG.info("Serializing fragment " + k);
+            DashLoader.LOG.info("Serializing fragment {}", k);
             CacheFragment fragment = fragments.get(k);
             List<StageFragment> stageFragmentMetadata = fragment.stages;
             ByteBufferIO io = ByteBufferIO.createDirect((int) fragment.info.fileSize);
-
 
             int taskSize = 0;
             for (var stage : stageFragmentMetadata) {
@@ -174,7 +171,6 @@ public class RegistrySerializer {
             out[i] = new StageData(chunks);
         }
 
-
         List<CacheFragment> fragments = metadata.fragments;
         List<Runnable> runnables = new ArrayList<>();
         for (int j = 0; j < fragments.size(); j++) {
@@ -200,7 +196,6 @@ public class RegistrySerializer {
 
         return out;
     }
-
 
     private void deserialize(StageData[] data, ByteBufferIO io, CacheFragment fragment) {
         for (int i = 0; i < fragment.stages.size(); i++) {

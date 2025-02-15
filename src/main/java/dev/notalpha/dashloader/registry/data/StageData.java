@@ -12,7 +12,6 @@ public class StageData {
     public void preExport(RegistryReader reader) {
         for (ChunkData<?, ?> chunk : chunks) {
             chunk.preExport(reader);
-
         }
     }
 

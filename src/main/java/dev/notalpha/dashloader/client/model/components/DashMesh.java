@@ -10,10 +10,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public final class DashMesh {
     public static final Map<String, Class<?>> CLASS_CACHE = new ConcurrentHashMap<>();
-
     public final int[] data;
     public final String className;
-
 
     public DashMesh(int[] data, String className) {
         this.data = data;

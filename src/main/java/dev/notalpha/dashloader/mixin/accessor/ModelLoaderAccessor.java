@@ -13,7 +13,6 @@ import java.util.Map;
 
 @Mixin(ModelLoader.class)
 public interface ModelLoaderAccessor {
-
     @Accessor("ITEM_FRAME_STATE_FACTORY")
     static StateManager<Block, BlockState> getTheItemFrameThing() {
         throw new HyphenException("froge", "your dad");

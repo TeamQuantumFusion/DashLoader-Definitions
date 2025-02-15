@@ -32,5 +32,4 @@ public final class TrackingRegistryWriterImpl implements RegistryWriter {
         dependencies.add(value);
         return value;
     }
-
 }

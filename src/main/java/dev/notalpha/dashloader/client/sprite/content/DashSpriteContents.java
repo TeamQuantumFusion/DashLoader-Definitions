@@ -18,7 +18,6 @@ public final class DashSpriteContents implements DashObject<SpriteContents, Spri
     @Nullable
     @DataNullable
     public final DashSpriteAnimation animation;
-
     public final int width;
     public final int height;
 

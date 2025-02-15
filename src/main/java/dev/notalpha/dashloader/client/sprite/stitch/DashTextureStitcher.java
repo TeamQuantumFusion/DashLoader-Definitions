@@ -107,9 +107,7 @@ public class DashTextureStitcher<T extends TextureStitcher.Stitchable> extends T
         if (data == null) {
             super.getStitchedSprites(consumer);
         } else {
-            data.slots.forEach((identifier, dashTextureSlot) -> {
-                consumer.load(dashTextureSlot.contents, dashTextureSlot.x, dashTextureSlot.y);
-            });
+            data.slots.forEach((identifier, dashTextureSlot) -> consumer.load(dashTextureSlot.contents, dashTextureSlot.x, dashTextureSlot.y));
         }
     }
 
@@ -126,18 +124,14 @@ public class DashTextureStitcher<T extends TextureStitcher.Stitchable> extends T
 
         public Data(RegistryWriter factory, TextureStitcher<T> stitcher) {
             this.slots = new IntObjectList<>();
-            stitcher.getStitchedSprites((info, x, y) -> {
-                this.slots.put(factory.add(info.getId()), new DashTextureSlot<>(x, y, info.getWidth(), info.getHeight()));
-            });
+            stitcher.getStitchedSprites((info, x, y) -> this.slots.put(factory.add(info.getId()), new DashTextureSlot<>(x, y, info.getWidth(), info.getHeight())));
             this.width = stitcher.getWidth();
             this.height = stitcher.getHeight();
         }
 
         public ExportedData<T> export(RegistryReader reader) {
             var output = new HashMap<Identifier, DashTextureSlot<T>>();
-            this.slots.forEach((key, value) -> {
-                output.put(reader.get(key), value);
-            });
+            this.slots.forEach((key, value) -> output.put(reader.get(key), value));
 
             return new ExportedData<>(
                 output,

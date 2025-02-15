@@ -9,7 +9,6 @@ import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(MipmapHelper.class)
 public abstract class MipmapHelperMixin {
-
     @Shadow
     private static int getColorComponent(int one, int two, int three, int four, int bits) {
         return 0;
@@ -54,7 +53,6 @@ public abstract class MipmapHelperMixin {
                 }
             }
         }
-
 
         for (int layer = 1; layer <= mipmap; ++layer) {
             if (layer < originals.length) {
@@ -137,6 +135,5 @@ public abstract class MipmapHelperMixin {
             imagesOut[i] = images[i].image;
         }
         return imagesOut;
-
     }
 }

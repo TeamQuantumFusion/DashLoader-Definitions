@@ -12,6 +12,7 @@ import net.minecraft.util.shape.VoxelShape;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -20,6 +21,7 @@ import java.util.Map;
 
 @Mixin(WallBlock.class)
 public abstract class WallBlockMixin extends Block implements Waterloggable {
+    @Unique
     private static final int LENGTH = WallShape.values().length;
     @Shadow
     @Final
@@ -39,13 +41,14 @@ public abstract class WallBlockMixin extends Block implements Waterloggable {
     @Shadow
     @Final
     public static BooleanProperty WATERLOGGED;
+    @Unique
     private static VoxelShape[][][][][] SHAPE_CACHE;
+    @Unique
     private static VoxelShape[][][][][] COLLISION_CACHE;
 
     public WallBlockMixin(Settings settings) {
         super(settings);
     }
-
 
     @Inject(method = "getShapeMap", at = @At(value = "HEAD"), cancellable = true)
     private void getShapeMapCache(float f, float g, float h, float i, float j, float k, CallbackInfoReturnable<Map<BlockState, VoxelShape>> cir) {
@@ -81,6 +84,7 @@ public abstract class WallBlockMixin extends Block implements Waterloggable {
         }
     }
 
+    @Unique
     private ImmutableMap<BlockState, VoxelShape> createFromCache(VoxelShape[][][][][] rawCache) {
         ImmutableMap.Builder<BlockState, VoxelShape> builder = ImmutableMap.builder();
         for (Boolean up : UP.getValues()) {
@@ -108,6 +112,7 @@ public abstract class WallBlockMixin extends Block implements Waterloggable {
         return builder.build();
     }
 
+    @Unique
     private void createCache(VoxelShape[][][][][] rawCache, Map<BlockState, VoxelShape> map) {
         for (Boolean up : UP.getValues()) {
             VoxelShape[][][][] cache = up ? rawCache[1] : rawCache[0];
@@ -134,24 +139,28 @@ public abstract class WallBlockMixin extends Block implements Waterloggable {
 
     //shape 4.0F, 3.0F, 16.0F, 0.0F, 14.0F, 16.0F
     //collision 4.0F, 3.0F, 24.0F, 0.0F, 24.0F, 24.0F
+    @Unique
     private boolean isShape(float h, float j, float k) {
         return h == 16.0F && j == 14.0F && k == 16.0F;
     }
 
+    @Unique
     private boolean isCollision(float h, float j, float k) {
         return h == 24.0F && j == 24.0F && k == 24.0F;
     }
 
+    @Unique
     private boolean isCommon(float f, float g, float i) {
         return f == 4.0F && g == 3.0F && i == 0.0F;
     }
 
+    @Unique
     private VoxelShape getCached(VoxelShape[][][][] cache, WallShape east, WallShape north, WallShape west, WallShape south) {
         return cache[east.ordinal()][north.ordinal()][west.ordinal()][south.ordinal()];
     }
 
+    @Unique
     private void setCached(VoxelShape[][][][] cache, WallShape east, WallShape north, WallShape west, WallShape south, VoxelShape shape) {
         cache[east.ordinal()][north.ordinal()][west.ordinal()][south.ordinal()] = shape;
     }
-
 }

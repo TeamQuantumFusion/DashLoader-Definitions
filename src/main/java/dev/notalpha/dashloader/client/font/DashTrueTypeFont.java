@@ -30,7 +30,6 @@ public final class DashTrueTypeFont implements DashObject<TrueTypeFont, TrueType
     public final float scaleFactor;
     public final float ascent;
 
-
     public DashTrueTypeFont(byte[] ttfBuffer, float oversample, List<Integer> excludedCharacters, float shiftX, float shiftY, float scaleFactor, float ascent) {
         this.ttfBuffer = ttfBuffer;
         this.oversample = oversample;

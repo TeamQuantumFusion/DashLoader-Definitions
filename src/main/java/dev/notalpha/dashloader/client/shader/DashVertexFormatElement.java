@@ -25,7 +25,6 @@ public class DashVertexFormatElement implements DashObject<VertexFormatElement, 
 
     @DataNullable
     public final DashVertexFormatElementData data;
-
     public final int builtin;
 
     public DashVertexFormatElement(@DataNullable DashVertexFormatElementData data, int builtin) {
@@ -44,7 +43,6 @@ public class DashVertexFormatElement implements DashObject<VertexFormatElement, 
         this.data = builtin == -1 ? new DashVertexFormatElementData(element) : null;
         this.builtin = builtin;
     }
-
 
     @Override
     public VertexFormatElement export(RegistryReader reader) {

@@ -34,7 +34,6 @@ public class FontModule implements DashModule<FontModule.Data> {
         ProviderIndex providerIndex = DATA.get(CacheStatus.SAVE);
         assert providerIndex != null;
 
-
         int taskSize = 0;
         for (List<Font> value : providerIndex.providers.values()) {
             taskSize += value.size();
@@ -72,9 +71,7 @@ public class FontModule implements DashModule<FontModule.Data> {
             index.providers.put(reader.get(key), fonts);
         });
 
-        data.fontMap.allProviders.forEach((value) -> {
-            index.allProviders.add(reader.get(value));
-        });
+        data.fontMap.allProviders.forEach((value) -> index.allProviders.add(reader.get(value)));
         DATA.set(CacheStatus.LOAD, index);
     }
 
@@ -109,7 +106,6 @@ public class FontModule implements DashModule<FontModule.Data> {
     public static final class ProviderIndex {
         public final Map<Identifier, List<Font>> providers;
         public final List<Font> allProviders;
-
 
         public ProviderIndex(Map<Identifier, List<Font>> providers, List<Font> allProviders) {
             this.providers = providers;

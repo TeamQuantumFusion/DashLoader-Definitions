@@ -31,7 +31,6 @@ public class MultipartUnbakedModelMixin {
     @Shadow
     @Final
     private List<MultipartModelComponent> components;
-
     @Shadow
     @Final
     private StateManager<Block, BlockState> stateFactory;
@@ -51,5 +50,4 @@ public class MultipartUnbakedModelMixin {
             cir.setReturnValue(bakedModel);
         });
     }
-
 }

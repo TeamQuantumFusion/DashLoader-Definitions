@@ -7,7 +7,6 @@ import org.jetbrains.annotations.Nullable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
-
 /**
  * A DashObject which is an object with adds Dash support to a target object. <br>
  * This class is very lazy as reflection is really slow
@@ -48,8 +47,7 @@ public final class DashObjectClass<R, D extends DashObject<R, ?>> {
                     if (genericInterface instanceof ParameterizedType targetClass) {
                         if (targetClass.getActualTypeArguments()[0] instanceof Class<?> targetClass2) {
                             this.targetClass = (Class<R>) targetClass2;
-                        }
-                        else {
+                        } else {
                             throw new RuntimeException(this.dashClass + " has a non resolvable DashObject parameter");
                         }
                     } else {
@@ -64,7 +62,6 @@ public final class DashObjectClass<R, D extends DashObject<R, ?>> {
         }
         return this.targetClass;
     }
-
 
     public int getDashObjectId() {
         return dashObjectId;

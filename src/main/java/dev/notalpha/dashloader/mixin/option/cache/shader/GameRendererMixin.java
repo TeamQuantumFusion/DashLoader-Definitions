@@ -36,6 +36,4 @@ public abstract class GameRendererMixin {
         ShaderModule.SHADERS.visit(CacheStatus.SAVE, map -> map.put(name, shader));
         return shader;
     }
-
-
 }

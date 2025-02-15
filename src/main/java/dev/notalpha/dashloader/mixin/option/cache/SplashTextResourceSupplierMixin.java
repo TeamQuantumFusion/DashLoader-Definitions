@@ -23,7 +23,6 @@ public class SplashTextResourceSupplierMixin {
         SplashModule.TEXTS.visit(CacheStatus.LOAD, cir::setReturnValue);
     }
 
-
     @Inject(
         method = "prepare(Lnet/minecraft/resource/ResourceManager;Lnet/minecraft/util/profiler/Profiler;)Ljava/util/List;",
         at = @At(value = "RETURN")

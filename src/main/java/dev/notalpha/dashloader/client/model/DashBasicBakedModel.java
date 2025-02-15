@@ -54,7 +54,6 @@ public final class DashBasicBakedModel implements DashObject<BasicBakedModel, Da
         this.spritePointer = spritePointer;
     }
 
-
     public DashBasicBakedModel(BasicBakedModel basicBakedModel, RegistryWriter writer) {
         BasicBakedModelAccessor access = ((BasicBakedModelAccessor) basicBakedModel);
 
@@ -72,7 +71,6 @@ public final class DashBasicBakedModel implements DashObject<BasicBakedModel, Da
         this.transformation = DashModelTransformation.createDashOrReturnNullIfDefault(access.getTransformation());
         this.spritePointer = writer.add(access.getSprite());
     }
-
 
     @Override
     public DazyImpl export(final RegistryReader reader) {
@@ -160,9 +158,7 @@ public final class DashBasicBakedModel implements DashObject<BasicBakedModel, Da
         protected BasicBakedModel resolve(Function<SpriteIdentifier, Sprite> spriteLoader) {
             List<BakedQuad> quads = this.quads.get(spriteLoader);
             var faceQuadsOut = new HashMap<Direction, List<BakedQuad>>();
-            this.faceQuads.forEach((direction, dazy) -> {
-                faceQuadsOut.put(direction, dazy.get(spriteLoader));
-            });
+            this.faceQuads.forEach((direction, dazy) -> faceQuadsOut.put(direction, dazy.get(spriteLoader)));
 
             Sprite sprite = this.sprite.get(spriteLoader);
             ModelOverrideList list = itemPropertyOverrides.get(spriteLoader);
