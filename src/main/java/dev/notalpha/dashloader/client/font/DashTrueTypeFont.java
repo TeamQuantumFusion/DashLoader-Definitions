@@ -22,69 +22,69 @@ import java.util.List;
 import java.util.Optional;
 
 public final class DashTrueTypeFont implements DashObject<TrueTypeFont, TrueTypeFont> {
-	public final byte[] ttfBuffer;
-	public final float oversample;
-	public final List<Integer> excludedCharacters;
-	public final float shiftX;
-	public final float shiftY;
-	public final float scaleFactor;
-	public final float ascent;
+    public final byte[] ttfBuffer;
+    public final float oversample;
+    public final List<Integer> excludedCharacters;
+    public final float shiftX;
+    public final float shiftY;
+    public final float scaleFactor;
+    public final float ascent;
 
 
-	public DashTrueTypeFont(byte[] ttfBuffer, float oversample, List<Integer> excludedCharacters, float shiftX, float shiftY, float scaleFactor, float ascent) {
-		this.ttfBuffer = ttfBuffer;
-		this.oversample = oversample;
-		this.excludedCharacters = excludedCharacters;
-		this.shiftX = shiftX;
-		this.shiftY = shiftY;
-		this.scaleFactor = scaleFactor;
-		this.ascent = ascent;
-	}
+    public DashTrueTypeFont(byte[] ttfBuffer, float oversample, List<Integer> excludedCharacters, float shiftX, float shiftY, float scaleFactor, float ascent) {
+        this.ttfBuffer = ttfBuffer;
+        this.oversample = oversample;
+        this.excludedCharacters = excludedCharacters;
+        this.shiftX = shiftX;
+        this.shiftY = shiftY;
+        this.scaleFactor = scaleFactor;
+        this.ascent = ascent;
+    }
 
-	public DashTrueTypeFont(TrueTypeFont font) {
-		TrueTypeFontAccessor fontAccess = (TrueTypeFontAccessor) font;
-		final Identifier ttFont = FontModule.FONT_TO_IDENT.get(CacheStatus.SAVE).get(fontAccess.getInfo());
-		byte[] data = null;
-		try {
-			Optional<Resource> resource = MinecraftClient.getInstance().getResourceManager().getResource(new Identifier(ttFont.getNamespace(), "font/" + ttFont.getPath()));
-			if (resource.isPresent()) {
-				data = IOHelper.streamToArray(resource.get().getInputStream());
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		this.ttfBuffer = data;
-		this.oversample = fontAccess.getOversample();
-		this.excludedCharacters = new ArrayList<>(fontAccess.getExcludedCharacters());
-		this.shiftX = fontAccess.getShiftX();
-		this.shiftY = fontAccess.getShiftY();
-		this.scaleFactor = fontAccess.getScaleFactor();
-		this.ascent = fontAccess.getAscent();
-	}
+    public DashTrueTypeFont(TrueTypeFont font) {
+        TrueTypeFontAccessor fontAccess = (TrueTypeFontAccessor) font;
+        final Identifier ttFont = FontModule.FONT_TO_IDENT.get(CacheStatus.SAVE).get(fontAccess.getInfo());
+        byte[] data = null;
+        try {
+            Optional<Resource> resource = MinecraftClient.getInstance().getResourceManager().getResource(new Identifier(ttFont.getNamespace(), "font/" + ttFont.getPath()));
+            if (resource.isPresent()) {
+                data = IOHelper.streamToArray(resource.get().getInputStream());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        this.ttfBuffer = data;
+        this.oversample = fontAccess.getOversample();
+        this.excludedCharacters = new ArrayList<>(fontAccess.getExcludedCharacters());
+        this.shiftX = fontAccess.getShiftX();
+        this.shiftY = fontAccess.getShiftY();
+        this.scaleFactor = fontAccess.getScaleFactor();
+        this.ascent = fontAccess.getAscent();
+    }
 
-	@Override
-	public TrueTypeFont export(RegistryReader handler) {
-		STBTTFontinfo sTBTTFontinfo = STBTTFontinfo.malloc();
-		ByteBuffer byteBuffer2 = MemoryUtil.memAlloc(this.ttfBuffer.length);
-		byteBuffer2.put(this.ttfBuffer);
-		byteBuffer2.flip();
-		if (!STBTruetype.stbtt_InitFont(sTBTTFontinfo, byteBuffer2)) {
-			try {
-				throw new IOException("Invalid ttf");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		TrueTypeFont trueTypeFont = UnsafeHelper.allocateInstance(TrueTypeFont.class);
-		TrueTypeFontAccessor trueTypeFontAccess = (TrueTypeFontAccessor) trueTypeFont;
-		trueTypeFontAccess.setInfo(sTBTTFontinfo);
-		trueTypeFontAccess.setOversample(this.oversample);
-		trueTypeFontAccess.setBuffer(byteBuffer2);
-		trueTypeFontAccess.setExcludedCharacters(new IntArraySet(this.excludedCharacters));
-		trueTypeFontAccess.setShiftX(this.shiftX);
-		trueTypeFontAccess.setShiftY(this.shiftY);
-		trueTypeFontAccess.setScaleFactor(this.scaleFactor);
-		trueTypeFontAccess.setAscent(this.ascent);
-		return trueTypeFont;
-	}
+    @Override
+    public TrueTypeFont export(RegistryReader handler) {
+        STBTTFontinfo sTBTTFontinfo = STBTTFontinfo.malloc();
+        ByteBuffer byteBuffer2 = MemoryUtil.memAlloc(this.ttfBuffer.length);
+        byteBuffer2.put(this.ttfBuffer);
+        byteBuffer2.flip();
+        if (!STBTruetype.stbtt_InitFont(sTBTTFontinfo, byteBuffer2)) {
+            try {
+                throw new IOException("Invalid ttf");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        TrueTypeFont trueTypeFont = UnsafeHelper.allocateInstance(TrueTypeFont.class);
+        TrueTypeFontAccessor trueTypeFontAccess = (TrueTypeFontAccessor) trueTypeFont;
+        trueTypeFontAccess.setInfo(sTBTTFontinfo);
+        trueTypeFontAccess.setOversample(this.oversample);
+        trueTypeFontAccess.setBuffer(byteBuffer2);
+        trueTypeFontAccess.setExcludedCharacters(new IntArraySet(this.excludedCharacters));
+        trueTypeFontAccess.setShiftX(this.shiftX);
+        trueTypeFontAccess.setShiftY(this.shiftY);
+        trueTypeFontAccess.setScaleFactor(this.scaleFactor);
+        trueTypeFontAccess.setAscent(this.ascent);
+        return trueTypeFont;
+    }
 }

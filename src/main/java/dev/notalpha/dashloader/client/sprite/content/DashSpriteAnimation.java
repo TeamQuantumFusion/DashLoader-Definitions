@@ -8,62 +8,62 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class DashSpriteAnimation {
-	public final List<DashSpriteAnimationFrame> frames;
-	public final int frameCount;
-	public final boolean interpolation;
+    public final List<DashSpriteAnimationFrame> frames;
+    public final int frameCount;
+    public final boolean interpolation;
 
-	public DashSpriteAnimation(
-			List<DashSpriteAnimationFrame> frames,
-			int frameCount,
-			boolean interpolation) {
-		this.frames = frames;
-		this.frameCount = frameCount;
-		this.interpolation = interpolation;
-	}
-
-
-	public DashSpriteAnimation(SpriteContents.Animation animation) {
-		SpriteAnimationAccessor access = ((SpriteAnimationAccessor) animation);
-		this.frames = new ArrayList<>();
-		for (var frame : access.getFrames()) {
-			this.frames.add(new DashSpriteAnimationFrame(frame));
-		}
-		this.frameCount = access.getFrameCount();
-		this.interpolation = access.getInterpolation();
-	}
+    public DashSpriteAnimation(
+        List<DashSpriteAnimationFrame> frames,
+        int frameCount,
+        boolean interpolation) {
+        this.frames = frames;
+        this.frameCount = frameCount;
+        this.interpolation = interpolation;
+    }
 
 
-	public SpriteContents.Animation export(SpriteContents owner, RegistryReader registry) {
-		var framesOut = new ArrayList<SpriteContents.AnimationFrame>();
-		for (var frame : this.frames) {
-			framesOut.add(frame.export(registry));
-		}
+    public DashSpriteAnimation(SpriteContents.Animation animation) {
+        SpriteAnimationAccessor access = ((SpriteAnimationAccessor) animation);
+        this.frames = new ArrayList<>();
+        for (var frame : access.getFrames()) {
+            this.frames.add(new DashSpriteAnimationFrame(frame));
+        }
+        this.frameCount = access.getFrameCount();
+        this.interpolation = access.getInterpolation();
+    }
 
-		return SpriteAnimationAccessor.init(
-				owner,
-				framesOut,
-				this.frameCount,
-				this.interpolation
-		);
-	}
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+    public SpriteContents.Animation export(SpriteContents owner, RegistryReader registry) {
+        var framesOut = new ArrayList<SpriteContents.AnimationFrame>();
+        for (var frame : this.frames) {
+            framesOut.add(frame.export(registry));
+        }
 
-		DashSpriteAnimation that = (DashSpriteAnimation) o;
+        return SpriteAnimationAccessor.init(
+            owner,
+            framesOut,
+            this.frameCount,
+            this.interpolation
+        );
+    }
 
-		if (frameCount != that.frameCount) return false;
-		if (interpolation != that.interpolation) return false;
-		return frames.equals(that.frames);
-	}
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-	@Override
-	public int hashCode() {
-		int result = frames.hashCode();
-		result = 31 * result + frameCount;
-		result = 31 * result + (interpolation ? 1 : 0);
-		return result;
-	}
+        DashSpriteAnimation that = (DashSpriteAnimation) o;
+
+        if (frameCount != that.frameCount) return false;
+        if (interpolation != that.interpolation) return false;
+        return frames.equals(that.frames);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = frames.hashCode();
+        result = 31 * result + frameCount;
+        result = 31 * result + (interpolation ? 1 : 0);
+        return result;
+    }
 }

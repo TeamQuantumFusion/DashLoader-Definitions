@@ -9,8 +9,8 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 @Mixin(Sprite.class)
 public interface SpriteAccessor {
 
-	@Invoker("<init>")
-	static Sprite init(Identifier atlasId, SpriteContents contents, int atlasWidth, int atlasHeight, int width, int height) {
-		throw new AssertionError();
-	}
+    @Invoker("<init>")
+    static Sprite init(Identifier atlasId, SpriteContents contents, int atlasWidth, int atlasHeight, int width, int height) {
+        throw new AssertionError();
+    }
 }

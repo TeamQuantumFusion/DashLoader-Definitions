@@ -30,119 +30,119 @@ import org.jetbrains.annotations.NotNull;
 import java.util.*;
 
 public class ModelModule implements DashModule<ModelModule.Data> {
-	public static final CachingData<HashMap<Identifier, BakedModel>> MODELS_SAVE = new CachingData<>(CacheStatus.SAVE);
-	public static final CachingData<HashMap<Identifier, UnbakedBakedModel>> MODELS_LOAD = new CachingData<>(CacheStatus.LOAD);
-	public static final CachingData<HashMap<BlockState, Identifier>> MISSING_READ = new CachingData<>();
-	public static final CachingData<HashMap<BakedModel, Pair<List<MultipartModelSelector>, StateManager<Block, BlockState>>>> MULTIPART_PREDICATES = new CachingData<>(CacheStatus.SAVE);
+    public static final CachingData<HashMap<Identifier, BakedModel>> MODELS_SAVE = new CachingData<>(CacheStatus.SAVE);
+    public static final CachingData<HashMap<Identifier, UnbakedBakedModel>> MODELS_LOAD = new CachingData<>(CacheStatus.LOAD);
+    public static final CachingData<HashMap<BlockState, Identifier>> MISSING_READ = new CachingData<>();
+    public static final CachingData<HashMap<BakedModel, Pair<List<MultipartModelSelector>, StateManager<Block, BlockState>>>> MULTIPART_PREDICATES = new CachingData<>(CacheStatus.SAVE);
 
-	@Override
-	public void reset(Cache cache) {
-		MODELS_SAVE.reset(cache, new HashMap<>());
-		MODELS_LOAD.reset(cache, new HashMap<>());
-		MISSING_READ.reset(cache, new HashMap<>());
-		MULTIPART_PREDICATES.reset(cache, new HashMap<>());
-	}
+    public static StateManager<Block, BlockState> getStateManager(Identifier identifier) {
+        StateManager<Block, BlockState> staticDef = ModelLoaderAccessor.getStaticDefinitions().get(identifier);
+        if (staticDef != null) {
+            return staticDef;
+        } else {
+            return Registries.BLOCK.get(identifier).getStateManager();
+        }
+    }
 
-	@Override
-	public Data save(RegistryWriter factory, StepTask task) {
-		var models = MODELS_SAVE.get(CacheStatus.SAVE);
+    @NotNull
+    public static Identifier getStateManagerIdentifier(StateManager<Block, BlockState> stateManager) {
+        // Static definitions like itemframes.
+        for (Map.Entry<Identifier, StateManager<Block, BlockState>> entry : ModelLoaderAccessor.getStaticDefinitions().entrySet()) {
+            if (entry.getValue() == stateManager) {
+                return entry.getKey();
+            }
+        }
 
-		if (models == null) {
-			return null;
-		} else {
-			var outModels = new IntIntList(new ArrayList<>(models.size()));
-			var missingModels = new IntIntList();
+        return Registries.BLOCK.getId(stateManager.getOwner());
+    }
 
-			final HashSet<Identifier> out = new HashSet<>();
-			task.doForEach(models, (identifier, bakedModel) -> {
-				if (bakedModel != null) {
-					try {
-						final int add = factory.add(bakedModel);
-						outModels.put(factory.add(identifier), add);
-						out.add(identifier);
-					} catch (RegistryAddException ignored) {
-						// Fallback is checked later with the blockstates missing.
-					}
-				}
-			});
+    @Override
+    public void reset(Cache cache) {
+        MODELS_SAVE.reset(cache, new HashMap<>());
+        MODELS_LOAD.reset(cache, new HashMap<>());
+        MISSING_READ.reset(cache, new HashMap<>());
+        MULTIPART_PREDICATES.reset(cache, new HashMap<>());
+    }
+
+    @Override
+    public Data save(RegistryWriter factory, StepTask task) {
+        var models = MODELS_SAVE.get(CacheStatus.SAVE);
+
+        if (models == null) {
+            return null;
+        } else {
+            var outModels = new IntIntList(new ArrayList<>(models.size()));
+            var missingModels = new IntIntList();
+
+            final HashSet<Identifier> out = new HashSet<>();
+            task.doForEach(models, (identifier, bakedModel) -> {
+                if (bakedModel != null) {
+                    try {
+                        final int add = factory.add(bakedModel);
+                        outModels.put(factory.add(identifier), add);
+                        out.add(identifier);
+                    } catch (RegistryAddException ignored) {
+                        // Fallback is checked later with the blockstates missing.
+                    }
+                }
+            });
 
 
-			// Check missing models for blockstates.
-			for (Block block : Registries.BLOCK) {
-				block.getStateManager().getStates().forEach((blockState) -> {
-					final ModelIdentifier modelId = BlockModels.getModelId(blockState);
-					if (!out.contains(modelId)) {
-						missingModels.put(factory.add(blockState), factory.add(modelId));
-					}
-				});
-			}
+            // Check missing models for blockstates.
+            for (Block block : Registries.BLOCK) {
+                block.getStateManager().getStates().forEach((blockState) -> {
+                    final ModelIdentifier modelId = BlockModels.getModelId(blockState);
+                    if (!out.contains(modelId)) {
+                        missingModels.put(factory.add(blockState), factory.add(modelId));
+                    }
+                });
+            }
 
-			return new Data(outModels, missingModels);
-		}
-	}
+            return new Data(outModels, missingModels);
+        }
+    }
 
-	@Override
-	public void load(Data data, RegistryReader reader, StepTask task) {
-		final HashMap<Identifier, UnbakedBakedModel> out = new HashMap<>(data.models.list().size());
-		data.models.forEach((key, value) -> {
-			Dazy<? extends BakedModel> model = reader.get(value);
-			Identifier identifier = reader.get(key);
-			out.put(identifier, new UnbakedBakedModel(model));
-		});
+    @Override
+    public void load(Data data, RegistryReader reader, StepTask task) {
+        final HashMap<Identifier, UnbakedBakedModel> out = new HashMap<>(data.models.list().size());
+        data.models.forEach((key, value) -> {
+            Dazy<? extends BakedModel> model = reader.get(value);
+            Identifier identifier = reader.get(key);
+            out.put(identifier, new UnbakedBakedModel(model));
+        });
 
-		var missingModelsRead = new HashMap<BlockState, Identifier>();
-		data.missingModels.forEach((blockState, modelId) -> {
-			missingModelsRead.put(reader.get(blockState), reader.get(modelId));
-		});
+        var missingModelsRead = new HashMap<BlockState, Identifier>();
+        data.missingModels.forEach((blockState, modelId) -> {
+            missingModelsRead.put(reader.get(blockState), reader.get(modelId));
+        });
 
-		DashLoader.LOG.info("Found {} Missing BlockState Models", missingModelsRead.size());
-		MISSING_READ.set(CacheStatus.LOAD, missingModelsRead);
-		MODELS_LOAD.set(CacheStatus.LOAD, out);
-	}
+        DashLoader.LOG.info("Found {} Missing BlockState Models", missingModelsRead.size());
+        MISSING_READ.set(CacheStatus.LOAD, missingModelsRead);
+        MODELS_LOAD.set(CacheStatus.LOAD, out);
+    }
 
-	@Override
-	public Class<Data> getDataClass() {
-		return Data.class;
-	}
+    @Override
+    public Class<Data> getDataClass() {
+        return Data.class;
+    }
 
-	@Override
-	public float taskWeight() {
-		return 1000;
-	}
+    @Override
+    public float taskWeight() {
+        return 1000;
+    }
 
-	@Override
-	public boolean isActive() {
-		return ConfigHandler.optionActive(Option.CACHE_MODEL_LOADER);
-	}
+    @Override
+    public boolean isActive() {
+        return ConfigHandler.optionActive(Option.CACHE_MODEL_LOADER);
+    }
 
-	public static StateManager<Block, BlockState> getStateManager(Identifier identifier) {
-		StateManager<Block, BlockState> staticDef = ModelLoaderAccessor.getStaticDefinitions().get(identifier);
-		if (staticDef != null) {
-			return staticDef;
-		} else {
-			return Registries.BLOCK.get(identifier).getStateManager();
-		}
-	}
+    public static final class Data {
+        public final IntIntList models; // identifier to model list
+        public final IntIntList missingModels;
 
-	@NotNull
-	public static Identifier getStateManagerIdentifier(StateManager<Block, BlockState> stateManager) {
-		// Static definitions like itemframes.
-		for (Map.Entry<Identifier, StateManager<Block, BlockState>> entry : ModelLoaderAccessor.getStaticDefinitions().entrySet()) {
-			if (entry.getValue() == stateManager) {
-				return entry.getKey();
-			}
-		}
-
-		return Registries.BLOCK.getId(stateManager.getOwner());
-	}
-
-	public static final class Data {
-		public final IntIntList models; // identifier to model list
-		public final IntIntList missingModels;
-
-		public Data(IntIntList models, IntIntList missingModels) {
-			this.models = models;
-			this.missingModels = missingModels;
-		}
-	}
+        public Data(IntIntList models, IntIntList missingModels) {
+            this.models = models;
+            this.missingModels = missingModels;
+        }
+    }
 }

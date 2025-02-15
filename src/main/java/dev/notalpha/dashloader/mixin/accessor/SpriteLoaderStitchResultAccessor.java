@@ -7,14 +7,14 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(SpriteLoader.StitchResult.class)
 public interface SpriteLoaderStitchResultAccessor {
 
-	@Accessor
-	int getWidth();
+    @Accessor
+    int getWidth();
 
-	@Accessor
-	int getHeight();
+    @Accessor
+    int getHeight();
 
-	@Accessor
-	int getMipLevel();
+    @Accessor
+    int getMipLevel();
 
 
 }

@@ -8,9 +8,9 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 public interface ModelOverrideListInlinedCondition {
 
 
-	@Invoker("<init>")
-	static ModelOverrideList.InlinedCondition newModelOverrideListInlinedCondition(int index, float threshold) {
-		throw new AssertionError();
-	}
+    @Invoker("<init>")
+    static ModelOverrideList.InlinedCondition newModelOverrideListInlinedCondition(int index, float threshold) {
+        throw new AssertionError();
+    }
 
 }

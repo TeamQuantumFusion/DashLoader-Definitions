@@ -13,50 +13,50 @@ import java.util.List;
 
 
 public final class DashOrPredicate implements DashObject<OrMultipartModelSelector, OrMultipartModelSelector> {
-	public final int[] selectors;
+    public final int[] selectors;
 
-	public DashOrPredicate(int[] selectors) {
-		this.selectors = selectors;
-	}
+    public DashOrPredicate(int[] selectors) {
+        this.selectors = selectors;
+    }
 
-	public DashOrPredicate(OrMultipartModelSelector selector, RegistryWriter writer) {
-		OrMultipartModelSelectorAccessor access = ((OrMultipartModelSelectorAccessor) selector);
+    public DashOrPredicate(OrMultipartModelSelector selector, RegistryWriter writer) {
+        OrMultipartModelSelectorAccessor access = ((OrMultipartModelSelectorAccessor) selector);
 
-		Iterable<? extends MultipartModelSelector> accessSelectors = access.getSelectors();
-		int count = 0;
-		for (MultipartModelSelector ignored : accessSelectors) {
-			count += 1;
-		}
-		this.selectors = new int[count];
+        Iterable<? extends MultipartModelSelector> accessSelectors = access.getSelectors();
+        int count = 0;
+        for (MultipartModelSelector ignored : accessSelectors) {
+            count += 1;
+        }
+        this.selectors = new int[count];
 
-		int i = 0;
-		for (MultipartModelSelector accessSelector : accessSelectors) {
-			this.selectors[i++] = writer.add(accessSelector);
-		}
-	}
+        int i = 0;
+        for (MultipartModelSelector accessSelector : accessSelectors) {
+            this.selectors[i++] = writer.add(accessSelector);
+        }
+    }
 
-	@Override
-	public OrMultipartModelSelector export(RegistryReader handler) {
-		final List<MultipartModelSelector> selectors = new ArrayList<>(this.selectors.length);
-		for (int accessSelector : this.selectors) {
-			selectors.add(handler.get(accessSelector));
-		}
+    @Override
+    public OrMultipartModelSelector export(RegistryReader handler) {
+        final List<MultipartModelSelector> selectors = new ArrayList<>(this.selectors.length);
+        for (int accessSelector : this.selectors) {
+            selectors.add(handler.get(accessSelector));
+        }
 
-		return new OrMultipartModelSelector(selectors);
-	}
+        return new OrMultipartModelSelector(selectors);
+    }
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-		DashOrPredicate that = (DashOrPredicate) o;
+        DashOrPredicate that = (DashOrPredicate) o;
 
-		return Arrays.equals(selectors, that.selectors);
-	}
+        return Arrays.equals(selectors, that.selectors);
+    }
 
-	@Override
-	public int hashCode() {
-		return Arrays.hashCode(selectors);
-	}
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(selectors);
+    }
 }

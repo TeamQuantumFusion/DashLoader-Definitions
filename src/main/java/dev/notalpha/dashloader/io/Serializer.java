@@ -16,57 +16,57 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 public class Serializer<O> {
-	private final HyphenSerializer<ByteBufferIO, O> serializer;
+    private final HyphenSerializer<ByteBufferIO, O> serializer;
 
-	public Serializer(Class<O> aClass) {
-		var factory = SerializerFactory.createDebug(ByteBufferIO.class, aClass);
-		factory.addGlobalAnnotation(ChunkData.class, DataSubclasses.class, new Class[]{ChunkData.class});
-		factory.setClassName(getSerializerClassName(aClass));
-		factory.addGlobalAnnotation(UnihexFont.BitmapGlyph.class, DataSubclasses.class, new Class[]{
-				UnihexFont.FontImage32x16.class,
-				UnihexFont.FontImage16x16.class,
-				UnihexFont.FontImage8x16.class,
-		});
-		factory.addDynamicDef(NativeImageData.class, (clazz, serializerHandler) -> new NativeImageDataDef(serializerHandler, clazz));
-		this.serializer = factory.build();
-	}
+    public Serializer(Class<O> aClass) {
+        var factory = SerializerFactory.createDebug(ByteBufferIO.class, aClass);
+        factory.addGlobalAnnotation(ChunkData.class, DataSubclasses.class, new Class[]{ChunkData.class});
+        factory.setClassName(getSerializerClassName(aClass));
+        factory.addGlobalAnnotation(UnihexFont.BitmapGlyph.class, DataSubclasses.class, new Class[]{
+            UnihexFont.FontImage32x16.class,
+            UnihexFont.FontImage16x16.class,
+            UnihexFont.FontImage8x16.class,
+        });
+        factory.addDynamicDef(NativeImageData.class, (clazz, serializerHandler) -> new NativeImageDataDef(serializerHandler, clazz));
+        this.serializer = factory.build();
+    }
 
-	public O get(ByteBufferIO io) {
-		return this.serializer.get(io);
-	}
+    @NotNull
+    private static <O> String getSerializerClassName(Class<O> holderClass) {
+        return holderClass.getSimpleName().toLowerCase() + "-serializer";
+    }
 
-	public void put(ByteBufferIO io, O data) {
-		this.serializer.put(io, data);
-	}
+    public O get(ByteBufferIO io) {
+        return this.serializer.get(io);
+    }
 
-	public long measure(O data) {
-		return this.serializer.measure(data);
-	}
+    public void put(ByteBufferIO io, O data) {
+        this.serializer.put(io, data);
+    }
 
-	public void save(Path path, StepTask task, O data) {
-		var measure = (int) this.serializer.measure(data);
-		var io = ByteBufferIO.createDirect(measure);
-		this.serializer.put(io, data);
-		io.rewind();
-		try {
+    public long measure(O data) {
+        return this.serializer.measure(data);
+    }
 
-			IOHelper.save(path, task, io, measure, ConfigHandler.INSTANCE.config.compression);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-	}
+    public void save(Path path, StepTask task, O data) {
+        var measure = (int) this.serializer.measure(data);
+        var io = ByteBufferIO.createDirect(measure);
+        this.serializer.put(io, data);
+        io.rewind();
+        try {
 
-	public O load(Path path) {
-		try {
-			ByteBufferIO io = IOHelper.load(path);
-			return this.serializer.get(io);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-	}
+            IOHelper.save(path, task, io, measure, ConfigHandler.INSTANCE.config.compression);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-	@NotNull
-	private static <O> String getSerializerClassName(Class<O> holderClass) {
-		return holderClass.getSimpleName().toLowerCase() + "-serializer";
-	}
+    public O load(Path path) {
+        try {
+            ByteBufferIO io = IOHelper.load(path);
+            return this.serializer.get(io);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

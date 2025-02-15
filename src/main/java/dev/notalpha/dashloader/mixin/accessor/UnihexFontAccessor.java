@@ -9,14 +9,15 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(UnihexFont.class)
 public interface UnihexFontAccessor {
-	@Invoker("<init>")
-	static UnihexFont create(GlyphContainer<UnihexFont.UnicodeTextureGlyph> glyphs) {
-		throw new AssertionError();
-	}
+    @Invoker("<init>")
+    static UnihexFont create(GlyphContainer<UnihexFont.UnicodeTextureGlyph> glyphs) {
+        throw new AssertionError();
+    }
 
-	@Accessor
-	GlyphContainer<UnihexFont.UnicodeTextureGlyph> getGlyphs();
-	@Accessor
-	@Mutable
-	void setGlyphs(GlyphContainer<UnihexFont.UnicodeTextureGlyph> glyphs);
+    @Accessor
+    GlyphContainer<UnihexFont.UnicodeTextureGlyph> getGlyphs();
+
+    @Accessor
+    @Mutable
+    void setGlyphs(GlyphContainer<UnihexFont.UnicodeTextureGlyph> glyphs);
 }

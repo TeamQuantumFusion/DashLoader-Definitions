@@ -10,32 +10,32 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 public interface BitmapFontGlyphAccessor {
 
 
-	@Invoker("<init>")
-	static BitmapFont.BitmapFontGlyph init(float scaleFactor, NativeImage image, int x, int y, int width, int height, int advance, int ascent) {
-		throw new AssertionError();
-	}
+    @Invoker("<init>")
+    static BitmapFont.BitmapFontGlyph init(float scaleFactor, NativeImage image, int x, int y, int width, int height, int advance, int ascent) {
+        throw new AssertionError();
+    }
 
-	@Accessor
-	NativeImage getImage();
+    @Accessor
+    NativeImage getImage();
 
-	@Accessor("x")
-	int getX();
+    @Accessor("x")
+    int getX();
 
-	@Accessor("y")
-	int getY();
+    @Accessor("y")
+    int getY();
 
-	@Accessor
-	float getScaleFactor();
+    @Accessor
+    float getScaleFactor();
 
-	@Accessor
-	int getWidth();
+    @Accessor
+    int getWidth();
 
-	@Accessor
-	int getHeight();
+    @Accessor
+    int getHeight();
 
-	@Accessor
-	int getAdvance();
+    @Accessor
+    int getAdvance();
 
-	@Accessor
-	int getAscent();
+    @Accessor
+    int getAscent();
 }

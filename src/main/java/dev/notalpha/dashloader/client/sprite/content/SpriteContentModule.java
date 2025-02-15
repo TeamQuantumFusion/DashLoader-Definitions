@@ -11,50 +11,52 @@ import dev.notalpha.taski.builtin.StepTask;
 import net.minecraft.client.texture.SpriteContents;
 import net.minecraft.util.Identifier;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
-public class SpriteContentModule implements DashModule<SpriteContentModule.Data>  {
-	public final static CachingData<Map<Identifier, SpriteContents>> SOURCE = new CachingData<>();
-	@Override
-	public void reset(Cache cache) {
-		SOURCE.reset(cache, new HashMap<>());
-	}
+public class SpriteContentModule implements DashModule<SpriteContentModule.Data> {
+    public final static CachingData<Map<Identifier, SpriteContents>> SOURCE = new CachingData<>();
 
-	@Override
-	public Data save(RegistryWriter writer, StepTask task) {
-		var spriteData = SOURCE.get(CacheStatus.SAVE);
-		assert spriteData != null;
+    @Override
+    public void reset(Cache cache) {
+        SOURCE.reset(cache, new HashMap<>());
+    }
 
-		var map = new IntIntList();
-		task.doForEach(spriteData, (identifier, spriteContents) -> {
-			map.put(writer.add(identifier), writer.add(spriteContents));
-		});
+    @Override
+    public Data save(RegistryWriter writer, StepTask task) {
+        var spriteData = SOURCE.get(CacheStatus.SAVE);
+        assert spriteData != null;
 
-		return new Data(map);
-	}
+        var map = new IntIntList();
+        task.doForEach(spriteData, (identifier, spriteContents) -> {
+            map.put(writer.add(identifier), writer.add(spriteContents));
+        });
 
-	@Override
-	public void load(Data data, RegistryReader reader, StepTask task) {
-		Map<Identifier, SpriteContents> spriteData = SOURCE.get(CacheStatus.LOAD);
-		assert spriteData != null;
+        return new Data(map);
+    }
 
-		data.sprites.forEach((key, value) ->  {
-			Identifier identifier = reader.get(key);
-			SpriteContents contents = reader.get(value);
-			spriteData.put(identifier, contents);
-		});
-	}
+    @Override
+    public void load(Data data, RegistryReader reader, StepTask task) {
+        Map<Identifier, SpriteContents> spriteData = SOURCE.get(CacheStatus.LOAD);
+        assert spriteData != null;
 
-	@Override
-	public Class<Data> getDataClass() {
-		return Data.class;
-	}
+        data.sprites.forEach((key, value) -> {
+            Identifier identifier = reader.get(key);
+            SpriteContents contents = reader.get(value);
+            spriteData.put(identifier, contents);
+        });
+    }
 
-	public static class Data {
-		public final IntIntList sprites;
+    @Override
+    public Class<Data> getDataClass() {
+        return Data.class;
+    }
 
-		public Data(IntIntList sprites) {
-			this.sprites = sprites;
-		}
-	}
+    public static class Data {
+        public final IntIntList sprites;
+
+        public Data(IntIntList sprites) {
+            this.sprites = sprites;
+        }
+    }
 }

@@ -11,30 +11,30 @@ import java.util.List;
 
 @Mixin(FontStorage.class)
 public interface FontStorageAccessor {
-	@Accessor
-	void setBlankGlyphRenderer(GlyphRenderer renderer);
+    @Accessor
+    void setBlankGlyphRenderer(GlyphRenderer renderer);
 
-	@Accessor
-	void setWhiteRectangleGlyphRenderer(GlyphRenderer renderer);
+    @Accessor
+    void setWhiteRectangleGlyphRenderer(GlyphRenderer renderer);
 
-	@Accessor
-	GlyphContainer<GlyphRenderer> getGlyphRendererCache();
+    @Accessor
+    GlyphContainer<GlyphRenderer> getGlyphRendererCache();
 
-	@Accessor
-	GlyphContainer<FontStorage.GlyphPair> getGlyphCache();
+    @Accessor
+    GlyphContainer<FontStorage.GlyphPair> getGlyphCache();
 
-	@Accessor
-	Int2ObjectMap<IntList> getCharactersByWidth();
+    @Accessor
+    Int2ObjectMap<IntList> getCharactersByWidth();
 
-	@Accessor
-	List<Font> getFonts();
+    @Accessor
+    List<Font> getFonts();
 
-	@Invoker
-	GlyphRenderer callGetGlyphRenderer(RenderableGlyph c);
+    @Invoker
+    GlyphRenderer callGetGlyphRenderer(RenderableGlyph c);
 
-	@Invoker
-	void callCloseFonts();
+    @Invoker
+    void callCloseFonts();
 
-	@Invoker
-	void callCloseGlyphAtlases();
+    @Invoker
+    void callCloseGlyphAtlases();
 }

@@ -11,6 +11,6 @@ import java.util.List;
 @Mixin(WeightedBakedModel.class)
 public interface WeightedBakedModelAccessor {
 
-	@Accessor("models")
-	List<Weighted.Present<BakedModel>> getBakedModels();
+    @Accessor("models")
+    List<Weighted.Present<BakedModel>> getBakedModels();
 }

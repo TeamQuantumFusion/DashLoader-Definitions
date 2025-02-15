@@ -11,58 +11,58 @@ import java.nio.ByteBuffer;
 
 @Mixin(TrueTypeFont.class)
 public interface TrueTypeFontAccessor {
-	@Accessor
-	@Mutable
-	void setBuffer(ByteBuffer thing);
+    @Accessor
+    @Mutable
+    void setBuffer(ByteBuffer thing);
 
-	@Accessor
-	STBTTFontinfo getInfo();
+    @Accessor
+    STBTTFontinfo getInfo();
 
-	@Accessor
-	@Mutable
-	void setInfo(STBTTFontinfo thing);
+    @Accessor
+    @Mutable
+    void setInfo(STBTTFontinfo thing);
 
-	@Accessor
-	float getOversample();
+    @Accessor
+    float getOversample();
 
-	@Accessor
-	@Mutable
-	void setOversample(float thing);
+    @Accessor
+    @Mutable
+    void setOversample(float thing);
 
-	@Accessor
-	IntSet getExcludedCharacters();
+    @Accessor
+    IntSet getExcludedCharacters();
 
-	@Accessor
-	@Mutable
-	void setExcludedCharacters(IntSet thing);
+    @Accessor
+    @Mutable
+    void setExcludedCharacters(IntSet thing);
 
-	@Accessor
-	float getShiftX();
+    @Accessor
+    float getShiftX();
 
-	@Accessor
-	@Mutable
-	void setShiftX(float thing);
+    @Accessor
+    @Mutable
+    void setShiftX(float thing);
 
-	@Accessor
-	float getShiftY();
+    @Accessor
+    float getShiftY();
 
-	@Accessor
-	@Mutable
-	void setShiftY(float thing);
+    @Accessor
+    @Mutable
+    void setShiftY(float thing);
 
-	@Accessor
-	float getScaleFactor();
+    @Accessor
+    float getScaleFactor();
 
-	@Accessor
-	@Mutable
-	void setScaleFactor(float thing);
+    @Accessor
+    @Mutable
+    void setScaleFactor(float thing);
 
-	@Accessor
-	float getAscent();
+    @Accessor
+    float getAscent();
 
-	@Accessor
-	@Mutable
-	void setAscent(float thing);
+    @Accessor
+    @Mutable
+    void setAscent(float thing);
 
 
 }

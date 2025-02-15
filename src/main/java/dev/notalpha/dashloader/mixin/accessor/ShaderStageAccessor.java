@@ -7,21 +7,21 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(ShaderStage.class)
 public interface ShaderStageAccessor {
-	@Invoker("<init>")
-	static ShaderStage create(ShaderStage.Type shaderType, int shaderRef, String name) {
-		throw new AssertionError();
-	}
+    @Invoker("<init>")
+    static ShaderStage create(ShaderStage.Type shaderType, int shaderRef, String name) {
+        throw new AssertionError();
+    }
 
-	@Accessor
-	ShaderStage.Type getType();
+    @Accessor
+    ShaderStage.Type getType();
 
-	@Accessor
-	int getGlRef();
+    @Accessor
+    int getGlRef();
 
-	@Mixin(ShaderStage.Type.class)
-	interface TypeAccessor {
-		@Accessor
-		int getGlType();
-	}
+    @Mixin(ShaderStage.Type.class)
+    interface TypeAccessor {
+        @Accessor
+        int getGlType();
+    }
 }
 

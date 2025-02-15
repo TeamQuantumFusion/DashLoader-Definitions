@@ -7,8 +7,8 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(Weighted.Present.class)
 public interface WeightedBakedModelEntryAccessor {
-	@Invoker("<init>")
-	static Weighted.Present init(Object data, Weight weight) {
-		throw new AssertionError();
-	}
+    @Invoker("<init>")
+    static Weighted.Present init(Object data, Weight weight) {
+        throw new AssertionError();
+    }
 }

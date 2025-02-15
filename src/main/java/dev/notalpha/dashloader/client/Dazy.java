@@ -8,16 +8,17 @@ import java.util.function.Function;
 
 // its lazy, but dash! Used for resolution of sprites.
 public abstract class Dazy<V> {
-	@Nullable
-	private transient V loaded;
+    @Nullable
+    private transient V loaded;
 
-	protected abstract V resolve(Function<SpriteIdentifier, Sprite> spriteLoader);
-	public V get(Function<SpriteIdentifier, Sprite> spriteLoader) {
-		if (loaded != null) {
-			return loaded;
-		}
+    protected abstract V resolve(Function<SpriteIdentifier, Sprite> spriteLoader);
 
-		loaded = resolve(spriteLoader);
-		return loaded;
-	}
+    public V get(Function<SpriteIdentifier, Sprite> spriteLoader) {
+        if (loaded != null) {
+            return loaded;
+        }
+
+        loaded = resolve(spriteLoader);
+        return loaded;
+    }
 }

@@ -28,28 +28,28 @@ import java.util.function.Function;
 
 @Mixin(MultipartUnbakedModel.class)
 public class MultipartUnbakedModelMixin {
-	@Shadow
-	@Final
-	private List<MultipartModelComponent> components;
+    @Shadow
+    @Final
+    private List<MultipartModelComponent> components;
 
-	@Shadow
-	@Final
-	private StateManager<Block, BlockState> stateFactory;
+    @Shadow
+    @Final
+    private StateManager<Block, BlockState> stateFactory;
 
-	@Inject(
-			method = "bake",
-			at = @At(value = "RETURN"),
-			locals = LocalCapture.CAPTURE_FAILSOFT,
-			cancellable = true
-	)
-	private void addPredicateInfo(Baker baker, Function<SpriteIdentifier, Sprite> textureGetter, ModelBakeSettings rotationContainer, Identifier modelId, CallbackInfoReturnable<@Nullable BakedModel> cir, MultipartBakedModel.Builder builder) {
-		ModelModule.MULTIPART_PREDICATES.visit(CacheStatus.SAVE, map -> {
-			var bakedModel = (MultipartBakedModel) builder.build();
-			var outSelectors = new ArrayList<MultipartModelSelector>();
-			this.components.forEach(multipartModelComponent -> outSelectors.add(((MultipartModelComponentAccessor) multipartModelComponent).getSelector()));
-			map.put(bakedModel, Pair.of(outSelectors, this.stateFactory));
-			cir.setReturnValue(bakedModel);
-		});
-	}
+    @Inject(
+        method = "bake",
+        at = @At(value = "RETURN"),
+        locals = LocalCapture.CAPTURE_FAILSOFT,
+        cancellable = true
+    )
+    private void addPredicateInfo(Baker baker, Function<SpriteIdentifier, Sprite> textureGetter, ModelBakeSettings rotationContainer, Identifier modelId, CallbackInfoReturnable<@Nullable BakedModel> cir, MultipartBakedModel.Builder builder) {
+        ModelModule.MULTIPART_PREDICATES.visit(CacheStatus.SAVE, map -> {
+            var bakedModel = (MultipartBakedModel) builder.build();
+            var outSelectors = new ArrayList<MultipartModelSelector>();
+            this.components.forEach(multipartModelComponent -> outSelectors.add(((MultipartModelComponentAccessor) multipartModelComponent).getSelector()));
+            map.put(bakedModel, Pair.of(outSelectors, this.stateFactory));
+            cir.setReturnValue(bakedModel);
+        });
+    }
 
 }

@@ -16,86 +16,85 @@ import java.util.Map;
 @Mixin(ShaderProgram.class)
 public interface ShaderProgramAccessor {
 
-	@Accessor
-	Map<String, Object> getSamplers();
+    @Accessor
+    Map<String, Object> getSamplers();
 
-	@Accessor
-	@Mutable
-	void setSamplers(Map<String, Object> samplers);
+    @Accessor
+    @Mutable
+    void setSamplers(Map<String, Object> samplers);
 
-	@Accessor
-	GlBlendState getBlendState();
+    @Accessor
+    GlBlendState getBlendState();
 
-	@Accessor
-	@Mutable
-	void setBlendState(GlBlendState blendState);
+    @Accessor
+    @Mutable
+    void setBlendState(GlBlendState blendState);
 
-	@Accessor
-	List<Integer> getLoadedAttributeIds();
+    @Accessor
+    List<Integer> getLoadedAttributeIds();
 
+    @Accessor
+    @Mutable
+    void setLoadedAttributeIds(List<Integer> loadedAttributeIds);
 
-	@Accessor
-	Map<String, GlUniform> getLoadedUniforms();
+    @Accessor
+    Map<String, GlUniform> getLoadedUniforms();
 
-	@Accessor
-	List<GlUniform> getUniforms();
+    @Accessor
+    @Mutable
+    void setLoadedUniforms(Map<String, GlUniform> loadedUniforms);
 
-	@Accessor
-	@Mutable
-	void setLoadedAttributeIds(List<Integer> loadedAttributeIds);
+    @Accessor
+    List<GlUniform> getUniforms();
 
-	@Accessor
-	List<String> getAttributeNames();
+    @Accessor
+    @Mutable
+    void setUniforms(List<GlUniform> uniforms);
 
-	@Accessor
-	@Mutable
-	void setAttributeNames(List<String> attributeNames);
+    @Accessor
+    List<String> getAttributeNames();
 
-	@Accessor
-	List<String> getSamplerNames();
+    @Accessor
+    @Mutable
+    void setAttributeNames(List<String> attributeNames);
 
-	@Accessor
-	@Mutable
-	void setSamplerNames(List<String> samplerNames);
+    @Accessor
+    List<String> getSamplerNames();
 
-	@Accessor
-	@Mutable
-	void setLoadedSamplerIds(List<Integer> loadedSamplerIds);
+    @Accessor
+    @Mutable
+    void setSamplerNames(List<String> samplerNames);
 
-	@Accessor
-	@Mutable
-	void setUniforms(List<GlUniform> uniforms);
+    @Accessor
+    @Mutable
+    void setLoadedSamplerIds(List<Integer> loadedSamplerIds);
 
-	@Accessor
-	@Mutable
-	void setLoadedUniformIds(List<Integer> loadedUniformIds);
+    @Accessor
+    @Mutable
+    void setLoadedUniformIds(List<Integer> loadedUniformIds);
 
-	@Accessor
-	@Mutable
-	void setLoadedUniforms(Map<String, GlUniform> loadedUniforms);
+    @Accessor
+    @Mutable
+    void setGlRef(int glRef);
 
-	@Accessor
-	@Mutable
-	void setGlRef(int glRef);
+    @Accessor
+    @Mutable
+    void setName(String name);
 
-	@Accessor
-	@Mutable
-	void setName(String name);
+    @Accessor
+    @Mutable
+    void setVertexShader(ShaderStage vertexShader);
 
-	@Accessor
-	@Mutable
-	void setVertexShader(ShaderStage vertexShader);
+    @Accessor
+    @Mutable
+    void setFragmentShader(ShaderStage fragmentShader);
 
-	@Accessor
-	@Mutable
-	void setFragmentShader(ShaderStage fragmentShader);
+    @Accessor
+    @Mutable
+    void setFormat(VertexFormat format);
 
-	@Accessor
-	@Mutable
-	void setFormat(VertexFormat format);
-
-	@Invoker("loadReferences")
-	void loadref();
+    @Invoker("loadReferences")
+    void loadref();
 }
 
 

@@ -7,8 +7,8 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(EffectShaderStage.class)
 public interface EffectShaderStageAccessor {
-	@Invoker("<init>")
-	static EffectShaderStage create(ShaderStage.Type shaderType, int shaderRef, String name) {
-		throw new AssertionError();
-	}
+    @Invoker("<init>")
+    static EffectShaderStage create(ShaderStage.Type shaderType, int shaderRef, String name) {
+        throw new AssertionError();
+    }
 }
