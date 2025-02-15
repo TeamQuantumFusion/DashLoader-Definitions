@@ -38,7 +38,7 @@ public class FontManagerOverride {
 	private void saveFonts(FontManager.ProviderIndex index, Profiler profiler, CallbackInfo ci) {
 		if (FontModule.DATA.active(CacheStatus.SAVE)) {
 			DashLoader.LOG.info("Saving fonts");
-			FontModule.DATA.set(CacheStatus.SAVE, new FontModule.ProviderIndex(index.providers(), index.allProviders()));
+			FontModule.DATA.set(CacheStatus.SAVE, new FontModule.ProviderIndex(index.fontSets(), index.allProviders()));
 		}
 	}
 }

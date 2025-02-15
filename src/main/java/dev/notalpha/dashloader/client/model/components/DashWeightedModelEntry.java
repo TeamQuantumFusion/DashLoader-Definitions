@@ -16,7 +16,7 @@ public final class DashWeightedModelEntry {
 	}
 
 	public DashWeightedModelEntry(Weighted.Present<BakedModel> entry, RegistryWriter writer) {
-		this(writer.add(entry.getData()), entry.getWeight().getValue());
+		this(writer.add(entry.data()), entry.getWeight().getValue());
 	}
 
 

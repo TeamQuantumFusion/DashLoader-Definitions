@@ -7,6 +7,7 @@ import net.minecraft.client.font.TrueTypeFontLoader;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 import org.lwjgl.stb.STBTTFontinfo;
+import org.lwjgl.util.freetype.FT_Face;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -25,9 +26,9 @@ public abstract class TrueTypeFontLoaderMixin {
 			at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/platform/TextureUtil;readResource(Ljava/io/InputStream;)Ljava/nio/ByteBuffer;"),
 			locals = LocalCapture.CAPTURE_FAILSOFT
 	)
-	private void loadInject(ResourceManager manager, CallbackInfoReturnable<Font> cir, STBTTFontinfo sTBTTFontinfo) {
+	private void loadInject(ResourceManager manager, CallbackInfoReturnable<Font> cir, FT_Face ft_face) {
 		FontModule.FONT_TO_IDENT.visit(CacheStatus.SAVE, map -> {
-			map.put(sTBTTFontinfo, location());
+			map.put(ft_face, location());
 		});
 	}
 }

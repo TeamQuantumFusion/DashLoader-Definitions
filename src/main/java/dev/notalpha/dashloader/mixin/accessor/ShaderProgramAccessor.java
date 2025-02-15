@@ -31,25 +31,10 @@ public interface ShaderProgramAccessor {
 	void setBlendState(GlBlendState blendState);
 
 	@Accessor
-	List<Integer> getLoadedAttributeIds();
-
-
-	@Accessor
 	Map<String, GlUniform> getLoadedUniforms();
 
 	@Accessor
 	List<GlUniform> getUniforms();
-
-	@Accessor
-	@Mutable
-	void setLoadedAttributeIds(List<Integer> loadedAttributeIds);
-
-	@Accessor
-	List<String> getAttributeNames();
-
-	@Accessor
-	@Mutable
-	void setAttributeNames(List<String> attributeNames);
 
 	@Accessor
 	List<String> getSamplerNames();

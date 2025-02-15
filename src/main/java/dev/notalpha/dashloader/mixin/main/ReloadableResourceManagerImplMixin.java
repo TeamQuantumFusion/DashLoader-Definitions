@@ -33,7 +33,7 @@ public class ReloadableResourceManagerImplMixin {
 
 		// Use server resource pack display name to differentiate them across each-other
 		for (ResourcePack pack : packs) {
-			if (Objects.equals(pack.getName(), "server")) {
+			if (Objects.equals(pack.getId(), "server")) {
 				if (pack instanceof ZipResourcePack zipResourcePack) {
 					ZipResourcePackAccessor zipPack = (ZipResourcePackAccessor) zipResourcePack;
 					Path path = ((ZipWrapperResourcePackAccessor)zipPack.getZipFile()).getFile().toPath();
@@ -45,8 +45,8 @@ public class ReloadableResourceManagerImplMixin {
 		for (ResourcePackProfile profile : manager.getEnabledProfiles()) {
 			if (profile != null) {
 				// Skip server as we have a special case where we use its path instead which contains its hash
-				if (!Objects.equals(profile.getName(), "server")) {
-					values.add(profile.getName() + "/");
+				if (!Objects.equals(profile.getId(), "server")) {
+					values.add(profile.getId() + "/");
 				}
 			}
 		}

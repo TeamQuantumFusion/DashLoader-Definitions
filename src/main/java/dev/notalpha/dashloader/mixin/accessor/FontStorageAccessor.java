@@ -26,14 +26,8 @@ public interface FontStorageAccessor {
 	@Accessor
 	Int2ObjectMap<IntList> getCharactersByWidth();
 
-	@Accessor
-	List<Font> getFonts();
-
 	@Invoker
 	GlyphRenderer callGetGlyphRenderer(RenderableGlyph c);
-
-	@Invoker
-	void callCloseFonts();
 
 	@Invoker
 	void callCloseGlyphAtlases();

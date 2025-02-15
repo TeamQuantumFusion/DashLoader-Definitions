@@ -116,6 +116,7 @@ public class DashLoaderClient implements DashEntrypoint {
 				DashSpaceFont.class,
 				DashTrueTypeFont.class,
 				DashUnihexFont.class,
+				DashFontFilterPair.class,
 				DashBlockState.class,
 				DashVertexFormat.class,
 				DashShader.class

@@ -24,7 +24,6 @@ accessible method net/minecraft/client/font/UnihexFont$FontImage32x16 <init> ([I
 accessible method net/minecraft/client/font/UnihexFont$UnicodeTextureGlyph <init> (Lnet/minecraft/client/font/UnihexFont$BitmapGlyph;II)V
 mutable field net/minecraft/client/gl/ShaderProgram modelViewMat Lnet/minecraft/client/gl/GlUniform;
 mutable field net/minecraft/client/gl/ShaderProgram projectionMat Lnet/minecraft/client/gl/GlUniform;
-mutable field net/minecraft/client/gl/ShaderProgram viewRotationMat Lnet/minecraft/client/gl/GlUniform;
 mutable field net/minecraft/client/gl/ShaderProgram textureMat Lnet/minecraft/client/gl/GlUniform;
 mutable field net/minecraft/client/gl/ShaderProgram screenSize Lnet/minecraft/client/gl/GlUniform;
 mutable field net/minecraft/client/gl/ShaderProgram colorModulator Lnet/minecraft/client/gl/GlUniform;

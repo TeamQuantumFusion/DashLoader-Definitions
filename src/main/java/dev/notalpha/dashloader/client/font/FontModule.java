@@ -21,6 +21,7 @@ import net.minecraft.client.font.FontManager;
 import net.minecraft.util.Identifier;
 import org.apache.commons.lang3.tuple.Pair;
 import org.lwjgl.stb.STBTTFontinfo;
+import org.lwjgl.util.freetype.FT_Face;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,7 +30,7 @@ import java.util.Map;
 
 public class FontModule implements DashModule<FontModule.Data> {
 	public static final CachingData<ProviderIndex> DATA = new CachingData<>();
-	public static final CachingData<Map<STBTTFontinfo, Identifier>> FONT_TO_IDENT = new CachingData<>();
+	public static final CachingData<Map<FT_Face, Identifier>> FONT_TO_IDENT = new CachingData<>();
 
 	@Override
 	public void reset(Cache cache) {
@@ -44,17 +45,17 @@ public class FontModule implements DashModule<FontModule.Data> {
 
 
 		int taskSize = 0;
-		for (List<Font> value : providerIndex.providers.values()) {
+		for (List<Font.FontFilterPair> value : providerIndex.providers.values()) {
 			taskSize += value.size();
 		}
 		taskSize += providerIndex.allProviders.size();
 		task.reset(taskSize);
 
 		var providers = new IntObjectList<List<Integer>>();
-		providerIndex.providers.forEach((identifier, fonts) -> {
+		providerIndex.providers.forEach((identifier, fontFilterPairs) -> {
 			var values = new ArrayList<Integer>();
-			for (Font font : fonts) {
-				values.add(factory.add(font));
+			for (Font.FontFilterPair fontFilterPair : fontFilterPairs) {
+				values.add(factory.add(fontFilterPair));
 				task.next();
 			}
 			providers.put(factory.add(identifier), values);
@@ -73,7 +74,7 @@ public class FontModule implements DashModule<FontModule.Data> {
 	public void load(Data data, RegistryReader reader, StepTask task) {
 		ProviderIndex index = new ProviderIndex(new HashMap<>(), new ArrayList<>());
 		data.fontMap.providers.forEach((key, value) -> {
-			var fonts = new ArrayList<Font>();
+			var fonts = new ArrayList<Font.FontFilterPair>();
 			for (Integer i : value) {
 				fonts.add(reader.get(i));
 			}
@@ -115,11 +116,11 @@ public class FontModule implements DashModule<FontModule.Data> {
 	}
 
 	public static final class ProviderIndex {
-		public final Map<Identifier, List<Font>> providers;
+		public final Map<Identifier, List<Font.FontFilterPair>> providers;
 		public final List<Font> allProviders;
 
 
-		public ProviderIndex(Map<Identifier, List<Font>> providers, List<Font> allProviders) {
+		public ProviderIndex(Map<Identifier, List<Font.FontFilterPair>> providers, List<Font> allProviders) {
 			this.providers = providers;
 			this.allProviders = allProviders;
 		}
