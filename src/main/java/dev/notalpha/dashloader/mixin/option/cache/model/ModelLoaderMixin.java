@@ -1,12 +1,13 @@
 package dev.notalpha.dashloader.mixin.option.cache.model;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import dev.notalpha.dashloader.DashLoader;
 import dev.notalpha.dashloader.api.cache.CacheStatus;
 import dev.notalpha.dashloader.client.model.ModelModule;
 import dev.notalpha.dashloader.client.model.fallback.UnbakedBakedModel;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.color.block.BlockColors;
-import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.ModelLoader;
 import net.minecraft.client.render.model.UnbakedModel;
 import net.minecraft.client.render.model.json.JsonUnbakedModel;
@@ -20,7 +21,6 @@ import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Iterator;
@@ -38,9 +38,6 @@ public abstract class ModelLoaderMixin {
     @Shadow
     @Final
     private Map<Identifier, UnbakedModel> modelsToBake;
-    @Shadow
-    @Final
-    private Map<Identifier, BakedModel> bakedModels;
 
     @Shadow
     protected abstract void method_4716(BlockState blockState);
@@ -63,11 +60,11 @@ public abstract class ModelLoaderMixin {
     /**
      * We want to not load all of the blockstate models as we have a list of them available on which ones to load to save a lot of computation
      */
-    @Redirect(
+    @WrapOperation(
         method = "<init>",
         at = @At(value = "INVOKE", target = "Ljava/util/Iterator;hasNext()Z", ordinal = 0)
     )
-    private boolean loadMissingModels(Iterator instance) {
+    private boolean loadMissingModels(Iterator instance, Operation<Boolean> original) {
         var map = ModelModule.MISSING_READ.get(CacheStatus.LOAD);
         if (map != null) {
             for (BlockState blockState : map.keySet()) {
@@ -77,7 +74,7 @@ public abstract class ModelLoaderMixin {
             DashLoader.LOG.info("Loaded {} unsupported models.", map.size());
             return false;
         }
-        return instance.hasNext();
+        return original.call(instance);
     }
 
     @Inject(
