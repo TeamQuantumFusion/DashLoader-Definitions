@@ -9,24 +9,22 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(ModelOverrideList.class)
 public interface ModelOverrideListAccessor {
+    @Invoker("<init>")
+    static ModelOverrideList newModelOverrideList() {
+        throw new AssertionError();
+    }
 
+    @Accessor
+    ModelOverrideList.BakedOverride[] getOverrides();
 
-	@Invoker("<init>")
-	static ModelOverrideList newModelOverrideList() {
-		throw new AssertionError();
-	}
+    @Accessor
+    @Mutable
+    void setOverrides(ModelOverrideList.BakedOverride[] overrides);
 
-	@Accessor
-	ModelOverrideList.BakedOverride[] getOverrides();
+    @Accessor
+    Identifier[] getConditionTypes();
 
-	@Accessor
-	@Mutable
-	void setOverrides(ModelOverrideList.BakedOverride[] overrides);
-
-	@Accessor
-	Identifier[] getConditionTypes();
-
-	@Accessor
-	@Mutable
-	void setConditionTypes(Identifier[] conditionTypes);
+    @Accessor
+    @Mutable
+    void setConditionTypes(Identifier[] conditionTypes);
 }

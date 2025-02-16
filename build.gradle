@@ -42,8 +42,8 @@ dependencies {
     // TODO jákob if you need modmenu uncomment this and in gradle.properties - !alpha
     // modImplementation "com.terraformersmc:modmenu:$project.modmenu_version"
 
-    implementation "dev.quantumfusion:Hyphen:0.4.0-rc.3"
-    include "dev.quantumfusion:Hyphen:0.4.0-rc.3"
+    implementation "dev.notalpha:Hyphen:0.4.0-rc.5"
+    include "dev.notalpha:Hyphen:0.4.0-rc.5"
 
     implementation "dev.notalpha:Taski:2.1.0"
     include "dev.notalpha:Taski:2.1.0"

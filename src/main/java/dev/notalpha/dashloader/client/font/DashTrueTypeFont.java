@@ -27,16 +27,15 @@ public final class DashTrueTypeFont implements DashObject<TrueTypeFont, TrueType
 	public final float oversample;
 	public final List<Integer> excludedCharacters;
 
-
-	public DashTrueTypeFont(byte[] ttfBuffer, float oversample, List<Integer> excludedCharacters) {
+    public DashTrueTypeFont(byte[] ttfBuffer, float oversample, List<Integer> excludedCharacters) {
 		this.ttfBuffer = ttfBuffer;
 		this.oversample = oversample;
 		this.excludedCharacters = excludedCharacters;
 	}
 
-	public DashTrueTypeFont(TrueTypeFont font) {
-		TrueTypeFontAccessor fontAccess = (TrueTypeFontAccessor) font;
-		final Identifier ttFont = FontModule.FONT_TO_IDENT.get(CacheStatus.SAVE).get(fontAccess.getFace());
+    public DashTrueTypeFont(TrueTypeFont font) {
+        TrueTypeFontAccessor fontAccess = (TrueTypeFontAccessor) font;
+        final Identifier ttFont = FontModule.FONT_TO_IDENT.get(CacheStatus.SAVE).get(fontAccess.getFace());
 		byte[] data = null;
 		try {
 			Optional<Resource> resource = MinecraftClient.getInstance().getResourceManager().getResource(new Identifier(ttFont.getNamespace(), "font/" + ttFont.getPath()));
@@ -51,19 +50,19 @@ public final class DashTrueTypeFont implements DashObject<TrueTypeFont, TrueType
 		this.excludedCharacters = new ArrayList<>(fontAccess.getExcludedCharacters());
 	}
 
-	@Override
-	public TrueTypeFont export(RegistryReader handler) {
-		ByteBuffer byteBuffer2 = MemoryUtil.memAlloc(this.ttfBuffer.length);
+    @Override
+    public TrueTypeFont export(RegistryReader handler) {
+        ByteBuffer byteBuffer2 = MemoryUtil.memAlloc(this.ttfBuffer.length);
 		byteBuffer2.put(this.ttfBuffer);
 		byteBuffer2.flip();
 		FT_Face ft_face = new FT_Face(byteBuffer2);
 
-		TrueTypeFont trueTypeFont = UnsafeHelper.allocateInstance(TrueTypeFont.class);
-		TrueTypeFontAccessor trueTypeFontAccess = (TrueTypeFontAccessor) trueTypeFont;
-		trueTypeFontAccess.setFace(ft_face);
+        TrueTypeFont trueTypeFont = UnsafeHelper.allocateInstance(TrueTypeFont.class);
+        TrueTypeFontAccessor trueTypeFontAccess = (TrueTypeFontAccessor) trueTypeFont;
+        trueTypeFontAccess.setFace(ft_face);
 		trueTypeFontAccess.setOversample(this.oversample);
 		trueTypeFontAccess.setBuffer(byteBuffer2);
 		trueTypeFontAccess.setExcludedCharacters(new IntArraySet(this.excludedCharacters));
-		return trueTypeFont;
-	}
+        return trueTypeFont;
+    }
 }

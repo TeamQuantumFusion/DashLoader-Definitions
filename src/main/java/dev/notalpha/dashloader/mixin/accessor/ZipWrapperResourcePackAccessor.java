@@ -8,6 +8,6 @@ import java.io.File;
 
 @Mixin(ZipResourcePack.ZipFileWrapper.class)
 public interface ZipWrapperResourcePackAccessor {
-	@Accessor
-	File getFile();
+    @Accessor
+    File getFile();
 }

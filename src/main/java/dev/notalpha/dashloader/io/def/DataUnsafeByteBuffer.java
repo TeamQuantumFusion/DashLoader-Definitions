@@ -1,6 +1,6 @@
 package dev.notalpha.dashloader.io.def;
 
-import dev.quantumfusion.hyphen.scan.annotations.HyphenAnnotation;
+import dev.notalpha.hyphen.scan.annotations.HyphenAnnotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -9,10 +9,7 @@ import net.minecraft.resource.Resource;
 import net.minecraft.resource.metadata.ResourceMetadata;
 import net.minecraft.resource.metadata.ResourceMetadataReader;
 import net.minecraft.util.Identifier;
-import org.slf4j.Logger;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -22,36 +19,31 @@ import java.util.Collection;
 
 @Mixin(SpriteOpener.class)
 public interface SpriteOpenerMixin {
+    @Inject(
+        method = "method_52851",
+        cancellable = true,
+        locals = LocalCapture.CAPTURE_FAILEXCEPTION,
+        at = @At(value = "INVOKE", target = "Lnet/minecraft/resource/Resource;getInputStream()Ljava/io/InputStream;", shift = At.Shift.BEFORE)
+    )
+    private static void dashloaderLoad(Collection<ResourceMetadataReader<?>> metadatas, Identifier id, Resource resource, CallbackInfoReturnable<SpriteContents> cir, ResourceMetadata resourceMetadata) {
+        var dashSpriteData = SpriteContentModule.SOURCE.get(CacheStatus.LOAD);
+        if (dashSpriteData != null) {
+            SpriteContents spriteContents = dashSpriteData.get(id);
+            if (spriteContents != null) {
+                ((SpriteContentsAccessor) spriteContents).setMetadata(resourceMetadata);
+                cir.setReturnValue(spriteContents);
+            }
+        }
+    }
 
-	@Final
-	@Shadow
-	Logger LOGGER = null;
-
-	@Inject(
-			method = "method_52851",
-			cancellable = true,
-			locals = LocalCapture.CAPTURE_FAILEXCEPTION,
-			at = @At(value = "INVOKE", target = "Lnet/minecraft/resource/Resource;getInputStream()Ljava/io/InputStream;", shift = At.Shift.BEFORE)
-	)
-	private static void dashloaderLoad(Collection<ResourceMetadataReader<?>> metadatas, Identifier id, Resource resource, CallbackInfoReturnable<SpriteContents> cir, ResourceMetadata resourceMetadata) {
-		var dashSpriteData = SpriteContentModule.SOURCE.get(CacheStatus.LOAD);
-		if (dashSpriteData != null) {
-			SpriteContents spriteContents = dashSpriteData.get(id);
-			if (spriteContents != null) {
-				((SpriteContentsAccessor) spriteContents).setMetadata(resourceMetadata);
-				cir.setReturnValue(spriteContents);
-			}
-		}
-	}
-
-	@Inject(
-			method = "method_52851",
-			at = @At(value = "RETURN")
-	)
-	private static void dashloaderSave(Collection<?> collection, Identifier id, Resource resource, CallbackInfoReturnable<SpriteContents> cir) {
-		var dashSpriteData = SpriteContentModule.SOURCE.get(CacheStatus.SAVE);
-		if (dashSpriteData != null) {
-			dashSpriteData.put(id, cir.getReturnValue());
-		}
-	}
+    @Inject(
+        method = "method_52851",
+        at = @At(value = "RETURN")
+    )
+    private static void dashloaderSave(Collection<?> collection, Identifier id, Resource resource, CallbackInfoReturnable<SpriteContents> cir) {
+        var dashSpriteData = SpriteContentModule.SOURCE.get(CacheStatus.SAVE);
+        if (dashSpriteData != null) {
+            dashSpriteData.put(id, cir.getReturnValue());
+        }
+    }
 }
