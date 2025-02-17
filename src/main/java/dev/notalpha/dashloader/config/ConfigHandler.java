@@ -34,8 +34,10 @@ public class ConfigHandler {
         this.config.options.forEach((s, aBoolean) -> {
             try {
                 var option = Option.valueOf(s.toUpperCase());
-                OPTION_ACTIVE.put(option, false);
-                DashLoader.LOG.warn("Disabled Optional Feature {} from DashLoader config.", s);
+                OPTION_ACTIVE.put(option, aBoolean);
+                if (!aBoolean) {
+                    DashLoader.LOG.warn("Disabled Optional Feature {} from DashLoader config.", s);
+                }
             } catch (IllegalArgumentException illegalArgumentException) {
                 DashLoader.LOG.error("Could not disable Optional Feature {} as it does not exist.", s);
             }
