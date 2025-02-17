@@ -10,6 +10,7 @@ import org.lwjgl.system.MemoryUtil;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
@@ -36,6 +37,17 @@ public final class IOHelper {
 
         buffer.rewind();
         float[] foo = new float[buffer.remaining()];
+        buffer.get(foo);
+        return foo;
+    }
+
+    public static byte[] toArray(ByteBuffer buffer) {
+        if (buffer == null) {
+            return null;
+        }
+
+        buffer.rewind();
+        byte[] foo = new byte[buffer.remaining()];
         buffer.get(foo);
         return foo;
     }
