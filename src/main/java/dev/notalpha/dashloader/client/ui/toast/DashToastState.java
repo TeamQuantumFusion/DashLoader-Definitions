@@ -1,17 +1,15 @@
-package dev.notalpha.dashloader.client.ui;
+package dev.notalpha.dashloader.client.ui.toast;
 
 import dev.notalpha.dashloader.DashLoader;
+import dev.notalpha.dashloader.misc.TranslationHelper;
 import dev.notalpha.taski.ParentTask;
 import dev.notalpha.taski.Task;
 import dev.notalpha.taski.builtin.AbstractTask;
 import dev.notalpha.taski.builtin.StaticTask;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.util.Language;
-
-import java.util.HashMap;
 
 public final class DashToastState {
-    private final HashMap<String, String> translations;
+    private final TranslationHelper translations;
     public Task task = new StaticTask("Idle", 0);
     private String overwriteText;
     private DashToastStatus status;
@@ -22,17 +20,7 @@ public final class DashToastState {
     public DashToastState() {
         var langCode = MinecraftClient.getInstance().getLanguageManager().getLanguage();
         DashLoader.LOG.info(langCode);
-        var stream = this.getClass().getClassLoader().getResourceAsStream("dashloader/lang/" + langCode + ".json");
-        this.translations = new HashMap<>();
-        if (stream != null) {
-            DashLoader.LOG.info("Found translations");
-            Language.load(stream, this.translations::put);
-        } else {
-            var en_stream = this.getClass().getClassLoader().getResourceAsStream("dashloader/lang/en_us.json");
-            if (en_stream != null) {
-                Language.load(en_stream, this.translations::put);
-            }
-        }
+        this.translations = TranslationHelper.getInstance();
     }
 
     private void tickProgress() {
@@ -60,7 +48,7 @@ public final class DashToastState {
         }
 
         String text = concatTask(3, task);
-        return this.translations.getOrDefault(text, text);
+        return this.translations.get(text);
     }
 
     public String getProgressText() {
@@ -104,7 +92,7 @@ public final class DashToastState {
     }
 
     public void setOverwriteText(String overwriteText) {
-        this.overwriteText = this.translations.getOrDefault(overwriteText, overwriteText);
+        this.overwriteText = this.translations.get(overwriteText);
     }
 
     public DashToastStatus getStatus() {
