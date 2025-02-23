@@ -106,7 +106,7 @@ public class ConfigListWidget extends ElementListWidget<ConfigListWidget.Entry> 
 
         @Override
         public void render(DrawContext context, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
-            context.drawText(ConfigListWidget.this.client.textRenderer, this.label, x + (entryWidth - ConfigListWidget.this.client.textRenderer.getWidth(label)) / 2, y + (entryHeight - 5) / 2, 0xFFFFFF, false);
+            context.drawText(ConfigListWidget.this.client.textRenderer, this.label, (ConfigListWidget.this.client.currentScreen.width - ConfigListWidget.this.client.textRenderer.getWidth(label)) / 2, y + (entryHeight - 5) / 2, 0xFFFFFF, false);
         }
 
         @Override
