@@ -202,7 +202,7 @@ public class ConfigListWidget extends ElementListWidget<ConfigListWidget.Entry> 
             this.min = min;
             this.max = max;
 
-            this.widget = new SliderThing(0, 0, INPUT_FIELD_WIDTH, ConfigListWidget.this.itemHeight - 2, Text.of(String.valueOf(value)), min, max, (double) (this.value - min) / (max - min));
+            this.widget = new SliderThing(0, 0, INPUT_FIELD_WIDTH, ConfigListWidget.this.itemHeight, Text.of(String.valueOf(value)), min, max, (double) (this.value - min) / (max - min));
             this.widget.setTooltip(this.tooltip);
         }
 
@@ -251,7 +251,7 @@ public class ConfigListWidget extends ElementListWidget<ConfigListWidget.Entry> 
             super(label, value, defaultValue, saveCallback);
             this.filter = filter;
 
-            this.widget = new TextFieldWidget(ConfigListWidget.this.client.textRenderer, 0, 0, INPUT_FIELD_WIDTH, ConfigListWidget.this.itemHeight - 2, Text.empty()) {
+            this.widget = new TextFieldWidget(ConfigListWidget.this.client.textRenderer, 0, 0, INPUT_FIELD_WIDTH, ConfigListWidget.this.itemHeight, Text.empty()) {
                 @Override
                 public boolean charTyped(char chr, int modifiers) {
                     if (TextFieldEntry.this.filter.test(chr)) {
