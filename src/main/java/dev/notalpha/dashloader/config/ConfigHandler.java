@@ -14,7 +14,6 @@ import java.nio.file.StandardOpenOption;
 import java.util.EnumMap;
 
 public class ConfigHandler {
-    public static final ConfigHandler INSTANCE = new ConfigHandler(FabricLoader.getInstance().getConfigDir().normalize().resolve("dashloader.json"));
     private static final EnumMap<Option, Boolean> OPTION_ACTIVE = new EnumMap<>(Option.class);
     private static final String DISABLE_OPTION_TAG = "dashloader:disableoption";
 
@@ -23,6 +22,7 @@ public class ConfigHandler {
             OPTION_ACTIVE.put(value, true);
         }
     }
+    public static final ConfigHandler INSTANCE = new ConfigHandler(FabricLoader.getInstance().getConfigDir().normalize().resolve("dashloader.json"));
 
     private final Gson gson = new GsonBuilder().setLenient().setPrettyPrinting().create();
     private final Path configPath;

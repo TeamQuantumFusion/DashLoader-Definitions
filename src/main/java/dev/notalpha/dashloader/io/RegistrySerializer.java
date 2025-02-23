@@ -36,10 +36,8 @@ public class RegistrySerializer {
     // 1GB
     private static final int MAX_FRAGMENT_SIZE = 1024 * 1024 * 1024;
     private final Object2ObjectMap<Class<?>, Serializer<?>> serializers;
-    private final int compressionLevel;
 
     public RegistrySerializer(List<DashObjectClass<?, ?>> dashObjects) {
-        this.compressionLevel = ConfigHandler.INSTANCE.config.compression;
         this.serializers = new Object2ObjectOpenHashMap<>();
         for (DashObjectClass<?, ?> dashObject : dashObjects) {
             Class<?> dashClass = dashObject.getDashClass();
@@ -141,7 +139,7 @@ public class RegistrySerializer {
             task.setSubTask(serializingTask);
 
             int fileSize = (int) fragment.info.fileSize;
-            IOHelper.save(fragmentFilePath(dir, k), serializingTask, io, fileSize, (byte) compressionLevel);
+            IOHelper.save(fragmentFilePath(dir, k), serializingTask, io, fileSize, ConfigHandler.INSTANCE.config.compression);
             task.next();
         }
 

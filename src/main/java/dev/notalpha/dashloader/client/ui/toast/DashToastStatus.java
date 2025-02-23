@@ -1,4 +1,4 @@
-package dev.notalpha.dashloader.client.ui;
+package dev.notalpha.dashloader.client.ui.toast;
 
 public enum DashToastStatus {
     PROGRESS,

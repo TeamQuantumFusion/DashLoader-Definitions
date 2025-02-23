@@ -27,6 +27,14 @@ repositories {
     maven {
         url "https://notalpha.dev/maven/releases"
     }
+    maven {
+        name = "Terraformers"
+        url = "https://maven.terraformersmc.com/"
+    }
+    maven {
+        name = "Nucleoid"
+        url = "https://maven.nucleoid.xyz/"
+    }
 }
 
 loom {
@@ -39,8 +47,7 @@ dependencies {
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
-    // TODO jákob if you need modmenu uncomment this and in gradle.properties - !alpha
-    // modImplementation "com.terraformersmc:modmenu:$project.modmenu_version"
+    modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
 
     implementation "dev.notalpha:Hyphen:0.4.0-rc.5"
     include "dev.notalpha:Hyphen:0.4.0-rc.5"

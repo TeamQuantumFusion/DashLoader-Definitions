@@ -1,6 +1,8 @@
-package dev.notalpha.dashloader.client.ui;
+package dev.notalpha.dashloader.client.ui.toast;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import dev.notalpha.dashloader.client.ui.Color;
+import dev.notalpha.dashloader.client.ui.DrawerUtil;
 import dev.notalpha.dashloader.misc.HahaManager;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
