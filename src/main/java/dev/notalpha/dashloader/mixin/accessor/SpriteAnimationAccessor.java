@@ -9,17 +9,17 @@ import java.util.List;
 
 @Mixin(SpriteContents.Animation.class)
 public interface SpriteAnimationAccessor {
-    @Invoker("<init>")
-    static SpriteContents.Animation init(SpriteContents parent, List<SpriteContents.AnimationFrame> frames, int frameCount, boolean interpolation) {
-        throw new AssertionError();
-    }
+	@Invoker("<init>")
+	static SpriteContents.Animation init(SpriteContents parent, List<SpriteContents.AnimationFrame> frames, int frameCount, boolean interpolation) {
+		throw new AssertionError();
+	}
 
-    @Accessor
-    List<SpriteContents.AnimationFrame> getFrames();
+	@Accessor
+	List<SpriteContents.AnimationFrame> getFrames();
 
-    @Accessor
-    int getFrameCount();
+	@Accessor
+	int getFrameCount();
 
-    @Accessor
-    boolean getInterpolation();
+	@Accessor
+	boolean getInterpolation();
 }

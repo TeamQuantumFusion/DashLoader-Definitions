@@ -17,23 +17,23 @@ import java.util.function.Function;
  * An unbaked model which holds a baked model, used for fallback to reuse cached models.
  */
 public class UnbakedBakedModel implements UnbakedModel {
-    private final Dazy<? extends BakedModel> bakedModel;
+	private final Dazy<? extends BakedModel> bakedModel;
 
-    public UnbakedBakedModel(Dazy<? extends BakedModel> bakedModel) {
-        this.bakedModel = bakedModel;
-    }
+	public UnbakedBakedModel(Dazy<? extends BakedModel> bakedModel) {
+		this.bakedModel = bakedModel;
+	}
 
-    @Override
-    public Collection<Identifier> getModelDependencies() {
-        return List.of();
-    }
+	@Override
+	public Collection<Identifier> getModelDependencies() {
+		return List.of();
+	}
 
-    @Override
-    public void setParents(Function<Identifier, UnbakedModel> modelLoader) {
-    }
+	@Override
+	public void setParents(Function<Identifier, UnbakedModel> modelLoader) {
+	}
 
-    @Override
-    public BakedModel bake(Baker baker, Function<SpriteIdentifier, Sprite> textureGetter, ModelBakeSettings rotationContainer, Identifier modelId) {
-        return this.bakedModel.get(textureGetter);
-    }
+	@Override
+	public BakedModel bake(Baker baker, Function<SpriteIdentifier, Sprite> textureGetter, ModelBakeSettings rotationContainer, Identifier modelId) {
+		return this.bakedModel.get(textureGetter);
+	}
 }

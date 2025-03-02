@@ -9,21 +9,21 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(BasicBakedModel.class)
 public interface BasicBakedModelAccessor {
-    @Accessor
-    boolean getUsesAo();
+	@Accessor
+	boolean getUsesAo();
 
-    @Accessor
-    boolean getHasDepth();
+	@Accessor
+	boolean getHasDepth();
 
-    @Accessor
-    boolean getIsSideLit();
+	@Accessor
+	boolean getIsSideLit();
 
-    @Accessor
-    Sprite getSprite();
+	@Accessor
+	Sprite getSprite();
 
-    @Accessor
-    ModelTransformation getTransformation();
+	@Accessor
+	ModelTransformation getTransformation();
 
-    @Accessor
-    ModelOverrideList getItemPropertyOverrides();
+	@Accessor
+	ModelOverrideList getItemPropertyOverrides();
 }

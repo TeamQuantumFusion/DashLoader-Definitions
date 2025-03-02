@@ -12,12 +12,12 @@ import java.util.List;
 
 @Mixin(GlStateManager.class)
 public class GlStateManagerMixin {
-    @Inject(
-        method = "glShaderSource",
-        at = @At(value = "HEAD")
-    )
-    private static void glShaderSourceInject(int shader, List<String> strings, CallbackInfo ci) {
-        ShaderModule.WRITE_PROGRAM_SOURCES.visit(CacheStatus.SAVE, map -> map.put(shader, strings));
-    }
+	@Inject(
+			method = "glShaderSource",
+			at = @At(value = "HEAD")
+	)
+	private static void glShaderSourceInject(int shader, List<String> strings, CallbackInfo ci) {
+		ShaderModule.WRITE_PROGRAM_SOURCES.visit(CacheStatus.SAVE, map -> map.put(shader, strings));
+	}
 }
 

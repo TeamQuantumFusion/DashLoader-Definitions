@@ -5,8 +5,8 @@ import dev.notalpha.dashloader.api.registry.RegistryReader;
 import net.minecraft.client.font.BlankFont;
 
 public final class DashBlankFont implements DashObject<BlankFont, BlankFont> {
-    @Override
-    public BlankFont export(RegistryReader exportHandler) {
-        return new BlankFont();
-    }
+	@Override
+	public BlankFont export(RegistryReader exportHandler) {
+		return new BlankFont();
+	}
 }

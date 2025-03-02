@@ -30,77 +30,77 @@ import java.util.function.BiFunction;
 
 @Mixin(value = ModelLoader.class, priority = 69420)
 public abstract class ModelLoaderMixin {
-    @Mutable
-    @Shadow
-    @Final
-    private Map<Identifier, UnbakedModel> unbakedModels;
-    @Mutable
-    @Shadow
-    @Final
-    private Map<Identifier, UnbakedModel> modelsToBake;
+	@Mutable
+	@Shadow
+	@Final
+	private Map<Identifier, UnbakedModel> unbakedModels;
+	@Mutable
+	@Shadow
+	@Final
+	private Map<Identifier, UnbakedModel> modelsToBake;
 
-    @Shadow
-    protected abstract void method_4716(BlockState blockState);
+	@Shadow
+	protected abstract void method_4716(BlockState blockState);
 
-    @Inject(
-        method = "<init>",
-        at = @At(value = "INVOKE_STRING", target = "Lnet/minecraft/util/profiler/Profiler;swap(Ljava/lang/String;)V", args = "ldc=static_definitions", shift = At.Shift.AFTER)
-    )
-    private void injectLoadedModels(BlockColors blockColors, Profiler profiler, Map<Identifier, JsonUnbakedModel> jsonUnbakedModels, Map<Identifier, List<ModelLoader.SourceTrackedData>> blockStates, CallbackInfo ci) {
-        ModelModule.MODELS_LOAD.visit(CacheStatus.LOAD, dashModels -> {
-            int total = dashModels.size();
-            this.unbakedModels.keySet().forEach(dashModels::remove);
-            this.modelsToBake.keySet().forEach(dashModels::remove);
-            DashLoader.LOG.info("Injecting {}/{} Cached Models", dashModels.size(), total);
-            this.unbakedModels.putAll(dashModels);
-            this.modelsToBake.putAll(dashModels);
-        });
-    }
+	@Inject(
+			method = "<init>",
+			at = @At(value = "INVOKE_STRING", target = "Lnet/minecraft/util/profiler/Profiler;swap(Ljava/lang/String;)V", args = "ldc=static_definitions", shift = At.Shift.AFTER)
+	)
+	private void injectLoadedModels(BlockColors blockColors, Profiler profiler, Map<Identifier, JsonUnbakedModel> jsonUnbakedModels, Map<Identifier, List<ModelLoader.SourceTrackedData>> blockStates, CallbackInfo ci) {
+		ModelModule.MODELS_LOAD.visit(CacheStatus.LOAD, dashModels -> {
+			int total = dashModels.size();
+			this.unbakedModels.keySet().forEach(dashModels::remove);
+			this.modelsToBake.keySet().forEach(dashModels::remove);
+			DashLoader.LOG.info("Injecting {}/{} Cached Models", dashModels.size(), total);
+			this.unbakedModels.putAll(dashModels);
+			this.modelsToBake.putAll(dashModels);
+		});
+	}
 
-    /**
-     * We want to not load all of the blockstate models as we have a list of them available on which ones to load to save a lot of computation
-     */
-    @WrapOperation(
-        method = "<init>",
-        at = @At(value = "INVOKE", target = "Ljava/util/Iterator;hasNext()Z", ordinal = 0)
-    )
-    private boolean loadMissingModels(Iterator instance, Operation<Boolean> original) {
-        var map = ModelModule.MISSING_READ.get(CacheStatus.LOAD);
-        if (map != null) {
-            for (BlockState blockState : map.keySet()) {
-                // load thing lambda
-                this.method_4716(blockState);
-            }
-            DashLoader.LOG.info("Loaded {} unsupported models.", map.size());
-            return false;
-        }
-        return original.call(instance);
-    }
+	/**
+	 * We want to not load all of the blockstate models as we have a list of them available on which ones to load to save a lot of computation
+	 */
+	@WrapOperation(
+			method = "<init>",
+			at = @At(value = "INVOKE", target = "Ljava/util/Iterator;hasNext()Z", ordinal = 0)
+	)
+	private boolean loadMissingModels(Iterator instance, Operation<Boolean> original) {
+		var map = ModelModule.MISSING_READ.get(CacheStatus.LOAD);
+		if (map != null) {
+			for (BlockState blockState : map.keySet()) {
+				// load thing lambda
+				this.method_4716(blockState);
+			}
+			DashLoader.LOG.info("Loaded {} unsupported models.", map.size());
+			return false;
+		}
+		return original.call(instance);
+	}
 
-    @Inject(
-        method = "bake",
-        at = @At(
-            value = "HEAD"
-        )
-    )
-    private void countModels(BiFunction<Identifier, SpriteIdentifier, Sprite> spriteLoader, CallbackInfo ci) {
-        if (ModelModule.MODELS_LOAD.active(CacheStatus.LOAD)) {
-            // Cache stats
-            int cachedModels = 0;
-            int fallbackModels = 0;
-            for (UnbakedModel value : this.modelsToBake.values()) {
-                if (value instanceof UnbakedBakedModel) {
-                    cachedModels += 1;
-                } else {
-                    fallbackModels += 1;
-                }
-            }
-            long totalModels = cachedModels + fallbackModels;
-            DashLoader.LOG.info("{}% Cache coverage", (int) (((cachedModels / (float) totalModels) * 100)));
-            DashLoader.LOG.info("with {} Fallback models", fallbackModels);
-            DashLoader.LOG.info("and  {} Cached models", cachedModels);
-        }
-    }
+	@Inject(
+			method = "bake",
+			at = @At(
+					value = "HEAD"
+			)
+	)
+	private void countModels(BiFunction<Identifier, SpriteIdentifier, Sprite> spriteLoader, CallbackInfo ci) {
+		if (ModelModule.MODELS_LOAD.active(CacheStatus.LOAD)) {
+			// Cache stats
+			int cachedModels = 0;
+			int fallbackModels = 0;
+			for (UnbakedModel value : this.modelsToBake.values()) {
+				if (value instanceof UnbakedBakedModel) {
+					cachedModels += 1;
+				} else {
+					fallbackModels += 1;
+				}
+			}
+			long totalModels = cachedModels + fallbackModels;
+			DashLoader.LOG.info("{}% Cache coverage", (int) (((cachedModels / (float) totalModels) * 100)));
+			DashLoader.LOG.info("with {} Fallback models", fallbackModels);
+			DashLoader.LOG.info("and  {} Cached models", cachedModels);
+		}
+	}
 
 //    @Inject(
 //        method = "bake",
@@ -125,11 +125,11 @@ public abstract class ModelLoaderMixin {
 //		System.out.println();
 
 //
-    //String dump = ObjectDumper.dump(new ObjectDumper.Wrapper(models));
-    //try {
-    //	Files.writeString(Path.of("./output." + DashLoaderClient.CACHE.getStatus()), dump);
-    //} catch (IOException e) {
-    //	throw new RuntimeException(e);
-    //}
+	//String dump = ObjectDumper.dump(new ObjectDumper.Wrapper(models));
+	//try {
+	//	Files.writeString(Path.of("./output." + DashLoaderClient.CACHE.getStatus()), dump);
+	//} catch (IOException e) {
+	//	throw new RuntimeException(e);
+	//}
 //    }
 }

@@ -18,26 +18,26 @@ import java.util.concurrent.Executor;
 
 @Mixin(FontManager.class)
 public class FontManagerOverride {
-    @Inject(
-        method = "loadIndex",
-        at = @At(value = "HEAD"),
-        cancellable = true
-    )
-    private void loadFonts(ResourceManager resourceManager, Executor executor, CallbackInfoReturnable<CompletableFuture<FontManager.ProviderIndex>> cir) {
-        FontModule.DATA.visit(CacheStatus.LOAD, data -> {
-            DashLoader.LOG.info("Providing fonts");
-            cir.setReturnValue(CompletableFuture.completedFuture(FontManagerProviderIndexAccessor.create(data.providers, data.allProviders)));
-        });
-    }
+	@Inject(
+			method = "loadIndex",
+			at = @At(value = "HEAD"),
+			cancellable = true
+	)
+	private void loadFonts(ResourceManager resourceManager, Executor executor, CallbackInfoReturnable<CompletableFuture<FontManager.ProviderIndex>> cir) {
+		FontModule.DATA.visit(CacheStatus.LOAD, data -> {
+			DashLoader.LOG.info("Providing fonts");
+			cir.setReturnValue(CompletableFuture.completedFuture(FontManagerProviderIndexAccessor.create(data.providers, data.allProviders)));
+		});
+	}
 
-    @Inject(
-        method = "reload(Lnet/minecraft/client/font/FontManager$ProviderIndex;Lnet/minecraft/util/profiler/Profiler;)V",
-        at = @At(value = "HEAD")
-    )
-    private void saveFonts(FontManager.ProviderIndex index, Profiler profiler, CallbackInfo ci) {
-        if (FontModule.DATA.active(CacheStatus.SAVE)) {
-            DashLoader.LOG.info("Saving fonts");
-            FontModule.DATA.set(CacheStatus.SAVE, new FontModule.ProviderIndex(index.providers(), index.allProviders()));
-        }
-    }
+	@Inject(
+			method = "reload(Lnet/minecraft/client/font/FontManager$ProviderIndex;Lnet/minecraft/util/profiler/Profiler;)V",
+			at = @At(value = "HEAD")
+	)
+	private void saveFonts(FontManager.ProviderIndex index, Profiler profiler, CallbackInfo ci) {
+		if (FontModule.DATA.active(CacheStatus.SAVE)) {
+			DashLoader.LOG.info("Saving fonts");
+			FontModule.DATA.set(CacheStatus.SAVE, new FontModule.ProviderIndex(index.providers(), index.allProviders()));
+		}
+	}
 }

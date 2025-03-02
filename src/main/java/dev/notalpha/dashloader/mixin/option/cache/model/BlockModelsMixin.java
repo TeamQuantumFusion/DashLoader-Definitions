@@ -13,17 +13,17 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(BlockModels.class)
 public class BlockModelsMixin {
-    @Inject(
-        method = "getModelId(Lnet/minecraft/block/BlockState;)Lnet/minecraft/client/util/ModelIdentifier;",
-        at = @At(value = "HEAD"),
-        cancellable = true
-    )
-    private static void cacheModelId(BlockState state, CallbackInfoReturnable<ModelIdentifier> cir) {
-        ModelModule.MISSING_READ.visit(CacheStatus.LOAD, map -> {
-            final Identifier identifier = map.get(state);
-            if (identifier != null) {
-                cir.setReturnValue((ModelIdentifier) identifier);
-            }
-        });
-    }
+	@Inject(
+			method = "getModelId(Lnet/minecraft/block/BlockState;)Lnet/minecraft/client/util/ModelIdentifier;",
+			at = @At(value = "HEAD"),
+			cancellable = true
+	)
+	private static void cacheModelId(BlockState state, CallbackInfoReturnable<ModelIdentifier> cir) {
+		ModelModule.MISSING_READ.visit(CacheStatus.LOAD, map -> {
+			final Identifier identifier = map.get(state);
+			if (identifier != null) {
+				cir.setReturnValue((ModelIdentifier) identifier);
+			}
+		});
+	}
 }

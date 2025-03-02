@@ -8,8 +8,8 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(ModelIdentifier.class)
 public interface ModelIdentifierAccessor {
-    @Invoker("<init>")
-    static ModelIdentifier init(String namespace, String path, String variant, @Nullable Identifier.ExtraData extraData) {
-        throw new AssertionError();
-    }
+	@Invoker("<init>")
+	static ModelIdentifier init(String namespace, String path, String variant, @Nullable Identifier.ExtraData extraData) {
+		throw new AssertionError();
+	}
 }

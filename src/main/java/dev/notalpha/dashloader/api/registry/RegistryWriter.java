@@ -7,13 +7,13 @@ package dev.notalpha.dashloader.api.registry;
  * @see RegistryReader
  */
 public interface RegistryWriter {
-    /**
-     * Adds an object to the Cache, the object needs to have a DashObject backing it else it will fail.
-     *
-     * @param object The Object to add to the cache.
-     * @param <R>    The target class being cached.
-     * @return A registry id which points to the object.
-     * @see RegistryReader#get(int)
-     */
-    <R> int add(R object);
+	/**
+	 * Adds an object to the Cache, the object needs to have a DashObject backing it else it will fail.
+	 *
+	 * @param object The Object to add to the cache.
+	 * @param <R>    The target class being cached.
+	 * @return A registry id which points to the object.
+	 * @see RegistryReader#get(int)
+	 */
+	<R> int add(R object);
 }

@@ -14,23 +14,23 @@ import java.util.List;
 
 @Mixin(SplashTextResourceSupplier.class)
 public class SplashTextResourceSupplierMixin {
-    @Inject(
-        method = "prepare(Lnet/minecraft/resource/ResourceManager;Lnet/minecraft/util/profiler/Profiler;)Ljava/util/List;",
-        at = @At(value = "HEAD"),
-        cancellable = true
-    )
-    private void applySplashCache(ResourceManager resourceManager, Profiler profiler, CallbackInfoReturnable<List<String>> cir) {
-        SplashModule.TEXTS.visit(CacheStatus.LOAD, cir::setReturnValue);
-    }
+	@Inject(
+			method = "prepare(Lnet/minecraft/resource/ResourceManager;Lnet/minecraft/util/profiler/Profiler;)Ljava/util/List;",
+			at = @At(value = "HEAD"),
+			cancellable = true
+	)
+	private void applySplashCache(ResourceManager resourceManager, Profiler profiler, CallbackInfoReturnable<List<String>> cir) {
+		SplashModule.TEXTS.visit(CacheStatus.LOAD, cir::setReturnValue);
+	}
 
-    @Inject(
-        method = "prepare(Lnet/minecraft/resource/ResourceManager;Lnet/minecraft/util/profiler/Profiler;)Ljava/util/List;",
-        at = @At(value = "RETURN")
-    )
-    private void stealSplashCache(ResourceManager resourceManager, Profiler profiler, CallbackInfoReturnable<List<String>> cir) {
-        SplashModule.TEXTS.visit(CacheStatus.SAVE, strings -> {
-            strings.clear();
-            strings.addAll(cir.getReturnValue());
-        });
-    }
+	@Inject(
+			method = "prepare(Lnet/minecraft/resource/ResourceManager;Lnet/minecraft/util/profiler/Profiler;)Ljava/util/List;",
+			at = @At(value = "RETURN")
+	)
+	private void stealSplashCache(ResourceManager resourceManager, Profiler profiler, CallbackInfoReturnable<List<String>> cir) {
+		SplashModule.TEXTS.visit(CacheStatus.SAVE, strings -> {
+			strings.clear();
+			strings.addAll(cir.getReturnValue());
+		});
+	}
 }

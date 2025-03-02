@@ -10,29 +10,29 @@ import dev.notalpha.dashloader.api.registry.RegistryReader;
  */
 @SuppressWarnings("unused")
 public interface DashObject<I, O> {
-    /**
-     * Runs before export on the main thread.
-     *
-     * @see DashObject#export(RegistryReader)
-     */
-    @SuppressWarnings("unused")
-    default void preExport(RegistryReader reader) {
-    }
+	/**
+	 * Runs before export on the main thread.
+	 *
+	 * @see DashObject#export(RegistryReader)
+	 */
+	@SuppressWarnings("unused")
+	default void preExport(RegistryReader reader) {
+	}
 
-    /**
-     * The export method converts the DashObject into the original counterpart which was provided on save.
-     * <br><br>
-     * Note: This runs in parallel meaning that it does not run on the Main thread. If you need to load things on the main thread use {@link DashObject#postExport(RegistryReader)}
-     */
-    @SuppressWarnings("unused")
-    O export(RegistryReader reader);
+	/**
+	 * The export method converts the DashObject into the original counterpart which was provided on save.
+	 * <br><br>
+	 * Note: This runs in parallel meaning that it does not run on the Main thread. If you need to load things on the main thread use {@link DashObject#postExport(RegistryReader)}
+	 */
+	@SuppressWarnings("unused")
+	O export(RegistryReader reader);
 
-    /**
-     * Runs after export on the main thread.
-     *
-     * @see DashObject#export(RegistryReader)
-     */
-    @SuppressWarnings("unused")
-    default void postExport(RegistryReader reader) {
-    }
+	/**
+	 * Runs after export on the main thread.
+	 *
+	 * @see DashObject#export(RegistryReader)
+	 */
+	@SuppressWarnings("unused")
+	default void postExport(RegistryReader reader) {
+	}
 }

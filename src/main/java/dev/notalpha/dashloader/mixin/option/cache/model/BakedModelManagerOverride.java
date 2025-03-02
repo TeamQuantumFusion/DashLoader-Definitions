@@ -17,16 +17,16 @@ import java.util.Map;
 
 @Mixin(value = BakedModelManager.class, priority = 69420)
 public abstract class BakedModelManagerOverride {
-    @Shadow
-    private Map<Identifier, BakedModel> models;
+	@Shadow
+	private Map<Identifier, BakedModel> models;
 
-    @Inject(method = "upload",
-        at = @At(value = "TAIL")
-    )
-    private void yankAssets(BakedModelManager.BakingResult bakingResult, Profiler profiler, CallbackInfo ci) {
-        ModelModule.MODELS_SAVE.visit(CacheStatus.SAVE, map -> {
-            DashLoader.LOG.info("Yanking Minecraft Assets");
-            map.putAll(this.models);
-        });
-    }
+	@Inject(method = "upload",
+			at = @At(value = "TAIL")
+	)
+	private void yankAssets(BakedModelManager.BakingResult bakingResult, Profiler profiler, CallbackInfo ci) {
+		ModelModule.MODELS_SAVE.visit(CacheStatus.SAVE, map -> {
+			DashLoader.LOG.info("Yanking Minecraft Assets");
+			map.putAll(this.models);
+		});
+	}
 }

@@ -15,46 +15,46 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SpriteContentModule implements DashModule<SpriteContentModule.Data> {
-    public final static CachingData<Map<Identifier, SpriteContents>> SOURCE = new CachingData<>();
+	public final static CachingData<Map<Identifier, SpriteContents>> SOURCE = new CachingData<>();
 
-    @Override
-    public void reset(Cache cache) {
-        SOURCE.reset(cache, new HashMap<>());
-    }
+	@Override
+	public void reset(Cache cache) {
+		SOURCE.reset(cache, new HashMap<>());
+	}
 
-    @Override
-    public Data save(RegistryWriter writer, StepTask task) {
-        var spriteData = SOURCE.get(CacheStatus.SAVE);
-        assert spriteData != null;
+	@Override
+	public Data save(RegistryWriter writer, StepTask task) {
+		var spriteData = SOURCE.get(CacheStatus.SAVE);
+		assert spriteData != null;
 
-        var map = new IntIntList();
-        task.doForEach(spriteData, (identifier, spriteContents) -> map.put(writer.add(identifier), writer.add(spriteContents)));
+		var map = new IntIntList();
+		task.doForEach(spriteData, (identifier, spriteContents) -> map.put(writer.add(identifier), writer.add(spriteContents)));
 
-        return new Data(map);
-    }
+		return new Data(map);
+	}
 
-    @Override
-    public void load(Data data, RegistryReader reader, StepTask task) {
-        Map<Identifier, SpriteContents> spriteData = SOURCE.get(CacheStatus.LOAD);
-        assert spriteData != null;
+	@Override
+	public void load(Data data, RegistryReader reader, StepTask task) {
+		Map<Identifier, SpriteContents> spriteData = SOURCE.get(CacheStatus.LOAD);
+		assert spriteData != null;
 
-        data.sprites.forEach((key, value) -> {
-            Identifier identifier = reader.get(key);
-            SpriteContents contents = reader.get(value);
-            spriteData.put(identifier, contents);
-        });
-    }
+		data.sprites.forEach((key, value) -> {
+			Identifier identifier = reader.get(key);
+			SpriteContents contents = reader.get(value);
+			spriteData.put(identifier, contents);
+		});
+	}
 
-    @Override
-    public Class<Data> getDataClass() {
-        return Data.class;
-    }
+	@Override
+	public Class<Data> getDataClass() {
+		return Data.class;
+	}
 
-    public static class Data {
-        public final IntIntList sprites;
+	public static class Data {
+		public final IntIntList sprites;
 
-        public Data(IntIntList sprites) {
-            this.sprites = sprites;
-        }
-    }
+		public Data(IntIntList sprites) {
+			this.sprites = sprites;
+		}
+	}
 }

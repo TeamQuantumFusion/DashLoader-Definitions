@@ -6,6 +6,6 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(ZipResourcePack.class)
 public interface ZipResourcePackAccessor {
-    @Accessor
-    ZipResourcePack.ZipFileWrapper getZipFile();
+	@Accessor
+	ZipResourcePack.ZipFileWrapper getZipFile();
 }

@@ -16,21 +16,21 @@ import java.util.function.Predicate;
 
 @Mixin(MultipartBakedModel.class)
 public interface MultipartBakedModelAccessor {
-    @Accessor
-    List<Pair<Predicate<BlockState>, BakedModel>> getComponents();
+	@Accessor
+	List<Pair<Predicate<BlockState>, BakedModel>> getComponents();
 
-    @Accessor
-    @Mutable
-    void setComponents(List<Pair<Predicate<BlockState>, BakedModel>> components);
+	@Accessor
+	@Mutable
+	void setComponents(List<Pair<Predicate<BlockState>, BakedModel>> components);
 
-    @Accessor
-    Map<BlockState, BitSet> getStateCache();
+	@Accessor
+	Map<BlockState, BitSet> getStateCache();
 
-    @Accessor
-    @Mutable
-    void setStateCache(Map<BlockState, BitSet> stateBitSetMap);
+	@Accessor
+	@Mutable
+	void setStateCache(Map<BlockState, BitSet> stateBitSetMap);
 
-    @Accessor
-    @Mutable
-    void setSprite(Sprite sprite);
+	@Accessor
+	@Mutable
+	void setSprite(Sprite sprite);
 }

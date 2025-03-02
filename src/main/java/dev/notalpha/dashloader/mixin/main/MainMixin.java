@@ -10,17 +10,17 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Main.class)
 public class MainMixin {
-    @Unique
-    private static boolean INITIALIZED = false;
+	@Unique
+	private static boolean INITIALIZED = false;
 
-    @Inject(
-        method = "main*",
-        at = @At(value = "HEAD")
-    )
-    private static void bootstrap(String[] args, CallbackInfo ci) {
-        if (!INITIALIZED) {
-            DashLoader.bootstrap();
-            INITIALIZED = true;
-        }
-    }
+	@Inject(
+			method = "main*",
+			at = @At(value = "HEAD")
+	)
+	private static void bootstrap(String[] args, CallbackInfo ci) {
+		if (!INITIALIZED) {
+			DashLoader.bootstrap();
+			INITIALIZED = true;
+		}
+	}
 }

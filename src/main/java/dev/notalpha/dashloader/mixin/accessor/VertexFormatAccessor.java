@@ -8,6 +8,6 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(VertexFormat.class)
 public interface VertexFormatAccessor {
-    @Accessor
-    ImmutableMap<String, VertexFormatElement> getElementMap();
+	@Accessor
+	ImmutableMap<String, VertexFormatElement> getElementMap();
 }
