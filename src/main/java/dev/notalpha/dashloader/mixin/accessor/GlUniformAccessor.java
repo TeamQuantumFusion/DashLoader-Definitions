@@ -10,21 +10,21 @@ import java.nio.IntBuffer;
 
 @Mixin(GlUniform.class)
 public interface GlUniformAccessor {
-	@Accessor
-	@Mutable
-	void setIntData(IntBuffer intData);
+    @Accessor
+    IntBuffer getIntData();
 
-	@Accessor
-	IntBuffer getIntData();
+    @Accessor
+    @Mutable
+    void setIntData(IntBuffer intData);
 
-	@Accessor
-	FloatBuffer getFloatData();
+    @Accessor
+    FloatBuffer getFloatData();
 
-	@Accessor
-	@Mutable
-	void setFloatData(FloatBuffer floatData);
+    @Accessor
+    @Mutable
+    void setFloatData(FloatBuffer floatData);
 
-	@Accessor
-	@Mutable
-	void setName(String name);
+    @Accessor
+    @Mutable
+    void setName(String name);
 }
