@@ -39,7 +39,7 @@ public class ConfigHandler {
 					DashLoader.LOG.warn("Disabled Optional Feature {} from DashLoader config.", s);
 				}
 			} catch (IllegalArgumentException illegalArgumentException) {
-				DashLoader.LOG.error("Could not disable Optional Feature {} as it does not exist.", s);
+				DashLoader.LOG.error("Could not disable Optional Feature {} from DashLoader config as it does not exist.", s);
 			}
 		});
 
@@ -53,7 +53,7 @@ public class ConfigHandler {
 						OPTION_ACTIVE.put(option, false);
 						DashLoader.LOG.warn("Disabled Optional Feature {} from {} config. {}", feature, mod.getId(), mod.getName());
 					} catch (IllegalArgumentException illegalArgumentException) {
-						DashLoader.LOG.error("Could not disable Optional Feature {} as it does not exist.", feature);
+						DashLoader.LOG.error("Could not disable Optional Feature {} from {} config as it does not exist. {}", feature, mod.getId(), mod.getName());
 					}
 				}
 			}
