@@ -30,12 +30,12 @@ public final class DashTrueTypeFont implements DashObject<TrueTypeFont, TrueType
     public final byte[] fontData;
     public final float oversample;
     public final List<Integer> excludedCharacters;
-    public final float size;
-    public final long shiftX;
-    public final long shiftY;
+    public final int size;
+    public final float shiftX;
+    public final float shiftY;
     private transient TrueTypeFont _font;
 
-    public DashTrueTypeFont(byte[] fontData, float oversample, List<Integer> excludedCharacters, float size, long shiftX, long shiftY) {
+    public DashTrueTypeFont(byte[] fontData, float oversample, List<Integer> excludedCharacters, int size, float shiftX, float shiftY) {
         this.fontData = fontData;
         this.oversample = oversample;
         this.excludedCharacters = excludedCharacters;
@@ -69,7 +69,7 @@ public final class DashTrueTypeFont implements DashObject<TrueTypeFont, TrueType
         this.fontData = data;
         this.oversample = fontAccess.getOversample();
         this.excludedCharacters = new ArrayList<>(fontAccess.getExcludedCharacters());
-        this.size = pair.getRight();
+        this.size = Math.round(pair.getRight() * this.oversample);
     }
 
     @Override
@@ -88,7 +88,6 @@ public final class DashTrueTypeFont implements DashObject<TrueTypeFont, TrueType
         fontBuffer.put(this.fontData);
         fontBuffer.flip();
 
-        int size = Math.round(this.size * this.oversample);
         FT_Face ft_face = null;
 
         var trueTypeFontAccess = (TrueTypeFontAccessor) this._font;
@@ -101,7 +100,7 @@ public final class DashTrueTypeFont implements DashObject<TrueTypeFont, TrueType
                     ft_face = FT_Face.create(pointerBuffer.get());
                 }
 
-                FreeType.FT_Set_Pixel_Sizes(ft_face, size, size);
+                FreeType.FT_Set_Pixel_Sizes(ft_face, this.size, this.size);
                 try (MemoryStack memoryStack = MemoryStack.stackPush()) {
                     FT_Vector vec = FreeTypeUtil.set(FT_Vector.malloc(memoryStack), this.shiftX, this.shiftY);
                     FreeType.FT_Set_Transform(ft_face, null, vec);
