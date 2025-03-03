@@ -55,8 +55,8 @@ dependencies {
     implementation "dev.notalpha:Taski:2.1.0"
     include "dev.notalpha:Taski:2.1.0"
 
-    implementation 'com.github.luben:zstd-jni:1.5.2-2'
-    include 'com.github.luben:zstd-jni:1.5.2-2'
+    implementation 'com.github.luben:zstd-jni:1.5.7-1'
+    include 'com.github.luben:zstd-jni:1.5.7-1'
 
     modCompileOnly fabricApi.module("fabric-renderer-indigo", project.fabric_version)
 
