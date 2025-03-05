@@ -47,7 +47,9 @@ public final class DashTrueTypeFont implements DashObject<TrueTypeFont, TrueType
 		try {
 			Optional<Resource> resource = MinecraftClient.getInstance().getResourceManager().getResource(new Identifier(ttFont.getNamespace(), "font/" + ttFont.getPath()));
 			if (resource.isPresent()) {
-				data = IOHelper.streamToArray(resource.get().getInputStream());
+				var stream = resource.get().getInputStream();
+				data = IOHelper.streamToArray(stream);
+				stream.close();
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
