@@ -30,7 +30,6 @@ public final class DashTrueTypeFont implements DashObject<TrueTypeFont, TrueType
 	public final float scaleFactor;
 	public final float ascent;
 
-
 	public DashTrueTypeFont(byte[] ttfBuffer, float oversample, List<Integer> excludedCharacters, float shiftX, float shiftY, float scaleFactor, float ascent) {
 		this.ttfBuffer = ttfBuffer;
 		this.oversample = oversample;
@@ -48,7 +47,9 @@ public final class DashTrueTypeFont implements DashObject<TrueTypeFont, TrueType
 		try {
 			Optional<Resource> resource = MinecraftClient.getInstance().getResourceManager().getResource(new Identifier(ttFont.getNamespace(), "font/" + ttFont.getPath()));
 			if (resource.isPresent()) {
-				data = IOHelper.streamToArray(resource.get().getInputStream());
+				var stream = resource.get().getInputStream();
+				data = IOHelper.streamToArray(stream);
+				stream.close();
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

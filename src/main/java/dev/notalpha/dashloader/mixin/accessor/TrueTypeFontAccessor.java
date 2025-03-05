@@ -63,6 +63,4 @@ public interface TrueTypeFontAccessor {
 	@Accessor
 	@Mutable
 	void setAscent(float thing);
-
-
 }

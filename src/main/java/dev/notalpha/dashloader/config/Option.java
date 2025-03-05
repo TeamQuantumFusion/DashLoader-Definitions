@@ -25,7 +25,6 @@ public enum Option {
 	FAST_WALL_BLOCK(
 			"WallBlockMixin",
 			"Caches the 2 most common blockstates for wall blocks.");
-
 	public final String mixinContains;
 	public final String description;
 

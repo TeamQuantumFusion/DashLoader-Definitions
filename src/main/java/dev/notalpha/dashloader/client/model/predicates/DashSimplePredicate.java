@@ -5,7 +5,6 @@ import dev.notalpha.dashloader.api.registry.RegistryReader;
 import dev.notalpha.dashloader.mixin.accessor.SimpleMultipartModelSelectorAccessor;
 import net.minecraft.client.render.model.json.SimpleMultipartModelSelector;
 
-
 public final class DashSimplePredicate implements DashObject<SimpleMultipartModelSelector, SimpleMultipartModelSelector> {
 	public final String key;
 	public final String valueString;

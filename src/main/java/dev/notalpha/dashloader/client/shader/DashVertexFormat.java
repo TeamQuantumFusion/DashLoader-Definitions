@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import dev.notalpha.dashloader.api.DashObject;
 import dev.notalpha.dashloader.api.registry.RegistryReader;
 import dev.notalpha.dashloader.mixin.accessor.VertexFormatAccessor;
-import dev.quantumfusion.hyphen.scan.annotations.DataNullable;
+import dev.notalpha.hyphen.scan.annotations.DataNullable;
 import net.minecraft.client.render.VertexFormat;
 import net.minecraft.client.render.VertexFormatElement;
 import net.minecraft.client.render.VertexFormats;
@@ -36,7 +36,6 @@ public class DashVertexFormat implements DashObject<VertexFormat, VertexFormat> 
 
 	@DataNullable
 	public final Map<String, DashVertexFormatElement> elementMap;
-
 	public final int builtin;
 
 	public DashVertexFormat(Map<String, DashVertexFormatElement> elementMap, int builtin) {
@@ -56,9 +55,7 @@ public class DashVertexFormat implements DashObject<VertexFormat, VertexFormat> 
 		this.builtin = builtin;
 		if (builtin == -1) {
 			this.elementMap = new HashMap<>();
-			((VertexFormatAccessor) vertexFormat).getElementMap().forEach((s, element) -> {
-				this.elementMap.put(s, new DashVertexFormatElement(element));
-			});
+			((VertexFormatAccessor) vertexFormat).getElementMap().forEach((s, element) -> this.elementMap.put(s, new DashVertexFormatElement(element)));
 		} else {
 			this.elementMap = null;
 		}

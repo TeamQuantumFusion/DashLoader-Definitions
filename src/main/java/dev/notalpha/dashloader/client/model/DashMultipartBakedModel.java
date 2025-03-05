@@ -61,11 +61,25 @@ public class DashMultipartBakedModel implements DashObject<MultipartBakedModel, 
 		return new DazyImpl(componentsOut);
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		DashMultipartBakedModel that = (DashMultipartBakedModel) o;
+
+		return components.equals(that.components);
+	}
+
+	@Override
+	public int hashCode() {
+		return components.hashCode();
+	}
+
 	public static final class Component {
 		public final int model;
 		public final int selector;
 		public final int identifier;
-
 
 		public Component(int model, int selector, int identifier) {
 			this.model = model;
@@ -94,21 +108,6 @@ public class DashMultipartBakedModel implements DashObject<MultipartBakedModel, 
 		}
 	}
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-
-		DashMultipartBakedModel that = (DashMultipartBakedModel) o;
-
-		return components.equals(that.components);
-	}
-
-	@Override
-	public int hashCode() {
-		return components.hashCode();
-	}
-
 	public static class DazyImpl extends Dazy<MultipartBakedModel> {
 		public final List<Component> components;
 
@@ -132,7 +131,6 @@ public class DashMultipartBakedModel implements DashObject<MultipartBakedModel, 
 			access.setStateCache(Collections.synchronizedMap(access.getStateCache()));
 			return multipartBakedModel;
 		}
-
 
 		public static class Component {
 			public final Dazy<? extends BakedModel> model;

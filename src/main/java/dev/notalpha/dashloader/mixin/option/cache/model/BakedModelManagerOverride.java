@@ -23,12 +23,10 @@ public abstract class BakedModelManagerOverride {
 	@Inject(method = "upload",
 			at = @At(value = "TAIL")
 	)
-
 	private void yankAssets(BakedModelManager.BakingResult bakingResult, Profiler profiler, CallbackInfo ci) {
 		ModelModule.MODELS_SAVE.visit(CacheStatus.SAVE, map -> {
 			DashLoader.LOG.info("Yanking Minecraft Assets");
 			map.putAll(this.models);
 		});
 	}
-
 }

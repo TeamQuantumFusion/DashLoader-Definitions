@@ -18,7 +18,6 @@ import java.util.concurrent.Executor;
 
 @Mixin(FontManager.class)
 public class FontManagerOverride {
-
 	@Inject(
 			method = "loadIndex",
 			at = @At(value = "HEAD"),

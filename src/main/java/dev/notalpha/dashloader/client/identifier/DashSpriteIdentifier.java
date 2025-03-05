@@ -4,7 +4,6 @@ import dev.notalpha.dashloader.api.DashObject;
 import dev.notalpha.dashloader.api.registry.RegistryReader;
 import dev.notalpha.dashloader.api.registry.RegistryWriter;
 import net.minecraft.client.util.SpriteIdentifier;
-import net.minecraft.util.Identifier;
 
 public class DashSpriteIdentifier implements DashObject<SpriteIdentifier, SpriteIdentifier> {
 	public final int atlas;

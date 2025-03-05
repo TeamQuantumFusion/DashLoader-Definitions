@@ -1,8 +1,6 @@
 package dev.notalpha.dashloader;
 
-import dev.notalpha.dashloader.api.DashEntrypoint;
 import dev.notalpha.dashloader.api.DashModule;
-import dev.notalpha.dashloader.registry.MissingHandler;
 import dev.notalpha.dashloader.api.cache.Cache;
 import dev.notalpha.dashloader.api.cache.CacheStatus;
 import dev.notalpha.dashloader.config.ConfigHandler;
@@ -10,11 +8,11 @@ import dev.notalpha.dashloader.io.MappingSerializer;
 import dev.notalpha.dashloader.io.RegistrySerializer;
 import dev.notalpha.dashloader.io.data.CacheInfo;
 import dev.notalpha.dashloader.misc.ProfilerUtil;
+import dev.notalpha.dashloader.registry.MissingHandler;
 import dev.notalpha.dashloader.registry.RegistryReaderImpl;
 import dev.notalpha.dashloader.registry.RegistryWriterImpl;
 import dev.notalpha.dashloader.registry.data.StageData;
 import dev.notalpha.taski.builtin.StepTask;
-import net.fabricmc.loader.api.FabricLoader;
 import org.apache.commons.io.FileUtils;
 import org.jetbrains.annotations.Nullable;
 
@@ -24,25 +22,22 @@ import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 public final class CacheImpl implements Cache {
 	private static final String METADATA_FILE_NAME = "metadata.bin";
-	private CacheStatus status;
-	private String hash;
 	private final Path cacheDir;
-
 	// DashLoader metadata
 	private final List<DashModule<?>> cacheHandlers;
 	private final List<DashObjectClass<?, ?>> dashObjects;
 	private final List<MissingHandler<?>> missingHandlers;
-
 	// Serializers
 	private final RegistrySerializer registrySerializer;
 	private final MappingSerializer mappingsSerializer;
+	private CacheStatus status;
+	private String hash;
 
 	CacheImpl(Path cacheDir, List<DashModule<?>> cacheHandlers, List<DashObjectClass<?, ?>> dashObjects, List<MissingHandler<?>> missingHandlers) {
 		this.cacheDir = cacheDir;
@@ -124,7 +119,7 @@ public final class CacheImpl implements Cache {
 				taskConsumer.accept(main);
 			}
 
- 			RegistryWriterImpl factory = RegistryWriterImpl.create(missingHandlers, dashObjects);
+			RegistryWriterImpl factory = RegistryWriterImpl.create(missingHandlers, dashObjects);
 
 			// Mappings
 			mappingsSerializer.save(ourDir, factory, cacheHandlers, main);
@@ -142,7 +137,7 @@ public final class CacheImpl implements Cache {
 				task.next();
 			});
 
-			DashLoader.LOG.info("Saved cache in " + ProfilerUtil.getTimeStringFromStart(start));
+			DashLoader.LOG.info("Saved cache in {}", ProfilerUtil.getTimeStringFromStart(start));
 			return true;
 		} catch (Throwable thr) {
 			DashLoader.LOG.error("Failed caching", thr);
@@ -211,7 +206,6 @@ public final class CacheImpl implements Cache {
 		}
 		return cacheDir.resolve(hash + "/");
 	}
-
 
 	public CacheStatus getStatus() {
 		return status;

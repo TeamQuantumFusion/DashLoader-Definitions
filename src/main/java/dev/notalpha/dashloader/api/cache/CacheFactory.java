@@ -36,11 +36,12 @@ public interface CacheFactory {
 	/**
 	 * Adds a missing handler to the Cache, a missing handler is used when an Object does not have a DashObject directly bound to it.
 	 * The registry will go through every missing handler until it finds one which does not return {@code null}.
+	 *
 	 * @param rClass The class which the object needs to implement.
 	 *               If you want to go through any object you can insert {@code Object.class} because every java object inherits this.
-	 * @param func The consumer function for an object which fits the {@code rClass}.
-	 *             If this function returns a non-null value, it will use that DashObject for serialization of that object.
-	 * @param <R> The super class of the objects being missed.
+	 * @param func   The consumer function for an object which fits the {@code rClass}.
+	 *               If this function returns a non-null value, it will use that DashObject for serialization of that object.
+	 * @param <R>    The super class of the objects being missed.
 	 */
 	<R> void addMissingHandler(Class<R> rClass, BiFunction<R, RegistryWriter, DashObject<? extends R, ?>> func);
 

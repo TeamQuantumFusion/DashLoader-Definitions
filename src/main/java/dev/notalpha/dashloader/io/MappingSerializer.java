@@ -5,10 +5,10 @@ import dev.notalpha.dashloader.api.DashModule;
 import dev.notalpha.dashloader.api.registry.RegistryReader;
 import dev.notalpha.dashloader.api.registry.RegistryWriter;
 import dev.notalpha.dashloader.config.ConfigHandler;
+import dev.notalpha.hyphen.io.ByteBufferIO;
 import dev.notalpha.taski.Task;
 import dev.notalpha.taski.builtin.StepTask;
 import dev.notalpha.taski.builtin.WeightedStageTask;
-import dev.quantumfusion.hyphen.io.ByteBufferIO;
 import it.unimi.dsi.fastutil.objects.Object2ObjectMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 
@@ -29,7 +29,6 @@ public class MappingSerializer {
 		});
 	}
 
-
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	public void save(Path dir, RegistryWriter factory, List<DashModule<?>> handlers, StepTask parent) {
 		List<WeightedStageTask.WeightedStage> tasks = new ArrayList<>();
@@ -38,7 +37,6 @@ public class MappingSerializer {
 		}
 		WeightedStageTask stageTask = new WeightedStageTask("Mapping", tasks);
 		parent.setSubTask(stageTask);
-
 
 		List<Object> objects = new ArrayList<>();
 		int i = 0;
@@ -101,7 +99,7 @@ public class MappingSerializer {
 			ByteBufferIO io = IOHelper.load(dir.resolve("mapping.bin"));
 			for (DashModule handler : handlers) {
 				if (io.getByte() == 0 && handler.isActive()) {
-					DashLoader.LOG.info("Recaching as " + handler.getClass().getSimpleName() + " is now active.");
+					DashLoader.LOG.info("Recaching as {} is now active.", handler.getClass().getSimpleName());
 					return false;
 				} else {
 					Class<?> dataClass = handler.getDataClass();
@@ -119,6 +117,4 @@ public class MappingSerializer {
 			throw new RuntimeException(e);
 		}
 	}
-
-
 }

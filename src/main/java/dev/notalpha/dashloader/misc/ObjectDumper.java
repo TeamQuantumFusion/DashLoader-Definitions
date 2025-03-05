@@ -17,6 +17,7 @@ public class ObjectDumper {
 
 	public static class Wrapper {
 		public final Object data;
+
 		public Wrapper(Object data) {
 			this.data = data;
 		}
@@ -102,11 +103,9 @@ public class ObjectDumper {
 					String s = builder.toString();
 					String result = s.split("@")[0];
 					buffer.append(result);
-				}
-				catch (InaccessibleObjectException e) {
+				} catch (InaccessibleObjectException e) {
 					throw e;
-				}
-				catch (Exception e) {
+				} catch (Exception e) {
 					e.printStackTrace();
 
 					buffer.append("unknown");
@@ -139,7 +138,6 @@ public class ObjectDumper {
 
 		@Override
 		protected void appendIdentityHashCode(StringBuffer buffer, Object object) {
-
 
 		}
 	}

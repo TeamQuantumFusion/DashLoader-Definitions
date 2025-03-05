@@ -6,6 +6,7 @@
   "description": "Launch at the speed of Light.",
   "authors": [
     "!alpha",
+    "bendy1234",
     "leocth"
   ],
   "contact": {
@@ -15,6 +16,9 @@
   "entrypoints": {
     "dashloader": [
       "dev.notalpha.dashloader.client.DashLoaderClient"
+    ],
+    "modmenu": [
+      "dev.notalpha.dashloader.client.ModMenuCompat"
     ]
   },
   "license": "LGPL-3.0-only",

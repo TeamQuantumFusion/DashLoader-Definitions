@@ -4,7 +4,7 @@ import dev.notalpha.dashloader.api.registry.RegistryReader;
 import dev.notalpha.dashloader.api.registry.RegistryWriter;
 import dev.notalpha.dashloader.client.Dazy;
 import dev.notalpha.dashloader.mixin.accessor.ModelOverrideListBakedOverrideAccessor;
-import dev.quantumfusion.hyphen.scan.annotations.DataNullable;
+import dev.notalpha.hyphen.scan.annotations.DataNullable;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.json.ModelOverrideList;
 import net.minecraft.client.texture.Sprite;
@@ -64,13 +64,12 @@ public final class DashModelOverrideListBakedOverride {
 		return result;
 	}
 
-
 	public static class DazyImpl extends Dazy<ModelOverrideList.BakedOverride> {
 		public final ModelOverrideList.InlinedCondition[] conditions;
 		@Nullable
 		public final Dazy<? extends BakedModel> model;
 
-		public DazyImpl(ModelOverrideList.InlinedCondition[] conditions, Dazy<? extends BakedModel> model) {
+		public DazyImpl(ModelOverrideList.InlinedCondition[] conditions, @Nullable Dazy<? extends BakedModel> model) {
 			this.conditions = conditions;
 			this.model = model;
 		}

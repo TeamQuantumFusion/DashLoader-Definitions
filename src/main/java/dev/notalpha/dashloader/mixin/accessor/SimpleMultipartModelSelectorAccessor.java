@@ -6,11 +6,9 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(SimpleMultipartModelSelector.class)
 public interface SimpleMultipartModelSelectorAccessor {
-
 	@Accessor
 	String getKey();
 
 	@Accessor
 	String getValueString();
-
 }

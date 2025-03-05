@@ -9,8 +9,6 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(ModelOverrideList.class)
 public interface ModelOverrideListAccessor {
-
-
 	@Invoker("<init>")
 	static ModelOverrideList newModelOverrideList() {
 		throw new AssertionError();

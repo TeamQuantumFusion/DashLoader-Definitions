@@ -22,7 +22,6 @@ public abstract class MinecraftClientMixin {
 		DashLoaderClient.NEEDS_RELOAD = true;
 	}
 
-
 	@Inject(method = "reloadResources(ZLnet/minecraft/client/MinecraftClient$LoadingContext;)Ljava/util/concurrent/CompletableFuture;", at = @At(value = "RETURN"))
 	private void reloadComplete(boolean force, MinecraftClient.LoadingContext loadingContext, CallbackInfoReturnable<CompletableFuture<Void>> cir) {
 		cir.getReturnValue().thenRun(() -> {
@@ -32,6 +31,4 @@ public abstract class MinecraftClientMixin {
 			}
 		});
 	}
-
-
 }

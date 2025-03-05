@@ -5,7 +5,7 @@ import dev.notalpha.dashloader.api.registry.RegistryReader;
 import dev.notalpha.dashloader.api.registry.RegistryWriter;
 import dev.notalpha.dashloader.misc.UnsafeHelper;
 import dev.notalpha.dashloader.mixin.accessor.SpriteContentsAccessor;
-import dev.quantumfusion.hyphen.scan.annotations.DataNullable;
+import dev.notalpha.hyphen.scan.annotations.DataNullable;
 import net.minecraft.client.texture.NativeImage;
 import net.minecraft.client.texture.SpriteContents;
 import org.jetbrains.annotations.Nullable;
@@ -18,7 +18,6 @@ public final class DashSpriteContents implements DashObject<SpriteContents, Spri
 	@Nullable
 	@DataNullable
 	public final DashSpriteAnimation animation;
-
 	public final int width;
 	public final int height;
 

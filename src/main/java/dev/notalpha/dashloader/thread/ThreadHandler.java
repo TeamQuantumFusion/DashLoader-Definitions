@@ -14,7 +14,6 @@ import java.util.function.IntFunction;
 public final class ThreadHandler {
 	public static final int THREADS = Runtime.getRuntime().availableProcessors();
 	public static final ThreadHandler INSTANCE = new ThreadHandler();
-
 	private final ForkJoinPool threadPool = new ForkJoinPool(THREADS, new ForkJoinPool.ForkJoinWorkerThreadFactory() {
 		private final AtomicInteger threadNumber = new AtomicInteger(0);
 
@@ -76,6 +75,4 @@ public final class ThreadHandler {
 			throw new RuntimeException(e);
 		}
 	}
-
-
 }

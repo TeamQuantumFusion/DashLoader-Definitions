@@ -12,7 +12,6 @@ import net.minecraft.util.Identifier;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
-
 public final class DashStitchResult {
 	public final int width;
 	public final int height;

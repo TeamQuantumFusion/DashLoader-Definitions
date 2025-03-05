@@ -2,10 +2,10 @@ package dev.notalpha.dashloader;
 
 import dev.notalpha.dashloader.api.DashModule;
 import dev.notalpha.dashloader.api.DashObject;
-import dev.notalpha.dashloader.registry.MissingHandler;
 import dev.notalpha.dashloader.api.cache.Cache;
 import dev.notalpha.dashloader.api.cache.CacheFactory;
 import dev.notalpha.dashloader.api.registry.RegistryWriter;
+import dev.notalpha.dashloader.registry.MissingHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -72,6 +72,5 @@ public class CacheFactoryImpl implements CacheFactory {
 		}
 
 		return new CacheImpl(cacheDir.resolve(DashLoader.MOD_HASH + "/"), modules, dashObjects, this.missingHandlers);
-
 	}
 }

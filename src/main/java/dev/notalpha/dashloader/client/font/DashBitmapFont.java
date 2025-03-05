@@ -35,5 +35,4 @@ public final class DashBitmapFont implements DashObject<BitmapFont, BitmapFont> 
 		this.glyphs.forEach((key, value) -> out.put(key, value.export(reader)));
 		return BitmapFontAccessor.init(reader.get(this.image), out);
 	}
-
 }

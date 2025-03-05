@@ -12,11 +12,9 @@ public class ModelLoaderBakedModelCacheKeyMixin {
 	@Shadow
 	@Final
 	private Identifier id;
-
 	@Shadow
 	@Final
 	private boolean isUvLocked;
-
 	@Shadow
 	@Final
 	private AffineTransformation transformation;

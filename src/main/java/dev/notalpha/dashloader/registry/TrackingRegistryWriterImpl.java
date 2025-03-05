@@ -20,12 +20,6 @@ public final class TrackingRegistryWriterImpl implements RegistryWriter {
 		this.factory = factory;
 	}
 
-	public <R> int add(R object) {
-		int value = factory.add(object);
-		dependencies.add(value);
-		return value;
-	}
-
 	static <R, D extends DashObject<R, ?>> ChunkFactory.Entry<D> create(RegistryWriterImpl factory, Function<RegistryWriter, D> function) {
 		TrackingRegistryWriterImpl writer = new TrackingRegistryWriterImpl(factory);
 		D data = function.apply(writer);
@@ -33,4 +27,9 @@ public final class TrackingRegistryWriterImpl implements RegistryWriter {
 		return new ChunkFactory.Entry<>(data, dependencies);
 	}
 
+	public <R> int add(R object) {
+		int value = factory.add(object);
+		dependencies.add(value);
+		return value;
+	}
 }

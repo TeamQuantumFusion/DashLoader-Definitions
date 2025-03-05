@@ -4,7 +4,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
 public final class UnsafeHelper {
-
 	public static final sun.misc.Unsafe UNSAFE = getUnsafeInstance();
 
 	private static sun.misc.Unsafe getUnsafeInstance() {
@@ -36,6 +35,4 @@ public final class UnsafeHelper {
 			throw new RuntimeException(e);
 		}
 	}
-
-
 }

@@ -46,6 +46,7 @@ public class DashSprite implements DashObject<Sprite, DashSprite.DazyImpl> {
 		public DazyImpl(SpriteIdentifier location) {
 			this.location = location;
 		}
+
 		@Override
 		protected Sprite resolve(Function<SpriteIdentifier, Sprite> spriteLoader) {
 			return spriteLoader.apply(location);

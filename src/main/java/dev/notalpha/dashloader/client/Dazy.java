@@ -12,6 +12,7 @@ public abstract class Dazy<V> {
 	private transient V loaded;
 
 	protected abstract V resolve(Function<SpriteIdentifier, Sprite> spriteLoader);
+
 	public V get(Function<SpriteIdentifier, Sprite> spriteLoader) {
 		if (loaded != null) {
 			return loaded;

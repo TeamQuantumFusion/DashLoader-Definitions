@@ -21,7 +21,6 @@ public final class DashSpriteAnimation {
 		this.interpolation = interpolation;
 	}
 
-
 	public DashSpriteAnimation(SpriteContents.Animation animation) {
 		SpriteAnimationAccessor access = ((SpriteAnimationAccessor) animation);
 		this.frames = new ArrayList<>();
@@ -31,7 +30,6 @@ public final class DashSpriteAnimation {
 		this.frameCount = access.getFrameCount();
 		this.interpolation = access.getInterpolation();
 	}
-
 
 	public SpriteContents.Animation export(SpriteContents owner, RegistryReader registry) {
 		var framesOut = new ArrayList<SpriteContents.AnimationFrame>();

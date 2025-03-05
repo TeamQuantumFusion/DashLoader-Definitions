@@ -10,15 +10,12 @@ import java.util.function.Supplier;
 
 public class CachingData<D> {
 	@Nullable
+	private final CacheStatus onlyOn;
+	@Nullable
 	private D data;
-
 	private Cache cacheManager;
-
 	@Nullable
 	private CacheStatus dataStatus;
-
-	@Nullable
-	private final CacheStatus onlyOn;
 
 	public CachingData(@Nullable CacheStatus onlyOn) {
 		this.data = null;
@@ -34,7 +31,6 @@ public class CachingData<D> {
 			consumer.accept(this.data);
 		}
 	}
-
 
 	/**
 	 * Gets the value or returns null if its status does not match the current state.

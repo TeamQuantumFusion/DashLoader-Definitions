@@ -11,10 +11,12 @@ import dev.notalpha.taski.builtin.StepTask;
 import net.minecraft.client.texture.SpriteContents;
 import net.minecraft.util.Identifier;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
-public class SpriteContentModule implements DashModule<SpriteContentModule.Data>  {
+public class SpriteContentModule implements DashModule<SpriteContentModule.Data> {
 	public final static CachingData<Map<Identifier, SpriteContents>> SOURCE = new CachingData<>();
+
 	@Override
 	public void reset(Cache cache) {
 		SOURCE.reset(cache, new HashMap<>());
@@ -26,9 +28,7 @@ public class SpriteContentModule implements DashModule<SpriteContentModule.Data>
 		assert spriteData != null;
 
 		var map = new IntIntList();
-		task.doForEach(spriteData, (identifier, spriteContents) -> {
-			map.put(writer.add(identifier), writer.add(spriteContents));
-		});
+		task.doForEach(spriteData, (identifier, spriteContents) -> map.put(writer.add(identifier), writer.add(spriteContents)));
 
 		return new Data(map);
 	}
@@ -38,7 +38,7 @@ public class SpriteContentModule implements DashModule<SpriteContentModule.Data>
 		Map<Identifier, SpriteContents> spriteData = SOURCE.get(CacheStatus.LOAD);
 		assert spriteData != null;
 
-		data.sprites.forEach((key, value) ->  {
+		data.sprites.forEach((key, value) -> {
 			Identifier identifier = reader.get(key);
 			SpriteContents contents = reader.get(value);
 			spriteData.put(identifier, contents);

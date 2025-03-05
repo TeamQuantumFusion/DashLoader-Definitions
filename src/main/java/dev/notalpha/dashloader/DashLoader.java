@@ -12,17 +12,16 @@ import org.apache.logging.log4j.Logger;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-
 public final class DashLoader {
+	public static final Logger LOG = LogManager.getLogger("DashLoader");
+	public static final Serializer<CacheInfo> METADATA_SERIALIZER = new Serializer<>(CacheInfo.class);
+	public static final String MOD_HASH;
 	private static final String VERSION = FabricLoader.getInstance()
 			.getModContainer("dashloader")
 			.orElseThrow(() -> new IllegalStateException("DashLoader not found... apparently! WTF?"))
 			.getMetadata()
 			.getVersion()
 			.getFriendlyString();
-	public static final Logger LOG = LogManager.getLogger("DashLoader");
-	public static final Serializer<CacheInfo> METADATA_SERIALIZER = new Serializer<>(CacheInfo.class);
-	public static final String MOD_HASH;
 
 	static {
 		ArrayList<ModMetadata> versions = new ArrayList<>();
@@ -42,14 +41,14 @@ public final class DashLoader {
 		MOD_HASH = DigestUtils.md5Hex(stringBuilder.toString()).toUpperCase();
 	}
 
-	@SuppressWarnings("EmptyMethod")
-	public static void bootstrap() {
-	}
-
 	private DashLoader() {
-		LOG.info("Initializing DashLoader " + VERSION + ".");
+		LOG.info("Initializing DashLoader {}.", VERSION);
 		if (FabricLoader.getInstance().isDevelopmentEnvironment()) {
 			LOG.warn("DashLoader launched in dev.");
 		}
+	}
+
+	@SuppressWarnings("EmptyMethod")
+	public static void bootstrap() {
 	}
 }

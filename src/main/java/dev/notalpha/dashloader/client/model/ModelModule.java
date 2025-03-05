@@ -35,6 +35,27 @@ public class ModelModule implements DashModule<ModelModule.Data> {
 	public static final CachingData<HashMap<BlockState, Identifier>> MISSING_READ = new CachingData<>();
 	public static final CachingData<HashMap<BakedModel, Pair<List<MultipartModelSelector>, StateManager<Block, BlockState>>>> MULTIPART_PREDICATES = new CachingData<>(CacheStatus.SAVE);
 
+	public static StateManager<Block, BlockState> getStateManager(Identifier identifier) {
+		StateManager<Block, BlockState> staticDef = ModelLoaderAccessor.getStaticDefinitions().get(identifier);
+		if (staticDef != null) {
+			return staticDef;
+		} else {
+			return Registries.BLOCK.get(identifier).getStateManager();
+		}
+	}
+
+	@NotNull
+	public static Identifier getStateManagerIdentifier(StateManager<Block, BlockState> stateManager) {
+		// Static definitions like itemframes.
+		for (Map.Entry<Identifier, StateManager<Block, BlockState>> entry : ModelLoaderAccessor.getStaticDefinitions().entrySet()) {
+			if (entry.getValue() == stateManager) {
+				return entry.getKey();
+			}
+		}
+
+		return Registries.BLOCK.getId(stateManager.getOwner());
+	}
+
 	@Override
 	public void reset(Cache cache) {
 		MODELS_SAVE.reset(cache, new HashMap<>());
@@ -66,7 +87,6 @@ public class ModelModule implements DashModule<ModelModule.Data> {
 				}
 			});
 
-
 			// Check missing models for blockstates.
 			for (Block block : Registries.BLOCK) {
 				block.getStateManager().getStates().forEach((blockState) -> {
@@ -91,9 +111,7 @@ public class ModelModule implements DashModule<ModelModule.Data> {
 		});
 
 		var missingModelsRead = new HashMap<BlockState, Identifier>();
-		data.missingModels.forEach((blockState, modelId) -> {
-			missingModelsRead.put(reader.get(blockState), reader.get(modelId));
-		});
+		data.missingModels.forEach((blockState, modelId) -> missingModelsRead.put(reader.get(blockState), reader.get(modelId)));
 
 		DashLoader.LOG.info("Found {} Missing BlockState Models", missingModelsRead.size());
 		MISSING_READ.set(CacheStatus.LOAD, missingModelsRead);
@@ -113,27 +131,6 @@ public class ModelModule implements DashModule<ModelModule.Data> {
 	@Override
 	public boolean isActive() {
 		return ConfigHandler.optionActive(Option.CACHE_MODEL_LOADER);
-	}
-
-	public static StateManager<Block, BlockState> getStateManager(Identifier identifier) {
-		StateManager<Block, BlockState> staticDef = ModelLoaderAccessor.getStaticDefinitions().get(identifier);
-		if (staticDef != null) {
-			return staticDef;
-		} else {
-			return Registries.BLOCK.get(identifier).getStateManager();
-		}
-	}
-
-	@NotNull
-	public static Identifier getStateManagerIdentifier(StateManager<Block, BlockState> stateManager) {
-		// Static definitions like itemframes.
-		for (Map.Entry<Identifier, StateManager<Block, BlockState>> entry : ModelLoaderAccessor.getStaticDefinitions().entrySet()) {
-			if (entry.getValue() == stateManager) {
-				return entry.getKey();
-			}
-		}
-
-		return Registries.BLOCK.getId(stateManager.getOwner());
 	}
 
 	public static final class Data {

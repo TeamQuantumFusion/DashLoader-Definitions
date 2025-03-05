@@ -1,23 +1,29 @@
 package dev.notalpha.dashloader.client.model.components;
 
-import dev.quantumfusion.hyphen.scan.annotations.DataNullable;
+import dev.notalpha.hyphen.scan.annotations.DataNullable;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.render.model.json.Transformation;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
-@DataNullable
 public final class DashModelTransformation {
+	@DataNullable
 	public final Transformation thirdPersonLeftHand;
+	@DataNullable
 	public final Transformation thirdPersonRightHand;
+	@DataNullable
 	public final Transformation firstPersonLeftHand;
+	@DataNullable
 	public final Transformation firstPersonRightHand;
+	@DataNullable
 	public final Transformation head;
+	@DataNullable
 	public final Transformation gui;
+	@DataNullable
 	public final Transformation ground;
+	@DataNullable
 	public final Transformation fixed;
-
 	public transient int nullTransformations = 0;
 
 	public DashModelTransformation(@Nullable Transformation thirdPersonLeftHand, @Nullable Transformation thirdPersonRightHand, @Nullable Transformation firstPersonLeftHand, @Nullable Transformation firstPersonRightHand, @Nullable Transformation head, @Nullable Transformation gui, @Nullable Transformation ground, @Nullable Transformation fixed) {

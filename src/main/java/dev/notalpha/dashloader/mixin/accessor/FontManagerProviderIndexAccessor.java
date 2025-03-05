@@ -11,10 +11,8 @@ import java.util.Map;
 
 @Mixin(FontManager.ProviderIndex.class)
 public interface FontManagerProviderIndexAccessor {
-
 	@Invoker("<init>")
 	static FontManager.ProviderIndex create(Map<Identifier, List<Font>> providers, List<Font> allProviders) {
 		throw new AssertionError();
 	}
-
 }

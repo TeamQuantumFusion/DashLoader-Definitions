@@ -7,8 +7,8 @@ import dev.notalpha.dashloader.api.registry.RegistryReader;
 import dev.notalpha.dashloader.api.registry.RegistryWriter;
 import dev.notalpha.dashloader.misc.UnsafeHelper;
 import dev.notalpha.dashloader.mixin.accessor.ShaderProgramAccessor;
-import dev.quantumfusion.hyphen.scan.annotations.DataNullable;
-import dev.quantumfusion.hyphen.scan.annotations.DataSubclasses;
+import dev.notalpha.hyphen.scan.annotations.DataNullable;
+import dev.notalpha.hyphen.scan.annotations.DataSubclasses;
 import net.minecraft.client.gl.GlProgramManager;
 import net.minecraft.client.gl.GlUniform;
 import net.minecraft.client.gl.ShaderProgram;
@@ -53,12 +53,9 @@ public final class DashShader implements DashObject<ShaderProgram, ShaderProgram
 		this.format = writer.add(shader.getFormat());
 		this.uniforms = new ArrayList<>();
 		Map<String, GlUniform> loadedUniforms = shaderAccess.getLoadedUniforms();
-		shaderAccess.getUniforms().forEach((glUniform) -> {
-			this.uniforms.add(new DashGlUniform(glUniform, loadedUniforms.containsKey(glUniform.getName())));
-		});
+		shaderAccess.getUniforms().forEach((glUniform) -> this.uniforms.add(new DashGlUniform(glUniform, loadedUniforms.containsKey(glUniform.getName()))));
 		this.samplerNames = shaderAccess.getSamplerNames();
 	}
-
 
 	@Override
 	public ShaderProgram export(RegistryReader reader) {
@@ -74,7 +71,6 @@ public final class DashShader implements DashObject<ShaderProgram, ShaderProgram
 		//<init> top
 		shaderAccess.setName(this.name);
 		shaderAccess.setFormat(reader.get(this.format));
-
 
 		//JsonHelper.getArray(jsonObject, "samplers", (JsonArray)null)
 		var samplersOut = new HashMap<String, Object>();
@@ -96,7 +92,6 @@ public final class DashShader implements DashObject<ShaderProgram, ShaderProgram
 		});
 		shaderAccess.setLoadedUniforms(uniformsOut);
 
-
 		// JsonHelper.getArray(jsonObject, "uniforms", (JsonArray)null);
 		this.toApply.markUniformsDirty();
 		this.toApply.modelViewMat = uniformsOut.get("ModelViewMat");
@@ -116,7 +111,6 @@ public final class DashShader implements DashObject<ShaderProgram, ShaderProgram
 		this.toApply.chunkOffset = uniformsOut.get("ChunkOffset");
 		return this.toApply;
 	}
-
 
 	@Override
 	public void postExport(RegistryReader reader) {
@@ -150,5 +144,4 @@ public final class DashShader implements DashObject<ShaderProgram, ShaderProgram
 			this.sampler = sampler;
 		}
 	}
-
 }

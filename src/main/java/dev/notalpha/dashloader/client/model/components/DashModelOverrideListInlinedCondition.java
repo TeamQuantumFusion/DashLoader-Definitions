@@ -34,7 +34,7 @@ public final class DashModelOverrideListInlinedCondition {
 	@Override
 	public int hashCode() {
 		int result = index;
-		result = 31 * result + (threshold != +0.0f ? Float.floatToIntBits(threshold) : 0);
+		result = 31 * result + (threshold != 0.0f ? Float.floatToIntBits(threshold) : 0);
 		return result;
 	}
 }

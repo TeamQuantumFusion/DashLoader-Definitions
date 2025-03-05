@@ -61,9 +61,7 @@ public class DashBakedQuadCollection implements DashObject<BakedQuadCollection, 
 		protected List<BakedQuad> resolve(Function<SpriteIdentifier, Sprite> spriteLoader) {
 			var out = new ArrayList<BakedQuad>(quads.size());
 			quads.forEach(
-					dazyBakedQuad -> {
-						out.add(dazyBakedQuad.get(spriteLoader));
-					}
+					dazyBakedQuad -> out.add(dazyBakedQuad.get(spriteLoader))
 			);
 			return out;
 		}

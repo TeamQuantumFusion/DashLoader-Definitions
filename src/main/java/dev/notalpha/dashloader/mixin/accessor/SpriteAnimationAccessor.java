@@ -9,8 +9,6 @@ import java.util.List;
 
 @Mixin(SpriteContents.Animation.class)
 public interface SpriteAnimationAccessor {
-
-
 	@Invoker("<init>")
 	static SpriteContents.Animation init(SpriteContents parent, List<SpriteContents.AnimationFrame> frames, int frameCount, boolean interpolation) {
 		throw new AssertionError();
@@ -24,5 +22,4 @@ public interface SpriteAnimationAccessor {
 
 	@Accessor
 	boolean getInterpolation();
-
 }

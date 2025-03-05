@@ -1,6 +1,8 @@
-package dev.notalpha.dashloader.client.ui;
+package dev.notalpha.dashloader.client.ui.toast;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import dev.notalpha.dashloader.client.ui.Color;
+import dev.notalpha.dashloader.client.ui.DrawerUtil;
 import dev.notalpha.dashloader.misc.HahaManager;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
@@ -23,13 +25,20 @@ public class DashToast implements Toast {
 	private static final int PROGRESS_BAR_HEIGHT = 2;
 	private static final int PADDING = 8;
 	private static final int LINES = 125;
+	public final DashToastState state;
 	private final Random random = new Random();
-	private List<Line> lines = new ArrayList<>();
-
 	@Nullable
 	private final String fact = HahaManager.getFact();
+	private List<Line> lines = new ArrayList<>();
 	private long oldTime = System.currentTimeMillis();
-	public final DashToastState state;
+
+	public DashToast() {
+		this.state = new DashToastState();
+		// Create lines
+		for (int i = 0; i < LINES; i++) {
+			this.lines.add(new Line());
+		}
+	}
 
 	private static void drawVertex(Matrix4f m4f, BufferBuilder bb, float z, float x, float y, Color color) {
 		bb.vertex(m4f, x, y, z).color(color.red(), color.green(), color.blue(), color.alpha()).next();
@@ -42,15 +51,6 @@ public class DashToast implements Toast {
 	public int getHeight() {
 		return 40;
 	}
-
-	public DashToast() {
-		this.state = new DashToastState();
-		// Create lines
-		for (int i = 0; i < LINES; i++) {
-			this.lines.add(new Line());
-		}
-	}
-
 
 	@Override
 	public Visibility draw(DrawContext context, ToastManager manager, long startTime) {
@@ -84,7 +84,6 @@ public class DashToast implements Toast {
 		this.lines = newList;
 		this.lines.addAll(newListPrio);
 
-
 		// Setup scissor
 		MatrixStack matrices = context.getMatrices();
 		{
@@ -108,7 +107,6 @@ public class DashToast implements Toast {
 				line.draw(matrix4f, bufferBuilder);
 			}
 		});
-
 
 		TextRenderer textRenderer = manager.getClient().textRenderer;
 		// Draw progress text
@@ -159,13 +157,18 @@ public class DashToast implements Toast {
 		RenderSystem.disableBlend();
 	}
 
+	public enum ColorKind {
+		Neutral,
+		Progress,
+		Crashed,
+	}
 
 	private final class Line {
+		public final int width;
+		public final int height;
 		public ColorKind colorKind;
 		public float x;
 		public float y;
-		public int width;
-		public int height;
 		public float speedBoost;
 		private Color color;
 
@@ -181,7 +184,6 @@ public class DashToast implements Toast {
 		public boolean tick(int screenWidth, int screenHeight, float progress, float delta) {
 			// Move the values
 			this.x += (float) (speedBoost * (0.8 + (2.5 * progress))) * delta;
-
 
 			// Check if not visible
 			if (x > screenWidth || x + width < 0) {
@@ -231,7 +233,6 @@ public class DashToast implements Toast {
 			drawVertex(b4, bb, 0f, x + width, y + height, color); // right bottom
 		}
 
-
 		public void drawGlow(Matrix4f b4, BufferBuilder bb) {
 			if (this.colorKind != ColorKind.Neutral) {
 				DrawerUtil.drawGlow(b4, bb, x, y, width, height, (getWeight() + 2.0f) / 3.0f, this.color, false, true, false, true);
@@ -257,11 +258,5 @@ public class DashToast implements Toast {
 		public float getWeight() {
 			return ((this.width * (float) this.height) - 60f) / 190f;
 		}
-	}
-
-	public enum ColorKind {
-		Neutral,
-		Progress,
-		Crashed,
 	}
 }

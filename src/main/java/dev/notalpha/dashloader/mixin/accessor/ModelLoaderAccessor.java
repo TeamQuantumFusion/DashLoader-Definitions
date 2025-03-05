@@ -1,6 +1,6 @@
 package dev.notalpha.dashloader.mixin.accessor;
 
-import dev.quantumfusion.hyphen.thr.HyphenException;
+import dev.notalpha.hyphen.thr.HyphenException;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.model.ModelLoader;
@@ -13,7 +13,6 @@ import java.util.Map;
 
 @Mixin(ModelLoader.class)
 public interface ModelLoaderAccessor {
-
 	@Accessor("ITEM_FRAME_STATE_FACTORY")
 	static StateManager<Block, BlockState> getTheItemFrameThing() {
 		throw new HyphenException("froge", "your dad");

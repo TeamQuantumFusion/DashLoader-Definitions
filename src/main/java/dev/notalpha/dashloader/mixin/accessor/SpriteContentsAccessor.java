@@ -10,15 +10,23 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(SpriteContents.class)
 public interface SpriteContentsAccessor {
-
 	@Accessor
 	NativeImage getImage();
+
+	@Accessor
+	@Mutable
+	void setImage(NativeImage image);
 
 	@Accessor
 	SpriteContents.Animation getAnimation();
 
 	@Accessor
-	NativeImage[] getMipmapLevelsImages();
+	@Mutable
+	void setAnimation(SpriteContents.Animation animation);
+
+	@Accessor
+	@Mutable
+	void setMipmapLevelsImages(NativeImage[] mipmapLevelsImages);
 
 	@Accessor
 	@Mutable
@@ -31,18 +39,6 @@ public interface SpriteContentsAccessor {
 	@Accessor
 	@Mutable
 	void setHeight(int height);
-
-	@Accessor
-	@Mutable
-	void setImage(NativeImage image);
-
-	@Accessor
-	@Mutable
-	void setMipmapLevelsImages(NativeImage[] mipmapLevelsImages);
-
-	@Accessor
-	@Mutable
-	void setAnimation(SpriteContents.Animation animation);
 
 	@Accessor
 	@Mutable

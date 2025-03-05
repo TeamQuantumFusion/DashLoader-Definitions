@@ -18,7 +18,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 public class ShaderModule implements DashModule<ShaderModule.Data> {
 	public static final CachingData<HashMap<String, ShaderProgram>> SHADERS = new CachingData<>();
 	public static final CachingData<Int2ObjectMap<List<String>>> WRITE_PROGRAM_SOURCES = new CachingData<>(CacheStatus.SAVE);

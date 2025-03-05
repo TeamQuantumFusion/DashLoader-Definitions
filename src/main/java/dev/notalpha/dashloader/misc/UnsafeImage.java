@@ -14,14 +14,14 @@ public final class UnsafeImage {
 		this.image = image;
 		this.width = image.getWidth();
 		this.height = image.getHeight();
-		this.pointer = ((NativeImageAccessor)(Object) image).getPointer();
+		this.pointer = ((NativeImageAccessor) (Object) image).getPointer();
 	}
 
 	public int get(int x, int y) {
-		return MemoryUtil.memGetInt(this.pointer + ((long)x + (long)y * (long)width) * 4L);
+		return MemoryUtil.memGetInt(this.pointer + ((long) x + (long) y * (long) width) * 4L);
 	}
 
 	public void set(int x, int y, int value) {
-		MemoryUtil.memPutInt(this.pointer + ((long)x + (long)y * (long)width) * 4L, value);
+		MemoryUtil.memPutInt(this.pointer + ((long) x + (long) y * (long) width) * 4L, value);
 	}
 }

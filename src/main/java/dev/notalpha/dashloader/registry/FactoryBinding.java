@@ -37,15 +37,6 @@ public final class FactoryBinding<R, D extends DashObject<R, ?>> {
 		return factory;
 	}
 
-	public D create(R raw, RegistryWriter writer) {
-		try {
-			//noinspection unchecked
-			return (D) this.creator.create(this.method, raw, writer);
-		} catch (Throwable e) {
-			throw new RuntimeException("Could not create DashObject " + raw.getClass().getSimpleName(), e);
-		}
-	}
-
 	@Nullable
 	private static <R, D extends DashObject<R, ?>> FactoryBinding<R, D> tryScanCreators(MethodTester tester, DashObjectClass<R, D> dashObject) {
 		for (InvokeType value : InvokeType.values()) {
@@ -63,6 +54,15 @@ public final class FactoryBinding<R, D extends DashObject<R, ?>> {
 			}
 		}
 		return null;
+	}
+
+	public D create(R raw, RegistryWriter writer) {
+		try {
+			//noinspection unchecked
+			return (D) this.creator.create(this.method, raw, writer);
+		} catch (Throwable e) {
+			throw new RuntimeException("Could not create DashObject " + raw.getClass().getSimpleName(), e);
+		}
 	}
 
 	// FULL object, writer
@@ -92,5 +92,4 @@ public final class FactoryBinding<R, D extends DashObject<R, ?>> {
 	private interface MethodTester {
 		MethodHandle getMethod(MethodHandles.Lookup lookup, MethodType parameters) throws Throwable;
 	}
-
 }

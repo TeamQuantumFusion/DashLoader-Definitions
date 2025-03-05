@@ -10,6 +10,4 @@ public class NativeImageData {
 		this.buffer = buffer;
 		this.stb = stb;
 	}
-
-
 }

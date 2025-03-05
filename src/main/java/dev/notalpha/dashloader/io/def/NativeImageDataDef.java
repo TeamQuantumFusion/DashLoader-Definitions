@@ -1,31 +1,34 @@
 package dev.notalpha.dashloader.io.def;
 
-import dev.quantumfusion.hyphen.SerializerHandler;
-import dev.quantumfusion.hyphen.codegen.MethodHandler;
-import dev.quantumfusion.hyphen.codegen.Variable;
-import dev.quantumfusion.hyphen.codegen.def.BufferDef;
-import dev.quantumfusion.hyphen.codegen.def.MethodDef;
-import dev.quantumfusion.hyphen.codegen.statement.IfElse;
-import dev.quantumfusion.hyphen.scan.type.Clazz;
+import dev.notalpha.hyphen.SerializerGenerator;
+import dev.notalpha.hyphen.codegen.MethodWriter;
+import dev.notalpha.hyphen.codegen.Variable;
+import dev.notalpha.hyphen.codegen.def.BufferDef;
+import dev.notalpha.hyphen.codegen.def.MethodDef;
+import dev.notalpha.hyphen.codegen.statement.IfElse;
+import dev.notalpha.hyphen.scan.struct.ClassStruct;
+import dev.notalpha.hyphen.scan.struct.Struct;
 import org.lwjgl.system.MemoryUtil;
 import org.objectweb.asm.Opcodes;
 
 import java.nio.ByteBuffer;
 
-public class NativeImageDataDef extends MethodDef {
+public class NativeImageDataDef extends MethodDef<Struct> {
 	private ByteBufferDef bytebufferDef;
 
-	public NativeImageDataDef(SerializerHandler<?, ?> handler, Clazz clazz) {
-		super(handler, clazz);
+	public NativeImageDataDef(Struct clazz) {
+		super(clazz);
 	}
 
 	@Override
-	public void scan(SerializerHandler<?, ?> handler, Clazz clazz) {
-		this.bytebufferDef = new ByteBufferDef(new Clazz(handler, ByteBuffer.class), handler);
+	public void scan(SerializerGenerator<?, ?> handler) {
+		this.bytebufferDef = new ByteBufferDef(new ClassStruct(ByteBuffer.class));
+		this.bytebufferDef.scan(handler);
+		super.scan(handler);
 	}
 
 	@Override
-	protected void writeMethodPut(MethodHandler mh, Runnable valueLoad) {
+	protected void writeMethodPut(MethodWriter mh, Runnable valueLoad) {
 		mh.loadIO();
 		valueLoad.run();
 		mh.visitFieldInsn(Opcodes.GETFIELD, NativeImageData.class, "stb", boolean.class);
@@ -38,7 +41,7 @@ public class NativeImageDataDef extends MethodDef {
 	}
 
 	@Override
-	protected void writeMethodGet(MethodHandler mh) {
+	protected void writeMethodGet(MethodWriter mh) {
 		mh.typeOp(Opcodes.NEW, NativeImageData.class);
 		mh.op(Opcodes.DUP);
 
@@ -57,7 +60,7 @@ public class NativeImageDataDef extends MethodDef {
 	}
 
 	@Override
-	protected void writeMethodMeasure(MethodHandler mh, Runnable valueLoad) {
+	protected void writeMethodMeasure(MethodWriter mh, Runnable valueLoad) {
 		bytebufferDef.writeMeasure(mh, () -> {
 			valueLoad.run();
 			mh.visitFieldInsn(Opcodes.GETFIELD, NativeImageData.class, "buffer", ByteBuffer.class);
@@ -72,12 +75,12 @@ public class NativeImageDataDef extends MethodDef {
 	private static class ByteBufferDef extends BufferDef {
 		private Variable stbVariable;
 
-		public ByteBufferDef(Clazz clazz, SerializerHandler<?, ?> serializerHandler) {
-			super(clazz, serializerHandler);
+		public ByteBufferDef(Struct clazz) {
+			super(clazz);
 		}
 
 		@Override
-		protected void allocateBuffer(MethodHandler mh) {
+		protected void allocateBuffer(MethodWriter mh) {
 			mh.varOp(Opcodes.ILOAD, stbVariable);
 			try (var thing = new IfElse(mh, Opcodes.IFEQ)) {
 				mh.op(Opcodes.ICONST_1, Opcodes.SWAP);

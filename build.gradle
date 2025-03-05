@@ -2,9 +2,8 @@ plugins {
     // Publishing
     id 'com.matthewprenger.cursegradle' version '1.4.0'
     id "com.modrinth.minotaur" version "2.+"
-    id 'io.github.juuxel.loom-vineflower' version '1.11.0'
 
-    id 'fabric-loom' version '1.3-SNAPSHOT'
+    id 'fabric-loom' version '1.9-SNAPSHOT'
     id 'maven-publish'
 }
 
@@ -28,6 +27,14 @@ repositories {
     maven {
         url "https://notalpha.dev/maven/releases"
     }
+    maven {
+        name = "Terraformers"
+        url = "https://maven.terraformersmc.com/"
+    }
+    maven {
+        name = "Nucleoid"
+        url = "https://maven.nucleoid.xyz/"
+    }
 }
 
 loom {
@@ -40,19 +47,25 @@ dependencies {
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
-    // TODO jákob if you need modmenu uncomment this and in gradle.properties - !alpha
-    // modImplementation "com.terraformersmc:modmenu:$project.modmenu_version"
+    modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
 
-    implementation "dev.quantumfusion:Hyphen:0.4.0-rc.3"
-    include "dev.quantumfusion:Hyphen:0.4.0-rc.3"
+    implementation "dev.notalpha:Hyphen:0.4.0-rc.5"
+    include "dev.notalpha:Hyphen:0.4.0-rc.5"
 
     implementation "dev.notalpha:Taski:2.1.0"
     include "dev.notalpha:Taski:2.1.0"
 
-    implementation 'com.github.luben:zstd-jni:1.5.2-2'
-    include 'com.github.luben:zstd-jni:1.5.2-2'
+    implementation 'com.github.luben:zstd-jni:1.5.7-1'
+    include 'com.github.luben:zstd-jni:1.5.7-1'
 
     modCompileOnly fabricApi.module("fabric-renderer-indigo", project.fabric_version)
+
+    // For Modmenu
+    modRuntimeOnly fabricApi.module("fabric-api-base", project.fabric_version)
+    modRuntimeOnly fabricApi.module("fabric-key-binding-api-v1", project.fabric_version)
+    modRuntimeOnly fabricApi.module("fabric-lifecycle-events-v1", project.fabric_version)
+    modRuntimeOnly fabricApi.module("fabric-resource-loader-v0", project.fabric_version)
+    modRuntimeOnly fabricApi.module("fabric-screen-api-v1", project.fabric_version)
 }
 
 test {
@@ -101,7 +114,7 @@ modrinth {
     versionName = "$project.version".split("\\+")[0] + " for $project.minecraft_version"
     uploadFile = remapJar
     versionType = "beta"
-    gameVersions = ['1.20.2']
+    gameVersions = ['1.20.4']
     loaders = ['fabric', 'quilt']
 }
 
@@ -113,7 +126,7 @@ curseforge {
         changelog = file("changelog.md")
         releaseType = 'beta'
 
-        addGameVersion "1.20.2"
+        addGameVersion "1.20.4"
         addGameVersion "Fabric"
         addGameVersion "Quilt"
         addGameVersion "Java 17"

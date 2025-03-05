@@ -9,8 +9,6 @@ import net.minecraft.client.font.GlyphContainer;
 import net.minecraft.client.font.UnihexFont;
 
 public final class DashUnihexFont implements DashObject<UnihexFont, UnihexFont> {
-
-
 	public final IntObjectList<UnihexFont.UnicodeTextureGlyph> glyphs;
 
 	public DashUnihexFont(IntObjectList<UnihexFont.UnicodeTextureGlyph> glyphs) {
@@ -23,7 +21,6 @@ public final class DashUnihexFont implements DashObject<UnihexFont, UnihexFont> 
 		var fontImages = font.getGlyphs();
 		fontImages.forEachGlyph(this.glyphs::put);
 	}
-
 
 	public UnihexFont export(RegistryReader handler) {
 		GlyphContainer<UnihexFont.UnicodeTextureGlyph> container = new GlyphContainer<>(

@@ -19,5 +19,4 @@ public interface ModelOverrideListBakedOverrideAccessor {
 
 	@Accessor
 	BakedModel getModel();
-
 }

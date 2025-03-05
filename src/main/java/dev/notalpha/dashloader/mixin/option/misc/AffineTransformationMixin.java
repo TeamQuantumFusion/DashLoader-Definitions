@@ -14,7 +14,6 @@ public class AffineTransformationMixin {
 	@Final
 	private Matrix4f matrix;
 
-
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;

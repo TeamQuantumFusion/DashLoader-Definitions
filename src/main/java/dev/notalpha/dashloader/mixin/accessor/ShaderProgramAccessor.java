@@ -15,7 +15,6 @@ import java.util.Map;
 
 @Mixin(ShaderProgram.class)
 public interface ShaderProgramAccessor {
-
 	@Accessor
 	Map<String, Object> getSamplers();
 
@@ -33,16 +32,23 @@ public interface ShaderProgramAccessor {
 	@Accessor
 	List<Integer> getLoadedAttributeIds();
 
+	@Accessor
+	@Mutable
+	void setLoadedAttributeIds(List<Integer> loadedAttributeIds);
 
 	@Accessor
 	Map<String, GlUniform> getLoadedUniforms();
+
+	@Accessor
+	@Mutable
+	void setLoadedUniforms(Map<String, GlUniform> loadedUniforms);
 
 	@Accessor
 	List<GlUniform> getUniforms();
 
 	@Accessor
 	@Mutable
-	void setLoadedAttributeIds(List<Integer> loadedAttributeIds);
+	void setUniforms(List<GlUniform> uniforms);
 
 	@Accessor
 	List<String> getAttributeNames();
@@ -64,15 +70,7 @@ public interface ShaderProgramAccessor {
 
 	@Accessor
 	@Mutable
-	void setUniforms(List<GlUniform> uniforms);
-
-	@Accessor
-	@Mutable
 	void setLoadedUniformIds(List<Integer> loadedUniformIds);
-
-	@Accessor
-	@Mutable
-	void setLoadedUniforms(Map<String, GlUniform> loadedUniforms);
 
 	@Accessor
 	@Mutable

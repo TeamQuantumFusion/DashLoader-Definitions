@@ -15,15 +15,15 @@ import java.util.EnumMap;
 
 public class ConfigHandler {
 	private static final EnumMap<Option, Boolean> OPTION_ACTIVE = new EnumMap<>(Option.class);
+	private static final String DISABLE_OPTION_TAG = "dashloader:disableoption";
 
 	static {
 		for (Option value : Option.values()) {
 			OPTION_ACTIVE.put(value, true);
 		}
 	}
-
-	private static final String DISABLE_OPTION_TAG = "dashloader:disableoption";
 	public static final ConfigHandler INSTANCE = new ConfigHandler(FabricLoader.getInstance().getConfigDir().normalize().resolve("dashloader.json"));
+
 	private final Gson gson = new GsonBuilder().setLenient().setPrettyPrinting().create();
 	private final Path configPath;
 	public Config config = new Config();
@@ -34,10 +34,12 @@ public class ConfigHandler {
 		this.config.options.forEach((s, aBoolean) -> {
 			try {
 				var option = Option.valueOf(s.toUpperCase());
-				OPTION_ACTIVE.put(option, false);
-				DashLoader.LOG.warn("Disabled Optional Feature {} from DashLoader config.", s);
+				OPTION_ACTIVE.put(option, aBoolean);
+				if (!aBoolean) {
+					DashLoader.LOG.warn("Disabled Optional Feature {} from DashLoader config.", s);
+				}
 			} catch (IllegalArgumentException illegalArgumentException) {
-				DashLoader.LOG.error("Could not disable Optional Feature {} as it does not exist.", s);
+				DashLoader.LOG.error("Could not disable Optional Feature {} from DashLoader config as it does not exist.", s);
 			}
 		});
 
@@ -51,13 +53,25 @@ public class ConfigHandler {
 						OPTION_ACTIVE.put(option, false);
 						DashLoader.LOG.warn("Disabled Optional Feature {} from {} config. {}", feature, mod.getId(), mod.getName());
 					} catch (IllegalArgumentException illegalArgumentException) {
-						DashLoader.LOG.error("Could not disable Optional Feature {} as it does not exist.", feature);
+						DashLoader.LOG.error("Could not disable Optional Feature {} from {} config as it does not exist. {}", feature, mod.getId(), mod.getName());
 					}
 				}
 			}
 		}
 	}
 
+	public static boolean shouldApplyMixin(String name) {
+		for (Option value : Option.values()) {
+			if (name.contains(value.mixinContains)) {
+				return OPTION_ACTIVE.get(value);
+			}
+		}
+		return true;
+	}
+
+	public static boolean optionActive(Option option) {
+		return OPTION_ACTIVE.get(option);
+	}
 
 	public void reloadConfig() {
 		try {
@@ -83,18 +97,5 @@ public class ConfigHandler {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-
-	public static boolean shouldApplyMixin(String name) {
-		for (Option value : Option.values()) {
-			if (name.contains(value.mixinContains)) {
-				return OPTION_ACTIVE.get(value);
-			}
-		}
-		return true;
-	}
-
-	public static boolean optionActive(Option option) {
-		return OPTION_ACTIVE.get(option);
 	}
 }

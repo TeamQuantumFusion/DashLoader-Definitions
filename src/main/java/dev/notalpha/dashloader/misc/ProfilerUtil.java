@@ -1,6 +1,5 @@
 package dev.notalpha.dashloader.misc;
 
-
 public final class ProfilerUtil {
 	public static long RELOAD_START = 0;
 

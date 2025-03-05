@@ -5,6 +5,7 @@ import java.util.List;
 
 public abstract class Piece {
 	public final long size;
+	int elementPos = 0;
 
 	protected Piece(long size) {
 		this.size = size;
@@ -16,8 +17,6 @@ public abstract class Piece {
 		Piece[] inner = this.getInner();
 		return inner == null || !(elementPos < inner.length);
 	}
-
-	int elementPos = 0;
 
 	public Fragment fragment(long sizeRemaining) {
 		Piece[] inner = this.getInner();

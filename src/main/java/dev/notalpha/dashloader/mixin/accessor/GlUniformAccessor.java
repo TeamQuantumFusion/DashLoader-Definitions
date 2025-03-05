@@ -11,11 +11,11 @@ import java.nio.IntBuffer;
 @Mixin(GlUniform.class)
 public interface GlUniformAccessor {
 	@Accessor
-	@Mutable
-	void setIntData(IntBuffer intData);
+	IntBuffer getIntData();
 
 	@Accessor
-	IntBuffer getIntData();
+	@Mutable
+	void setIntData(IntBuffer intData);
 
 	@Accessor
 	FloatBuffer getFloatData();

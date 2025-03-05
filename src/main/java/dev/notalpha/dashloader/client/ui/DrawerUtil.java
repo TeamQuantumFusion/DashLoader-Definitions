@@ -6,7 +6,6 @@ import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.text.Text;
 import org.joml.Matrix4f;
 
-
 public class DrawerUtil {
 	public static final float GLOW_SIZE = 30f;
 	public static final float GLOW_STRENGTH = 0.1f;
@@ -22,7 +21,6 @@ public class DrawerUtil {
 			new Color(0xff, 0xd8, 0x66),
 			new Color(0xa9, 0xdc, 0x76)
 	};
-
 
 	public static void drawRect(DrawContext context, int x, int y, int width, int height, Color color) {
 		final int x2 = width + x;
@@ -118,7 +116,6 @@ public class DrawerUtil {
 		float currentOpacity = color.alpha() / 255f;
 		return new Color(color.red(), color.green(), color.blue(), (int) ((opacity * currentOpacity) * 255));
 	}
-
 
 	public static Color getProgressColor(double progress) {
 		return mix(progress, PROGRESS_COLORS);

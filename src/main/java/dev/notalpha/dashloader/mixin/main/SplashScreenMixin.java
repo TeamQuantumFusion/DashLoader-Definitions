@@ -4,9 +4,9 @@ import dev.notalpha.dashloader.DashLoader;
 import dev.notalpha.dashloader.api.cache.Cache;
 import dev.notalpha.dashloader.api.cache.CacheStatus;
 import dev.notalpha.dashloader.client.DashLoaderClient;
-import dev.notalpha.dashloader.client.ui.DashToast;
-import dev.notalpha.dashloader.client.ui.DashToastState;
-import dev.notalpha.dashloader.client.ui.DashToastStatus;
+import dev.notalpha.dashloader.client.ui.toast.DashToast;
+import dev.notalpha.dashloader.client.ui.toast.DashToastState;
+import dev.notalpha.dashloader.client.ui.toast.DashToastStatus;
 import dev.notalpha.dashloader.config.ConfigHandler;
 import dev.notalpha.dashloader.misc.ProfilerUtil;
 import dev.notalpha.taski.builtin.StaticTask;
@@ -15,7 +15,6 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.SplashOverlay;
 import net.minecraft.client.gui.screen.TitleScreen;
 import net.minecraft.client.toast.Toast;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.resource.ResourceReload;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -25,20 +24,16 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-
 @Mixin(value = SplashOverlay.class, priority = 69420)
 public class SplashScreenMixin {
 	@Shadow
 	@Final
 	private MinecraftClient client;
-
 	@Shadow
 	private long reloadCompleteTime;
-
 	@Shadow
 	@Final
 	private ResourceReload reload;
-
 	@Mutable
 	@Shadow
 	@Final
